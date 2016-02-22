@@ -5,6 +5,7 @@ var DungeonHop = DungeonHop || {};
 DungeonHop.ModelManager = function () {
     var that = {};
 
+    /*
     function getGeometry(mtx) {
         var face;
         var model = new THREE.Geometry();
@@ -118,6 +119,7 @@ DungeonHop.ModelManager = function () {
         }
         return model;
     }
+    */
 
     return that;
 };
