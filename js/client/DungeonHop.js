@@ -18,7 +18,8 @@ DungeonHop = (function () {
 
     function init(){
         var QEFLoader = new DungeonHop.QEFLoader();
-        QEFLoader.getModel("road.qef");
+        var matrix = QEFLoader.getModel("road.qef");
+        var Mo
 
         player = new DungeonHop.Player();
         player.init();
