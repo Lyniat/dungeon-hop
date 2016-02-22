@@ -7,7 +7,7 @@ DungeonHop = (function () {
 
     var scene = new THREE.Scene();
 
-    var canvas = document.getElementsByTagName("canvas")[0];
+    var canvas = document.getElementById("canvas");
     var renderer = new THREE.WebGLRenderer({ canvas: canvas });
 
     var cameraObj;
