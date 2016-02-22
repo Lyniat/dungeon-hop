@@ -28,7 +28,6 @@ DungeonHop.PlayerCamera = function () {
     function updateCamera() {
         var playerPosition = player.getPosition();
         camera.lookAt(playerPosition);
-        console.log(playerPosition);
     }
 
     function getPosition() {

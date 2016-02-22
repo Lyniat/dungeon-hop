@@ -40,16 +40,6 @@ DungeonHop.Player = function () {
         if (evt.keyCode == "68") {
             moveDirection.x = 1;
         }
-
-        if (evt.keyCode == "81") {
-            rotationDirection.y = 1;
-        }
-        if (evt.keyCode == "69") {
-            rotationDirection.y = -1;
-        }
-        if (evt.keyCode == "32") {
-            jump();
-        }
     }
 
     function onKeyUp(evt) {
@@ -64,13 +54,6 @@ DungeonHop.Player = function () {
         }
         if (evt.keyCode == "68") {
             moveDirection.x = 0;
-        }
-
-        if (evt.keyCode == "81") {
-            rotationDirection.y = 0;
-        }
-        if (evt.keyCode == "69") {
-            rotationDirection.y = 0;
         }
     }
 
