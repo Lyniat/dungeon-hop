@@ -7,7 +7,8 @@ DungeonHop = (function () {
 
     var scene = new THREE.Scene();
 
-    var renderer = new THREE.WebGLRenderer();
+    var canvas = document.getElementsByTagName("canvas")[0];
+    var renderer = new THREE.WebGLRenderer({ canvas: canvas });
 
     var cameraObj;
 
@@ -16,6 +17,9 @@ DungeonHop = (function () {
     var player;
 
     function init(){
+        var QEFLoader = new DungeonHop.QEFLoader();
+        QEFLoader.getModel("road.qef");
+
         player = new DungeonHop.Player();
         player.init();
         scene.add(player.getObject());
