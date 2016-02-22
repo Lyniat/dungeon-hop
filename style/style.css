@@ -1,6 +1,4 @@
-@import url(https://fonts.googleapis.com/css?family=VT323);
 body {
-    font-family: 'VT323',"Lucida Console", Monaco, monospace;
     margin-top: 60px;
 }
 
@@ -11,7 +9,6 @@ canvas {
 
 .menu{
     background-color: #000;
-    color:#fff;
 }
 
 /******************/

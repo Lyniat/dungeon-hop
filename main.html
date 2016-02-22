@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Dungeon Hop</title>
+</head>
+<body>
+<script src="js/three.min.js"></script>
+<script src="js/client/DungeonHop.js"></script>
+<script src="js/client/PlayerCamera.js"></script>
+<script src="js/client/Player.js"></script>
+<script>
+    DungeonHop.init();
+    (function(){var script=document.createElement('script');script.onload=function(){var stats=new Stats();stats.domElement.style.cssText='position:fixed;left:0;top:0;z-index:10000';document.body.appendChild(stats.domElement);requestAnimationFrame(function loop(){stats.update();requestAnimationFrame(loop)});};script.src='//rawgit.com/mrdoob/stats.js/master/build/stats.min.js';document.head.appendChild(script);})()
+</script>
+</body>
+</html>
