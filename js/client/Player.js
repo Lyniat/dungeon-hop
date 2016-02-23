@@ -15,15 +15,10 @@ DungeonHop.Player = function () {
 
     //load the player model (a cube for testing)
     function loadPlayer(geometry) {
-        //var geometry = new THREE.BoxGeometry(1, 1, 1);
-        var material = new THREE.MeshLambertMaterial({vertexColors: THREE.FaceColors, side: THREE.FrontSide});
-        object = new THREE.Mesh(geometry,material);
-
-        object.scale.set(1/16,1/16,1/16);
-
+        object = geometry;
         object.position.y = 0;
-        object.position.x = 10;
-        object.position.z = 10;
+        object.position.x = 5;
+        object.position.z = 0;
     }
 
     function addListeners() {

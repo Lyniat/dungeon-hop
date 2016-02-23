@@ -17,14 +17,14 @@ DungeonHop = (function () {
     var player;
 
     function init(){
-        var QEFLoader = new DungeonHop.QEFLoader();
-        var matrix = QEFLoader.getMatrix("gekko.qef");
+        var modelManager = DungeonHop.ModelManager();
+        modelManager.init();
 
-        var modelCreator = new DungeonHop.ModelCreator();
-        var geometry = modelCreator.createFromMatrix(matrix);
+        var world = new DungeonHop.World();
+        world.init(scene);
 
         player = new DungeonHop.Player();
-        player.init(geometry);
+        player.init(modelManager.getGekko());
         scene.add(player.getObject());
 
         cameraObj = new DungeonHop.PlayerCamera();

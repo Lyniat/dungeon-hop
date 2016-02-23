@@ -8,6 +8,19 @@ DungeonHop.Chunk = function () {
     var chunkSize = 16;
     var borderSize = 8;
 
+    function init(scene,zPosition){
+        addGround(zPosition);
+        addToScene(scene);
+    }
+
+    function addGround(zPosition){
+        var geometry = new THREE.BoxGeometry(chunkSize, 0.1, 1);
+        var material = new THREE.MeshBasicMaterial( { color: 0x00aa00} );
+        var mesh = new THREE.Mesh(geometry,material);
+        mesh.position.z = zPosition;
+        objects.push(mesh);
+    }
+
     function addToScene(scene){
         var i;
         for (i = 0; i < objects.length; i++){
@@ -30,7 +43,7 @@ DungeonHop.Chunk = function () {
         }
     }
 
-    that.addToScene = addToScene;
+    that.init = init;
     that.addToWorld = addToWorld;
     return that;
 
