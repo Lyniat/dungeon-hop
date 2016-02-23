@@ -6,9 +6,12 @@ DungeonHop.ModelCreator = function () {
         var face;
         var model = new THREE.Geometry();
         var v = 0;
-        for (var x = 0; x < mtx.length; x++) {
-            for (var y = 0; y < mtx[0].length; y++) {
-                for (var z = 0; z < mtx[0][0].length; z++) {
+        var xLength = mtx.length;
+        var yLength = mtx[0].length;
+        var zLength = mtx[0][0].length;
+        for (var x = 0; x < xLength; x++) {
+            for (var y = 0; y < yLength; y++) {
+                for (var z = 0; z < zLength; z++) {
                     if (mtx[x][y][z] == null) {
                         continue;
                     }
@@ -114,7 +117,24 @@ DungeonHop.ModelCreator = function () {
                 }
             }
         }
-        return model;
+
+        var material = new THREE.MeshLambertMaterial({vertexColors: THREE.FaceColors, side: THREE.FrontSide});
+        var object = new THREE.Mesh(model,material);
+
+        var longestSide;
+
+        if(xLength > zLength){
+            longestSide = xLength;
+        }
+        else{
+            longestSide = zLength;
+        }
+
+        var scale = (1/longestSide)*0.8;
+
+        object.scale.set(scale,scale,scale);
+
+        return object;
     }
 
     that.createFromMatrix = createFromMatrix;
