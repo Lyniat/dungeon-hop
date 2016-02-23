@@ -1,30 +1,26 @@
-(function() {
-    var that = {},
-        express = require("express"),
-        app = express(),
-        server;
+var app = require('express')();
+var http = require('http').Server(app);
+var io = require('socket.io')(http);
 
-    function run() {
-        console.log("hello express");
-        initRoutes();
-        startServer(3000);
-    }
+app.get('/', function(req, res){
+    res.sendFile(__dirname + '/main.html');
+});
 
-    function initRoutes() {
-        app.get("/", function(req, res) {
-            res.send("Hello World");
-        });
-        app.get("/www", function(req, res) {
-            res.send("a website");
-        });
-    }
+io.on('connection', function(socket){
+    console.log('a user connected');
+    socket.on('disconnect', function(){
+        console.log('user disconnected');
+    });
+});
 
-    function startServer(port) {
-        server = app.listen(port, function() {
-            console.log("Server is listening on http://localhost:" + server.address().port);
-        });
-    }
+io.on('connection', function(socket){
+    socket.on('chat message', function(msg){
+        console.log('message: ' + msg);
+        io.emit('chat message', msg);
+    });
+});
 
-    that.run = run;
-    return that;
-}().run())
+
+http.listen(3000, function(){
+    console.log('listening on *:3000');
+});
