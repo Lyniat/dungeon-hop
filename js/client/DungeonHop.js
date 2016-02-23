@@ -17,11 +17,14 @@ DungeonHop = (function () {
     var player;
 
     function init(){
-        //var QEFLoader = new DungeonHop.QEFLoader();
-        //var matrix = QEFLoader.getModel("road.qef");
+        var QEFLoader = new DungeonHop.QEFLoader();
+        var matrix = QEFLoader.getMatrix("gekko.qef");
+
+        var modelCreator = new DungeonHop.ModelCreator();
+        var geometry = modelCreator.createFromMatrix(matrix);
 
         player = new DungeonHop.Player();
-        player.init();
+        player.init(geometry);
         scene.add(player.getObject());
 
         cameraObj = new DungeonHop.PlayerCamera();
@@ -71,6 +74,7 @@ DungeonHop = (function () {
     //renders the scene every frame
     var render = function () {
         var delta = getDeltaTime();
+        player.update(delta);
         cameraObj.update(delta);
         requestAnimationFrame(render);
         renderer.render(scene, cameraObj.camera);
