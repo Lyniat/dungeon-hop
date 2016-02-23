@@ -24,6 +24,7 @@ nav.navbar.navbar-inverse.navbar-fixed-top {
     background-color: #572F0C;
     color: #fff;
     font-size:28px;
+
 }
 .navbar-inverse .timecode{
     color:#fff;
@@ -31,6 +32,29 @@ nav.navbar.navbar-inverse.navbar-fixed-top {
     float: left;
     margin-right: 40px;
     margin-top: 16px;
+}
+
+.textshadow{
+    text-shadow: 0 1px 0 #BA7537,
+    0 2px 0 #A86830,
+    1px 3px 0 #9D622D,
+    2px 4px 0 #925B2B,
+    3px 5px 0 #865326,
+    4px 6px 1px #744922,
+    0 0 5px rgba(68,44,23,.6),
+    0 1px 3px rgba(68,44,23,.5),
+    1px 3px 5px rgba(68,44,23,.4),
+    3px 5px 10px rgba(68,44,23,.3),
+    5px 10px 10px rgba(68,44,23,.2),
+    10px 20px 20px rgba(68,44,23,.1);
+}
+.textshadow-s{
+    text-shadow: 0 1px 0 #BA7537,
+    0 2px 0 #925B2B,
+    1px 3px 0 #744922,
+    0 0 5px rgba(68,44,23,.6),
+    0 1px 3px rgba(68,44,23,.3),
+    1px 3px 5px rgba(68,44,23,.1);
 }
 
 /******************/
