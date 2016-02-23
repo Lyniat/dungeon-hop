@@ -6,9 +6,11 @@ DungeonHop.QEFLoader = function () {
     var that = {};
     var path = "assets/models/qef/";
 
-    function getModel(fl) {
+    function getMatrix(fl) {
         var file = loadFile(fl);
         var matrix = parseFile(file);
+        console.log(matrix);
+        return matrix;
     }
 
     //load file as string
@@ -57,6 +59,11 @@ DungeonHop.QEFLoader = function () {
             matrix[x] = [];
             for (y = 0; y < sizeY; y++) {
                 matrix[x][y] = [sizeZ];
+                for (z = 0; z < sizeY; z++) {
+                    matrix[x][y][z] = null;
+
+                }
+
             }
         }
 
@@ -74,6 +81,6 @@ DungeonHop.QEFLoader = function () {
         return matrix;
     }
 
-    that.getModel = getModel;
+    that.getMatrix = getMatrix;
     return that;
 };
