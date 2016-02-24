@@ -3,12 +3,14 @@
  */
 var DungeonHop = DungeonHop || {};
 DungeonHop.QEFLoader = function () {
-    var that = {};
-    var path = "assets/models/qef/";
+	"use strict";
+    /* eslint-env browser  */
+    var that = {},
+		path = "assets/models/qef/";
 
     function getMatrix(fl) {
-        var file = loadFile(fl);
-        var matrix = parseFile(file);
+        var file = loadFile(fl),
+			matrix = parseFile(file);
         console.log(matrix);
         return matrix;
     }
@@ -73,10 +75,10 @@ DungeonHop.QEFLoader = function () {
             x = parseInt(values[0]);
             y = parseInt(values[1]);
             z = parseInt(values[2]);
-            var colorIndex = values[3];
-            var visibilityMask = values[4];
-            var color = colorList[colorIndex];
-            matrix[x][y][z] = {color:color,mask:visibilityMask};
+            var colorIndex = values[3],
+				visibilityMask = values[4],
+				color = colorList[colorIndex];
+            matrix[x][y][z] = {color: color, mask: visibilityMask};
         }
         return matrix;
     }

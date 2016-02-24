@@ -1,26 +1,28 @@
 var DungeonHop = DungeonHop || {};
 DungeonHop.ModelCreator = function () {
+	"use strict";
+    /* eslint-env browser  */
     var that = {};
-
     function createFromMatrix(mtx) {
-        var face;
-        var model = new THREE.Geometry();
-        var v = 0;
-        var xLength = mtx.length;
-        var yLength = mtx[0].length;
-        var zLength = mtx[0][0].length;
-        for (var x = 0; x < xLength; x++) {
-            for (var y = 0; y < yLength; y++) {
-                for (var z = 0; z < zLength; z++) {
-                    if (mtx[x][y][z] == null) {
+        var x,
+			y,
+			z,
+			face,
+			model = new THREE.Geometry(),
+			v = 0,
+			xLength = mtx.length,
+			yLength = mtx[0].length,
+			zLength = mtx[0][0].length;
+        for (x = 0; x < xLength; x++) {
+            for (y = 0; y < yLength; y++) {
+                for (z = 0; z < zLength; z++) {
+                    if (mtx[x][y][z] === null) {
                         continue;
                     }
 
-                    var color = new THREE.Color();
-
-                    var matrixColor = mtx[x][y][z].color;
-
-                    var size = 1;
+                    var color = new THREE.Color(),
+						matrixColor = mtx[x][y][z].color,
+						size = 1;
                     color.setRGB(matrixColor.r,
                         matrixColor.g, matrixColor.b);
 
@@ -118,21 +120,20 @@ DungeonHop.ModelCreator = function () {
             }
         }
 
-        var material = new THREE.MeshLambertMaterial({vertexColors: THREE.FaceColors, side: THREE.FrontSide});
-        var object = new THREE.Mesh(model,material);
+        var material = new THREE.MeshLambertMaterial({vertexColors: THREE.FaceColors, side: THREE.FrontSide}),
+			object = new THREE.Mesh(model, material),
+			longestSide,
+			scale;
 
-        var longestSide;
-
-        if(xLength > zLength){
+        if (xLength > zLength) {
             longestSide = xLength;
-        }
-        else{
-            longestSide = zLength;
+        } else {
+			longestSide = zLength;
         }
 
-        var scale = (1/longestSide)*0.8;
+        scale = (1 / longestSide) * 0.8;
 
-        object.scale.set(scale,scale,scale);
+        object.scale.set(scale, scale, scale);
 
         return object;
     }

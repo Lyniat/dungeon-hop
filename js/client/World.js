@@ -3,44 +3,23 @@
  */
 var DungeonHop = DungeonHop || {};
 DungeonHop.World = function () {
-    var that = {};
-    var count = 3;
-    var timer;
-    var time = document.querySelector('#timer');
-    var seconds = 0;
-    var startButton = document.querySelector('#start');
-    var worldMatrix = [];
-    var actualChunk_Z_Position = 0;
-    var models;
-    var scene;
-    var player;
-    var loadDistance = 14;
+	"use strict";
+    /* eslint-env browser  */
+    var that = {},
+		count = 3,
+		timer,
+		time = document.querySelector('#timer'),
+		seconds = 0,
+		startButton = document.querySelector('#start'),
+		worldMatrix = [],
+		actualChunk_Z_Position = 0,
+		models,
+		scene,
+		player,
+		loadDistance = 14;
 
-    function init(sc,mdls,pl){
-        player = pl;
-        models = mdls;
-        scene = sc;
-        for(var z = 0; z > -16; z--){
-            createChunk();
-        }
-        startButton.addEventListener("click", onStartButtonClicked);
-    }
-    function onStartButtonClicked(){
-        timer = setInterval(function() { handleCountdown(count); }, 1000);
-        timer();
-    }
-
-    //handles a countdown and starts the timer
-    function handleCountdown() {
-        if(count === 0) {
-            time.innerHTML = "START";
-            clearInterval(timer);
-            setInterval(startTimer, 1000);
-        } else {
-            time.innerHTML = count;
-            count--;
-        }
-    }
+	
+   
 
     function startTimer() {
         var min, sec;
@@ -55,17 +34,45 @@ DungeonHop.World = function () {
         }
         time.innerHTML = min + ":" + sec;
     }
-    function createChunk(){
+  
+	 //handles a countdown and starts the timer
+    function handleCountdown() {
+        if (count === 0) {
+            time.innerHTML = "START";
+            clearInterval(timer);
+            setInterval(startTimer, 1000);
+        } else {
+            time.innerHTML = count;
+            count--;
+        }
+    }
+    function onStartButtonClicked() {
+        timer = setInterval(function () { handleCountdown(count); }, 1000);
+        timer();
+    }
+
+    function createChunk() {
         var chunk = new DungeonHop.Chunk();
-        chunk.init(scene,actualChunk_Z_Position,models);
+        chunk.init(scene, actualChunk_Z_Position, models);
         actualChunk_Z_Position--;
     }
 
-    function update(){
+    function update() {
         var playerZPosition = player.getPosition().z;
-        if (playerZPosition < actualChunk_Z_Position+loadDistance){
+        if (playerZPosition < actualChunk_Z_Position + loadDistance) {
             createChunk();
         }
+    }
+	
+	function init(sc, mdls, pl) {
+		var z;
+        player = pl;
+        models = mdls;
+        scene = sc;
+        for (z = 0; z > -16; z--) {
+            createChunk();
+        }
+        startButton.addEventListener("click", onStartButtonClicked);
     }
 
     that.update = update;

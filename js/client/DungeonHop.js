@@ -4,48 +4,20 @@
 
 var DungeonHop = DungeonHop || {};
 DungeonHop = (function () {
-    var that = {};
+	"use strict";
+    /* eslint-env browser  */
+    var that = {},
+		scene = new THREE.Scene(),
+		canvas = document.getElementById("canvas"),
+		renderer = new THREE.WebGLRenderer({canvas: canvas}),
+		modelManager,
+		cameraObj,
+		lastTime = Date.now(),
+		player,
+		world;
 
-    var scene = new THREE.Scene();
-
-    var canvas = document.getElementById("canvas");
-    var renderer = new THREE.WebGLRenderer({canvas: canvas});
-    var modelManager;
-
-    var cameraObj;
-
-    var lastTime = Date.now();
-
-    var player;
-    var world;
-
-    function init() {
-        modelManager = new DungeonHop.ModelManager();
-        modelManager.init(this);
-    }
-
-    function loaded(models){;
-        createWorld(models);
-    }
-
-    function createWorld(models) {
-        player = new DungeonHop.Player();
-
-        world = new DungeonHop.World();
-        world.init(scene,models,player);
-
-        player.init(models[0]);
-        scene.add(player.getObject());
-
-        cameraObj = new DungeonHop.PlayerCamera();
-        cameraObj.init(player);
-
-        setScene();
-        render();
-
-    }
-
-//creates a new scene with light and shadow
+   
+	//creates a new scene with light and shadow
     function setScene() {
         renderer.setSize(window.innerWidth, window.innerHeight);
         renderer.setClearColor(0x33ccff, 1); //lovely baby blue sky
@@ -72,8 +44,8 @@ DungeonHop = (function () {
         var light = new THREE.AmbientLight(0x999999); // soft white light
         scene.add(light);
     }
-
-//calculates the time between the frames
+	
+	//calculates the time between the frames
     function getDeltaTime() {
         var actualTime = Date.now();
         var delta = actualTime - lastTime;
@@ -81,8 +53,8 @@ DungeonHop = (function () {
         delta /= 1000;
         return delta;
     }
-
-//renders the scene every frame
+	
+	//renders the scene every frame
     var render = function () {
         var delta = getDeltaTime();
         player.update(delta);
@@ -91,9 +63,33 @@ DungeonHop = (function () {
         requestAnimationFrame(render);
         renderer.render(scene, cameraObj.camera);
     };
+	
+	function createWorld(models) {
+        player = new DungeonHop.Player();
 
+        world = new DungeonHop.World();
+        world.init(scene, models, player);
+
+        player.init(models[0]);
+        scene.add(player.getObject());
+
+        cameraObj = new DungeonHop.PlayerCamera();
+        cameraObj.init(player);
+
+        setScene();
+        render();
+    }
+	
+    function loaded(models) {
+        createWorld(models);
+    }
+
+	function init() {
+        modelManager = new DungeonHop.ModelManager();
+        modelManager.init(this);
+    }
+	
     that.loaded = loaded;
     that.init = init;
     return that;
-})
-();
+})();
