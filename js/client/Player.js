@@ -2,6 +2,7 @@ var DungeonHop = DungeonHop || {};
 DungeonHop.Player = function () {
     var that = {};
     var object;
+
     var moveDirection = new THREE.Vector3();
     var rotationDirection = new THREE.Vector3();
     var rotation = new THREE.Vector3();
@@ -24,6 +25,8 @@ DungeonHop.Player = function () {
     function addListeners() {
         //window.addEventListener("keydown", onKeyDown, false);
         window.addEventListener("keyup", onKeyUp, false);
+
+
     }
 
     function onKeyUp(evt) {
@@ -40,6 +43,8 @@ DungeonHop.Player = function () {
             moveDirection.x = 1;
         }
     }
+
+
 
     /*
     function onKeyUp(evt) {

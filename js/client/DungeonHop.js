@@ -4,8 +4,12 @@
 var DungeonHop = DungeonHop || {};
 DungeonHop = (function () {
     var that = {};
+    var count = 3;
+    var timer;
     var time = document.querySelector('#timer');
     var seconds = 0;
+    var startButton = document.querySelector('#start');
+
     var scene = new THREE.Scene();
 
     var canvas = document.getElementById("canvas");
@@ -30,14 +34,31 @@ DungeonHop = (function () {
 
         cameraObj = new DungeonHop.PlayerCamera();
         cameraObj.init(player);
-        setInterval(setTime, 1000);
+
+        startButton.addEventListener("click", onStartButtonClicked);
         setScene();
         render();
     }
 
-    //sets the time starting with 00:00
-    function setTime() {
-        console.log('hallo');
+
+    function onStartButtonClicked(){
+        timer = setInterval(function() { handleCountdown(count); }, 1000);
+        timer();
+    }
+
+    //handles a countdown and starts the timer
+    function handleCountdown() {
+        if(count === 0) {
+            time.innerHTML = "START";
+            clearInterval(timer);
+            setInterval(startTimer, 1000);
+        } else {
+            time.innerHTML = count;
+            count--;
+        }
+    }
+  
+    function startTimer() {
         var min, sec;
         seconds++;
         min = Math.floor(seconds / 60);
@@ -50,6 +71,8 @@ DungeonHop = (function () {
         }
         time.innerHTML = min + ":" + sec;
     }
+
+
 
     //creates a new scene with light and shadow
     function setScene() {
