@@ -11,7 +11,7 @@ DungeonHop.ModelManager = function () {
         var QEFLoader = new DungeonHop.QEFLoader();
         var modelCreator = new DungeonHop.ModelCreator();
 
-        var matrix = QEFLoader.getMatrix("geccocube.qef");
+        var matrix = QEFLoader.getMatrix("geckocube.qef");
         gekko = modelCreator.createFromMatrix(matrix);
     }
 
