@@ -3,13 +3,14 @@ var http = require('http').Server(app);
 var io = require('socket.io')(http);
 
 app.get('/', function(req, res){
-    res.sendFile(__dirname + '/main.html');
+    res.sendFile('main.html',{ root:'D:/OneDrive/SkripteWS2015/MME/Projekt/dunegon-hop'});
 });
 
 io.on('connection', function(socket){
-    console.log('a user connected');
+    console.log('a player connected');
+
     socket.on('disconnect', function(){
-        console.log('user disconnected');
+        console.log('player disconnected');
     });
 });
 
