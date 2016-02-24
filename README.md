@@ -1,3 +1,2 @@
 Anleitung: 
-main.html im Browser oeffnen
-Aktuell ist volle Funktionalitaet nur im Firefox gegeben.
+Server starten und main.html im Browser oeffnen
