@@ -1,6 +1,7 @@
-/**
- * Created by laurin on 22.02.16.
- */
+/*
+global THREE
+*/
+
 var DungeonHop = DungeonHop || {};
 DungeonHop = (function () {
     var that = {};
@@ -17,14 +18,29 @@ DungeonHop = (function () {
     var player;
 
     function init(){
-        var modelManager = DungeonHop.ModelManager();
-        modelManager.init();
+        //var modelManager = DungeonHop.ModelManager();
+        //modelManager.init();
+
+        var loader = new THREE.ColladaLoader();
+
+        loader.load(
+            // resource URL
+            'assetsmonster.dae',
+            // Function when resource is loaded
+            function ( collada ) {
+                scene.add( collada.scene );
+            },
+            // Function called when download progresses
+            function ( xhr ) {
+                console.log( (xhr.loaded / xhr.total * 100) + '% loaded' );
+            }
+        );
 
         var world = new DungeonHop.World();
         world.init(scene);
 
         player = new DungeonHop.Player();
-        player.init(modelManager.getGekko());
+        //player.init(modelManager.getGekko());
         scene.add(player.getObject());
 
         cameraObj = new DungeonHop.PlayerCamera();
