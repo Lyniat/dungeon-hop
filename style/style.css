@@ -37,6 +37,7 @@ nav.navbar.navbar-inverse.navbar-fixed-top {
     margin-top:8px;
     background-color: #9D622D;
     border-color: #8B572A;
+    color:#f9f9f9;
 }
 .btn-default:hover{
     background-color: #8B572A;
