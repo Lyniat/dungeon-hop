@@ -2,8 +2,9 @@ var DungeonHop = DungeonHop || {};
 DungeonHop.PlayerCamera = function () {
     var that = {};
     var rotation = new THREE.Vector3();
-    var camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-    //var camera = new THREE.OrthographicCamera( 75, 75,75 ,75, 0.1, 1000 );
+    //var camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+    var zoom = 1/100;
+    var camera = new THREE.OrthographicCamera( -window.innerWidth*zoom, window.innerWidth*zoom,window.innerHeight*zoom ,-window.innerHeight*zoom, -100, 1000 );
     var player;
     var cameraSpeed = 0.1;
 
@@ -11,9 +12,9 @@ DungeonHop.PlayerCamera = function () {
     function init(pl) {
         player = pl;
         var playerObj = player.getObject();
-        camera.position.x = playerObj.position.x+0.5;
-        camera.position.y = playerObj.position.y +3;
-        camera.position.z = playerObj.position.z+1.5;
+        camera.position.x = playerObj.position.x+1;
+        camera.position.y = playerObj.position.y +5;
+        camera.position.z = playerObj.position.z+3;
         var playerPosition = player.getPosition();
         camera.lookAt(playerPosition);
     }
@@ -26,6 +27,7 @@ DungeonHop.PlayerCamera = function () {
     function updatePosition(delta) {
         var playerObj = player.getObject();
         camera.position.z -= delta * cameraSpeed;
+        camera.position.x = playerObj.position.x+1;
         if(playerObj.position.z+1.5 < camera.position.z){
             camera.position.z = playerObj.position.z+1.5;
         }
