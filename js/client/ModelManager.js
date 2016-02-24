@@ -4,22 +4,44 @@
 var DungeonHop = DungeonHop || {};
 DungeonHop.ModelManager = function () {
     var that = {};
+    var mainApp;
 
-    var gekko;
+    var models = [];
 
-    function init(){
-        var QEFLoader = new DungeonHop.QEFLoader();
-        var modelCreator = new DungeonHop.ModelCreator();
+    var loadedModels = 0;
 
-        var matrix = QEFLoader.getMatrix("geckocube.qef");
-        gekko = modelCreator.createFromMatrix(matrix);
+    function init(app){
+        mainApp = app;
+        loadJSON("geckocube");
+        loadJSON("firebowl");
     }
 
-    function getGekko(){
-        return gekko;
+    function loadJSON(file){
+
+        var loader = new THREE.JSONLoader();
+
+        // load a resource
+        loader.load(
+            // resource URL
+            "assets/models/json/"+file+".js",
+            // Function when resource is loaded
+            function ( geometry, materials ) {
+                var material = new THREE.MultiMaterial( materials );
+                var object = new THREE.Mesh( geometry, material );
+                object.scale.set(1/16,1/16,1/16);
+                models.push(object);
+                objectsLoaded();
+            }
+        );
     }
 
-    that.getGekko = getGekko;
+    function objectsLoaded(){
+        loadedModels++;
+        if(loadedModels == 2) {
+            mainApp.loaded(models);
+        }
+    }
+
     that.init = init;
     return that;
 };

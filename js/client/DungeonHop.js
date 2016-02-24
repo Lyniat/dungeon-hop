@@ -1,6 +1,6 @@
 /*
-global THREE
-*/
+ global THREE
+ */
 
 var DungeonHop = DungeonHop || {};
 DungeonHop = (function () {
@@ -9,38 +9,32 @@ DungeonHop = (function () {
     var scene = new THREE.Scene();
 
     var canvas = document.getElementById("canvas");
-    var renderer = new THREE.WebGLRenderer({ canvas: canvas });
+    var renderer = new THREE.WebGLRenderer({canvas: canvas});
+    var modelManager;
 
     var cameraObj;
 
     var lastTime = Date.now();
 
     var player;
+    var world;
 
-    function init(){
-        //var modelManager = DungeonHop.ModelManager();
-        //modelManager.init();
+    function init() {
+        modelManager = new DungeonHop.ModelManager();
+        modelManager.init(this);
+    }
 
-        var loader = new THREE.ColladaLoader();
+    function loaded(models){;
+        createWorld(models);
+    }
 
-        loader.load(
-            // resource URL
-            'assetsmonster.dae',
-            // Function when resource is loaded
-            function ( collada ) {
-                scene.add( collada.scene );
-            },
-            // Function called when download progresses
-            function ( xhr ) {
-                console.log( (xhr.loaded / xhr.total * 100) + '% loaded' );
-            }
-        );
-
-        var world = new DungeonHop.World();
-        world.init(scene);
-
+    function createWorld(models) {
         player = new DungeonHop.Player();
-        //player.init(modelManager.getGekko());
+
+        world = new DungeonHop.World();
+        world.init(scene,models,player);
+
+        player.init(models[0]);
         scene.add(player.getObject());
 
         cameraObj = new DungeonHop.PlayerCamera();
@@ -48,9 +42,10 @@ DungeonHop = (function () {
 
         setScene();
         render();
+
     }
 
-    //creates a new scene with light and shadow
+//creates a new scene with light and shadow
     function setScene() {
         renderer.setSize(window.innerWidth, window.innerHeight);
         renderer.setClearColor(0x33ccff, 1); //lovely baby blue sky
@@ -66,7 +61,7 @@ DungeonHop = (function () {
         directionalLight.shadow.camera.near = 0;
         directionalLight.shadow.camera.far = 15;
 
-        directionalLight.shadow.camera.left= -5;
+        directionalLight.shadow.camera.left = -5;
         directionalLight.shadow.camera.right = 5;
         directionalLight.shadow.camera.top = 5;
         directionalLight.shadow.camera.bottom = -5;
@@ -78,7 +73,7 @@ DungeonHop = (function () {
         scene.add(light);
     }
 
-    //calculates the time between the frames
+//calculates the time between the frames
     function getDeltaTime() {
         var actualTime = Date.now();
         var delta = actualTime - lastTime;
@@ -87,15 +82,18 @@ DungeonHop = (function () {
         return delta;
     }
 
-    //renders the scene every frame
+//renders the scene every frame
     var render = function () {
         var delta = getDeltaTime();
         player.update(delta);
         cameraObj.update(delta);
+        world.update();
         requestAnimationFrame(render);
         renderer.render(scene, cameraObj.camera);
     };
 
+    that.loaded = loaded;
     that.init = init;
     return that;
-})();
+})
+();

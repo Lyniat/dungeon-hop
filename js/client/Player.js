@@ -66,10 +66,30 @@ DungeonHop.Player = function () {
         if(moveDirection.z != 0 || moveDirection.x != 0){
             console.log("move");
             object.position.add(moveDirection);
+            rotate(moveDirection);
             moveDirection = new THREE.Vector3(0,0,0);
             console.log("player position: x: "+object.position.x+" z: "+object.position.z);
         }
 
+    }
+
+    function rotate(){
+        if(moveDirection.x == -1) {
+            //left
+            object.rotation.y = Math.PI / 2;
+        }
+        if(moveDirection.x == 1) {
+            //left
+            object.rotation.y = -Math.PI / 2;
+        }
+        if(moveDirection.z == -1) {
+            //forward
+            object.rotation.y = 0;
+        }
+        if(moveDirection.z == 1) {
+            //backward
+            object.rotation.y = Math.PI;
+        }
     }
 
     function getPosition() {
