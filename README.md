@@ -1,4 +1,4 @@
-## **ANLEITUNG** ##: 
+## **ANLEITUNG** ## 
 Server starten und main.html im Browser oeffnen
 
 
@@ -56,4 +56,3 @@ anschließend beginnt das spiel
 1. nachdem ein spieler verloren hat erscheint den Spielern der button "erneut spielen", damit ohne Rückkehr in die lobby gleich ein neues spiel gestartet werden kann
 
 2. es wäre vielleicht gut, jedem spieler 3 leben zu geben, da das spiel sonst sehr schnell vorbei ist.
-
