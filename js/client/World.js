@@ -16,7 +16,8 @@ DungeonHop.World = function () {
 		models,
 		scene,
 		player,
-		loadDistance = 14;
+        server,
+		loadDistance = 20;
 
     function startTimer() {
         var min, sec;
@@ -38,7 +39,7 @@ DungeonHop.World = function () {
   
 	 //handles a countdown and starts the timer
     function handleCountdown() {
-        if (count === 0) {
+        if (count == 0) {
             time.innerHTML = "START";
             clearInterval(timer);
             setInterval(startTimer, 1000);
@@ -49,20 +50,34 @@ DungeonHop.World = function () {
     }
    
 
+    //creates the new chunk and adds the collision information the matrix
     function createChunk() {
         var chunk = new DungeonHop.Chunk();
-        chunk.init(scene, actualChunk_Z_Position, models);
+        var obstacles = chunk.init(scene, actualChunk_Z_Position, models,server);
+        addToMatrix(obstacles);
         actualChunk_Z_Position--;
     }
 
+    //tests if the player has moved forward, so that a new chunk must be loaded
     function update() {
         var playerZPosition = player.getPosition().z;
         if (playerZPosition < actualChunk_Z_Position + loadDistance) {
             createChunk();
         }
     }
+
+    function addToMatrix(obstacles){
+        worldMatrix[actualChunk_Z_Position] = obstacles;
+    }
+
+    //returns the status of the requested fiel in the matrix to check if the player can move
+    function getEntryInMatrix(x,z){
+        console.log(worldMatrix[z][x]);
+        return worldMatrix[z][x];
+    }
 	
-	function init(sc, mdls, pl) {
+	function init(sc, mdls, pl,srv) {
+        server = srv;
 		var z;
         player = pl;
         models = mdls;
@@ -74,6 +89,7 @@ DungeonHop.World = function () {
     }
 
     that.update = update;
+    that.getEntryInMatrix = getEntryInMatrix;
     that.init = init;
     return that;
 };

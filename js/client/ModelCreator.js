@@ -16,7 +16,7 @@ DungeonHop.ModelCreator = function () {
         for (x = 0; x < xLength; x++) {
             for (y = 0; y < yLength; y++) {
                 for (z = 0; z < zLength; z++) {
-                    if (mtx[x][y][z] === null) {
+                    if (mtx[x][y][z] == null) {
                         continue;
                     }
 

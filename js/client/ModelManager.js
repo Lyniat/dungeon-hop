@@ -9,15 +9,16 @@ DungeonHop.ModelManager = function () {
 		mainApp,
 		models = [],
 		loadedModels = 0;
+    var ids = {barell:0,firebowl:1,stonething:2};
 	
 	function objectsLoaded() {
         loadedModels++;
-        if (loadedModels === 2) {
+        if (loadedModels == 5) {
             mainApp.loaded(models);
         }
     }
 	
-    function loadJSON(file) {
+    function loadJSON(file,type) {
         var loader = new THREE.JSONLoader();
 
         // load a resource
@@ -29,7 +30,17 @@ DungeonHop.ModelManager = function () {
                 var material = new THREE.MultiMaterial(materials),
 					object = new THREE.Mesh(geometry, material);
                 object.scale.set(1 / 16, 1 / 16, 1 / 16);
-                models.push(object);
+
+                var id;
+
+                if(type=="obstacle"){
+                    id = ids[file];
+                }
+                else{
+                    id = -1;
+                }
+
+                models.push({object:object,id:id,type:type,name:file});
                 objectsLoaded();
             }
         );
@@ -37,8 +48,11 @@ DungeonHop.ModelManager = function () {
 	
 	function init(app) {
         mainApp = app;
-        loadJSON("geckocube");
-        loadJSON("firebowl");
+        loadJSON("geckocube","player");
+        loadJSON("piggycube","player");
+        loadJSON("firebowl","obstacle");
+        loadJSON("barell","obstacle");
+        loadJSON("stonething","obstacle");
     }
 	
     that.init = init;
