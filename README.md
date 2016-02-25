@@ -1,4 +1,4 @@
-## ANLEITUNG## 
+## ANLEITUNG ## 
 Server starten und main.html im Browser oeffnen
 
 _________________________________________________
@@ -27,7 +27,7 @@ Durch einen mit node.js gehostetenServer verbinden sich die Spieler dann über d
 Adresse.
 
 
-### Spielmodus: ### 
+### Spielmodus ### 
 
 **Das Spiel ist für 1 bis 4 Spieler spielbar.**
 
@@ -37,21 +37,21 @@ Adresse.
 
 3. funktion 2: spiel beginnen
 
-**Im Spiel:**
+**Im Spiel**
 
 haben alle Spieler den "start" button geklickt zählt der counter von 3 nach unten
 anschließend beginnt das spiel
 
-**Gewinner:**
+**Gewinner**
 1. wer ohne Kollision am längsten durchhält
 
-**Verlierer:**
+**Verlierer**
 
 1. wer mit feind kollidiert oder in lava springt.
 
 2. wer zu langsam ist und nicht mehr im canvas ist
 
-**Erweiterungen:**
+**Erweiterungen**
 
 1. nachdem ein spieler verloren hat erscheint den Spielern der button "erneut spielen", damit ohne Rückkehr in die lobby gleich ein neues spiel gestartet werden kann
 
