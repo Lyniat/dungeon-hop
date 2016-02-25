@@ -18,9 +18,6 @@ DungeonHop.World = function () {
 		player,
 		loadDistance = 14;
 
-	
-   
-
     function startTimer() {
         var min, sec;
         seconds++;
@@ -34,6 +31,10 @@ DungeonHop.World = function () {
         }
         time.innerHTML = min + ":" + sec;
     }
+	 function onStartButtonClicked() {
+        timer = setInterval(function () { handleCountdown(count); }, 1000);
+        timer();
+    }
   
 	 //handles a countdown and starts the timer
     function handleCountdown() {
@@ -46,10 +47,7 @@ DungeonHop.World = function () {
             count--;
         }
     }
-    function onStartButtonClicked() {
-        timer = setInterval(function () { handleCountdown(count); }, 1000);
-        timer();
-    }
+   
 
     function createChunk() {
         var chunk = new DungeonHop.Chunk();
