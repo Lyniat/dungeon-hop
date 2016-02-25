@@ -14,7 +14,8 @@ DungeonHop = (function () {
 		cameraObj,
 		lastTime = Date.now(),
 		player,
-		world;
+		world,
+        server;
 
    
 	//creates a new scene with light and shadow
@@ -68,9 +69,11 @@ DungeonHop = (function () {
         player = new DungeonHop.Player();
 
         world = new DungeonHop.World();
-        world.init(scene, models, player);
+        world.init(scene, models, player,server);
 
-        player.init(models[0]);
+        console.log(models[0].object);
+
+        player.init(models[0].object,world);
         scene.add(player.getObject());
 
         cameraObj = new DungeonHop.PlayerCamera();
@@ -87,6 +90,7 @@ DungeonHop = (function () {
 	function init() {
         modelManager = new DungeonHop.ModelManager();
         modelManager.init(this);
+        server = new DungeonHop.TestServer();
     }
 	
     that.loaded = loaded;
