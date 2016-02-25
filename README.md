@@ -1,8 +1,8 @@
-## **ANLEITUNG** ## 
+## ANLEITUNG ## 
 Server starten und main.html im Browser oeffnen
 
-
-
+_________________________________________________
+ 
 ### Projektbeschreibung ###
 
 Dungeon Hop ist ein interaktives Multiplayer Game, dass dem Apple Design Award
@@ -16,7 +16,7 @@ Gegner zu tun. Die Gamification wird außerdem erweitert durch das einsammeln vo
 Gems die den Spielstand vorantreiben oder aber auch Fallen, die den Spieler
 zurückwerfen.
 
-## Anforderungen ##
+### Anforderungen ###
 Das Spiel soll für die Nutzer einen klaren Mehrwert gegenüber anderen Arcade Hopper
 Games bringen. Diesen Mehrwert stellt der Multiplayer Mode dar.
 Die Grafik soll - basierend auf three.js und Qubicle Modellen - den Nutzer durch ein
