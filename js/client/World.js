@@ -19,9 +19,6 @@ DungeonHop.World = function () {
         server,
 		loadDistance = 20;
 
-	
-   
-
     function startTimer() {
         var min, sec;
         seconds++;
@@ -35,6 +32,10 @@ DungeonHop.World = function () {
         }
         time.innerHTML = min + ":" + sec;
     }
+	 function onStartButtonClicked() {
+        timer = setInterval(function () { handleCountdown(count); }, 1000);
+        timer();
+    }
   
 	 //handles a countdown and starts the timer
     function handleCountdown() {
@@ -47,10 +48,7 @@ DungeonHop.World = function () {
             count--;
         }
     }
-    function onStartButtonClicked() {
-        timer = setInterval(function () { handleCountdown(count); }, 1000);
-        timer();
-    }
+   
 
     //creates the new chunk and adds the collision information the matrix
     function createChunk() {
