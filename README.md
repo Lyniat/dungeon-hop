@@ -1,6 +1,28 @@
-## ANLEITUNG ## 
-Server starten und main.html im Browser oeffnen
 
+
+## ANLEITUNG ## 
+Anleitung start der app:
+
+goto Ordner 'server'
+
+
+cmd1: 
+
+'npm install'
+
+cmd2:
+
+'npm start'
+
+
+die Anwendung ist nun aufrufbar auf localhost:8080
+
+
+ohne server: goto Ordner 'main'
+
+starte index.html
+
+(derzeit noch möglich)
 _________________________________________________
  
 ### Projektbeschreibung ###
