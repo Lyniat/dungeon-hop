@@ -14,6 +14,7 @@ DungeonHop = (function () {
 		cameraObj,
 		lastTime = Date.now(),
 		player,
+        directionalLight,
 		world,
         server;
 
@@ -21,25 +22,24 @@ DungeonHop = (function () {
 	//creates a new scene with light and shadow
     function setScene() {
         renderer.setSize(window.innerWidth, window.innerHeight);
-        renderer.setClearColor(0x33ccff, 1); //lovely baby blue sky
+        renderer.setClearColor(0xbb0000, 1); //lava red sky
         document.body.appendChild(renderer.domElement);
 
         renderer.shadowMap.enabled = true;
         renderer.shadowMapSoft = true;
 
         //directional light
-        var directionalLight = new THREE.DirectionalLight(0xffffff, 1);
-        directionalLight.position.set(-1, 1.75, -1.5).normalize();
+        directionalLight = new THREE.DirectionalLight(0xffaaaa, 1);
+        directionalLight.position.set(-1, 1.75, 1.5);
         directionalLight.castShadow = true;
-        directionalLight.shadow.camera.near = 0;
-        directionalLight.shadow.camera.far = 15;
+        directionalLight.shadow.camera.near = -5;
+        directionalLight.shadow.camera.far = 5;
 
         directionalLight.shadow.camera.left = -5;
         directionalLight.shadow.camera.right = 5;
         directionalLight.shadow.camera.top = 5;
         directionalLight.shadow.camera.bottom = -5;
 
-        scene.add(directionalLight);
         scene.add(directionalLight);
 
         var light = new THREE.AmbientLight(0x999999); // soft white light
@@ -70,8 +70,6 @@ DungeonHop = (function () {
 
         world = new DungeonHop.World();
         world.init(scene, models, player,server);
-
-        console.log(models[0].object);
 
         player.init(models[0].object,world);
         scene.add(player.getObject());

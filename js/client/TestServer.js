@@ -25,17 +25,38 @@ DungeonHop.TestServer = function () {
     function createNewChunk(){
         var i, r, obstacleId;
         var chunk = [];
-        for (i = 0; i < chunkSize; i++) {
-            chunk[i] = -1;
-            //always keep the middle empty
-            if (i == 16) {
-                continue;
+
+        //decide if lava or normal ground
+        r = Math.random();
+        //lava
+        if (r < 0.2) {
+            for (i = 0; i < chunkSize; i++) {
+                chunk[i] = -2;
+                //always keep the middle empty
+                if (i == 16) {
+                    continue;
+                }
+                r = Math.random();
+                if (r < 0.25) {
+                }
             }
-            r = Math.random();
-            if (r < 0.25) {
-                obstacleId = getRandomObstacle();
-                chunk[i] = obstacleId;
+            chunk[chunkSize] = 1;
+        }
+        //normal ground
+        else{
+            for (i = 0; i < chunkSize; i++) {
+                chunk[i] = -1;
+                //always keep the middle empty
+                if (i == 16) {
+                    continue;
+                }
+                r = Math.random();
+                if (r < 0.25) {
+                    obstacleId = getRandomObstacle();
+                    chunk[i] = obstacleId;
+                }
             }
+            chunk[chunkSize] = 0;
         }
         return chunk;
     }

@@ -25,7 +25,7 @@ DungeonHop.ModelManager = function () {
         loader.load(
             // resource URL
             "assets/models/json/" + file + ".js",
-            // Function when resource is loaded
+            //when resource is loaded
             function (geometry, materials) {
                 var material = new THREE.MultiMaterial(materials),
 					object = new THREE.Mesh(geometry, material);

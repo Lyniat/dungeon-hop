@@ -20,6 +20,20 @@ DungeonHop.Chunk = function () {
         mesh.position.z = zPosition;
         mesh.position.y = -0.05;
         mesh.position.x = chunkSize / 2 - 0.5;
+
+        mesh.castShadow = false;
+        mesh.receiveShadow = true;
+
+        objects.push(mesh);
+    }
+
+    function addLava(zPosition) {
+        var geometry = new THREE.BoxGeometry(chunkSize, 0.1, 1),
+            material = new THREE.MeshLambertMaterial({ color: 0xbb0000}),
+            mesh = new THREE.Mesh(geometry, material);
+        mesh.position.z = zPosition;
+        mesh.position.y = -0.1;
+        mesh.position.x = chunkSize / 2 - 0.5;
         objects.push(mesh);
     }
 
@@ -36,18 +50,22 @@ DungeonHop.Chunk = function () {
 
     //requests the wanted chunk from the server
     //creates a new matrix for collision and adds the object the array
-    function addObstacles(zPosition) {
-        var obstacles = server.getChunkAt(zPosition);
+    function addObstacles(zPosition,chunk) {
+        var obstacles = chunk;
         var i;
         var obstacle;
-        for(i = 0; i < chunkSize; i++){
+        for(i = 0; i < chunkSize - 1; i++){
             matrix[i] = obstacles[i];
-            if(obstacles[i] != -1) {
+            if(obstacles[i] >= 0) {
                 console.log(obstacles[i]);
                 obstacle = getObstacleById(obstacles[i]);
                 console.log(obstacles);
                 obstacle.position.z = zPosition;
                 obstacle.position.x = i;
+
+                obstacle.castShadow = true;
+                obstacle.receiveShadow = false;
+
                 objects.push(obstacle);
             }
         }
@@ -81,10 +99,16 @@ DungeonHop.Chunk = function () {
 	function init(scene, zPosition, mdls,srv) {
         server = srv;
         models = mdls;
-        addGround(zPosition);
+        var chunk = server.getChunkAt(zPosition);
+        var groundType = chunk[chunkSize];
+        if(groundType == 0) {
+            addGround(zPosition);
+        }else{
+            addLava(zPosition);
+        }
         addWall(zPosition,0);
         addWall(zPosition,chunkSize+borderSize);
-        addObstacles(zPosition);
+        addObstacles(zPosition,chunk);
         addToScene(scene);
         return matrix;
     }
