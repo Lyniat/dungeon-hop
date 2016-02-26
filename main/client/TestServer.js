@@ -8,10 +8,17 @@ DungeonHop.TestServer = function () {
     var that = {};
     var world = [];
     var chunkSize = 32;
+    var obstacles
 
     //returns the chunk at the zPosition
     //if the wanted chunk has not been created it will generate a new one in createNewChunk
     function getChunkAt(zPosition){
+
+        //special case at beginning
+        if(zPosition > -2){
+            return createEmptyChunk();
+        }
+
         var chunk;
         if(world[zPosition] == undefined){
             chunk = createNewChunk();
@@ -19,6 +26,15 @@ DungeonHop.TestServer = function () {
         }else{
             return world[zPosition];
         }
+    }
+
+    function createEmptyChunk(){
+        var chunk = [], i;
+        for (i = 0; i < chunkSize; i++) {
+            chunk[i] = -1;
+        }
+        chunk[chunkSize] = 0;
+        return chunk;
     }
 
     //generates a new chunk with random obstacles
@@ -34,10 +50,12 @@ DungeonHop.TestServer = function () {
                 chunk[i] = -2;
                 //always keep the middle empty
                 if (i == 16) {
+                    chunk[i] = -5;
                     continue;
                 }
                 r = Math.random();
                 if (r < 0.25) {
+                    chunk[i] = -5;
                 }
             }
             chunk[chunkSize] = 1;

@@ -10,15 +10,15 @@ DungeonHop.Chunk = function () {
         matrix = [],
 		chunkSize = 32,
 		borderSize = 16,
-		models,
+        obstacleModels,
         server;
 
     function addGround(zPosition) {
-        var geometry = new THREE.BoxGeometry(chunkSize, 0.1, 1),
+        var geometry = new THREE.BoxGeometry(chunkSize, 0.5, 1),
 			material = new THREE.MeshLambertMaterial({ color: 0x999999}),
 			mesh = new THREE.Mesh(geometry, material);
         mesh.position.z = zPosition;
-        mesh.position.y = -0.05;
+        mesh.position.y = -0.25;
         mesh.position.x = chunkSize / 2 - 0.5;
 
         mesh.castShadow = false;
@@ -32,18 +32,18 @@ DungeonHop.Chunk = function () {
             material = new THREE.MeshLambertMaterial({ color: 0xbb0000}),
             mesh = new THREE.Mesh(geometry, material);
         mesh.position.z = zPosition;
-        mesh.position.y = -0.1;
+        mesh.position.y = -0.25;
         mesh.position.x = chunkSize / 2 - 0.5;
         objects.push(mesh);
     }
 
     //adds a wall on the side of the dungeon
     function addWall(zPosition,xPosition){
-        var geometry = new THREE.BoxGeometry(borderSize, 1.5, 1),
+        var geometry = new THREE.BoxGeometry(borderSize, 3, 1),
             material = new THREE.MeshLambertMaterial({ color: 0x444444}),
             mesh = new THREE.Mesh(geometry, material);
         mesh.position.z = zPosition;
-        mesh.position.y = 0.75;
+        mesh.position.y = 0;
         mesh.position.x = -borderSize/2 -0.5 + xPosition;
         objects.push(mesh);
     }
@@ -57,9 +57,7 @@ DungeonHop.Chunk = function () {
         for(i = 0; i < chunkSize - 1; i++){
             matrix[i] = obstacles[i];
             if(obstacles[i] >= 0) {
-                console.log(obstacles[i]);
-                obstacle = getObstacleById(obstacles[i]);
-                console.log(obstacles);
+                obstacle = obstacleModels[obstacles[i]].clone();
                 obstacle.position.z = zPosition;
                 obstacle.position.x = i;
 
@@ -68,24 +66,20 @@ DungeonHop.Chunk = function () {
 
                 objects.push(obstacle);
             }
-        }
-    }
+            if(obstacles[i] <= -3) {
+                var obstacleId = (obstacles[i] +3)*(-1);
+                console.log("obstacle id: "+obstacleId);
+                obstacle = obstacleModels[obstacleId].clone();
+                obstacle.position.z = zPosition;
+                obstacle.position.x = i;
+                obstacle.rotation.x = Math.PI;
 
-    //gets the wanted model by the id, the server has returned
-    function getObstacleById(_id){
-        console.log(models);
-        var i,
-            obstacle,
-            object;
-        for(i = 0; i < models.length; i++){
-            console.log("i: "+i);
-            if(models[i].id == _id){
-                console.log("found");
-                obstacle =  models[i];
+                obstacle.castShadow = true;
+                obstacle.receiveShadow = false;
+
+                objects.push(obstacle);
             }
         }
-        object = obstacle.object.clone();
-        return object;
     }
 
     //adds the models to the visual scene
@@ -96,9 +90,9 @@ DungeonHop.Chunk = function () {
         }
     }
 	
-	function init(scene, zPosition, mdls,srv) {
+	function init(scene, zPosition, obstacleMdls,srv) {
         server = srv;
-        models = mdls;
+        obstacleModels = obstacleMdls;
         var chunk = server.getChunkAt(zPosition);
         var groundType = chunk[chunkSize];
         if(groundType == 0) {
@@ -112,6 +106,8 @@ DungeonHop.Chunk = function () {
         addToScene(scene);
         return matrix;
     }
+
+
 
     that.init = init;
     return that;

@@ -66,6 +66,7 @@ DungeonHop = (function () {
     };
 	
 	function createWorld(models) {
+        getPlayerModel(models);
         player = new DungeonHop.Player();
 
         world = new DungeonHop.World();
@@ -79,6 +80,26 @@ DungeonHop = (function () {
 
         setScene();
         render();
+    }
+
+    function getPlayerModel(models){
+        var i, players = []
+        //get all player models
+        for (i = 0; i < models.length; i++) {
+            var model = models[i];
+            if (model["type"] == "players") {
+                var modelId = model["id"];
+                var modelObject = model["object"];
+                players[modelId] = modelObject;
+            }
+        }
+
+        //get random player model
+        var r = Math.random()*players.length;
+        r = parseInt(Math.floor(r));
+        var playerModel = players[r];
+        return playerModel;
+
     }
 	
     function loaded(models) {
