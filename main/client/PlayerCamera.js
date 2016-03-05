@@ -8,7 +8,8 @@ DungeonHop.PlayerCamera = function () {
 		zoom = 1 / 100,
 		camera = new THREE.OrthographicCamera(-window.innerWidth * zoom, window.innerWidth * zoom, window.innerHeight * zoom, -window.innerHeight * zoom, -100, 1000),
 		player,
-		cameraSpeed = 0.3;
+		cameraSpeed = 0.3,
+        gameStatus;
 
 
     
@@ -40,8 +41,9 @@ DungeonHop.PlayerCamera = function () {
     function getCamera() {
         return camera;
     }
-	function init(pl) {
+	function init(pl,gameStat) {
         player = pl;
+        gameStatus = gameStat;
         var playerObj = player.getObject(),
 			playerPosition = player.getPosition();
         camera.position.x = playerObj.position.x + 1;
@@ -51,6 +53,9 @@ DungeonHop.PlayerCamera = function () {
     }
 	
 	function update(delta) {
+        if(!gameStatus.active){
+            return;
+        }
         updatePosition(delta);
         updateCamera();
     }

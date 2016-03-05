@@ -3,26 +3,11 @@
 ## ANLEITUNG ## 
 Anleitung start der app:
 
-goto Ordner 'server'
+server.js im ordner server starten
 
+main.html local hosten und im browser öffnen
 
-cmd1: 
-
-'npm install'
-
-cmd2:
-
-'npm start'
-
-
-die Anwendung ist nun aufrufbar auf localhost:8080
-
-
-ohne server: goto Ordner 'main'
-
-starte index.html
-
-(derzeit noch möglich)
+ip und port des servers eingeben
 _________________________________________________
  
 ### Projektbeschreibung ###

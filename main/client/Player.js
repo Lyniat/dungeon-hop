@@ -13,7 +13,10 @@ DungeonHop.Player = function () {
         normalScale,
         time = 0,
         moving,
-        falling;
+        falling,
+        gameStatus,
+        playerId,
+        server;
 
 
     //load the player model (a cube for testing)
@@ -22,7 +25,7 @@ DungeonHop.Player = function () {
         object.castShadow = true;
         object.receiveShadow = false;
         object.position.y = 0;
-        object.position.x = 5;
+        object.position.x = playerId*5;
         object.position.z = 0;
     }
 
@@ -107,6 +110,9 @@ DungeonHop.Player = function () {
     }
 
     function move(deltaTime) {
+        if(!gameStatus.active){
+            return;
+        }
         var field;
         time += deltaTime;
         //object.position.y = Math.abs(Math.sin(time));
@@ -129,11 +135,18 @@ DungeonHop.Player = function () {
             object.position.add(moveDirection);
             moveDirection = new THREE.Vector3(0, 0, 0);
             console.log("player position: x: " + object.position.x + " z: " + object.position.z);
+            updateServer();
             if (field == -2) {
                 falling = true;
             }
         }
 
+    }
+
+    function updateServer(){
+        var xPos = object.position.x;
+        var zPos = object.position.z;
+        server.emit("updatePosition",playerId,xPos,zPos);
     }
 
     function fallDown(deltaTime) {
@@ -152,9 +165,12 @@ DungeonHop.Player = function () {
         return object;
     }
 
-    function init(geometry, wrld) {
+    function init(geometry, wrld,gameStat,srv,id) {
         world = wrld;
         normalScale = geometry.scale.y;
+        gameStatus = gameStat;
+        server = srv;
+        playerId = id;
         loadPlayer(geometry);
         addListeners();
     }

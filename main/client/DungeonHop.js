@@ -4,22 +4,27 @@
 
 var DungeonHop = DungeonHop || {};
 DungeonHop = (function () {
-	"use strict";
+    "use strict";
     /* eslint-env browser  */
     var that = {},
-		scene = new THREE.Scene(),
-		canvas = document.getElementById("canvas"),
-		renderer = new THREE.WebGLRenderer({canvas: canvas}),
-		modelManager,
-		cameraObj,
-		lastTime = Date.now(),
-		player,
+        scene = new THREE.Scene(),
+        canvas = document.getElementById("canvas"),
+        renderer = new THREE.WebGLRenderer({canvas: canvas}),
+        modelManager,
+        cameraObj,
+        lastTime = Date.now(),
+        player,
         directionalLight,
-		world,
-        server;
+        world,
+        server,
+        gameStatus = {},
+        playerId = -1,
+        models,
+        enemyPlayers = [],
+        ip;
 
-   
-	//creates a new scene with light and shadow
+
+    //creates a new scene with light and shadow
     function setScene() {
         renderer.setSize(window.innerWidth, window.innerHeight);
         renderer.setClearColor(0xbb0000, 1); //lava red sky
@@ -45,8 +50,8 @@ DungeonHop = (function () {
         var light = new THREE.AmbientLight(0x999999); // soft white light
         scene.add(light);
     }
-	
-	//calculates the time between the frames
+
+    //calculates the time between the frames
     function getDeltaTime() {
         var actualTime = Date.now();
         var delta = actualTime - lastTime;
@@ -54,9 +59,10 @@ DungeonHop = (function () {
         delta /= 1000;
         return delta;
     }
-	
-	//renders the scene every frame
+
+    //renders the scene every frame
     var render = function () {
+        //waitForStart();
         var delta = getDeltaTime();
         player.update(delta);
         cameraObj.update(delta);
@@ -64,26 +70,28 @@ DungeonHop = (function () {
         requestAnimationFrame(render);
         renderer.render(scene, cameraObj.camera);
     };
-	
-	function createWorld(models) {
-        getPlayerModel(models);
+
+    function createWorld() {
+        var playerModel = getPlayerModel();
         player = new DungeonHop.Player();
 
         world = new DungeonHop.World();
-        world.init(scene, models, player,server);
+        world.init(scene, models, player, server);
 
-        player.init(models[0].object,world);
+        player.init(playerModel, world, gameStatus, server, playerId);
         scene.add(player.getObject());
 
         cameraObj = new DungeonHop.PlayerCamera();
-        cameraObj.init(player);
+        cameraObj.init(player, gameStatus);
 
         setScene();
+        server.emit("loaded", playerId, player.getPosition().x, player.getPosition().z);
+        console.log("loading: " + playerId);
         render();
     }
 
-    function getPlayerModel(models){
-        var i, players = []
+    function getPlayerModel() {
+        var i, players = [];
         //get all player models
         for (i = 0; i < models.length; i++) {
             var model = models[i];
@@ -95,23 +103,74 @@ DungeonHop = (function () {
         }
 
         //get random player model
-        var r = Math.random()*players.length;
+        var r = Math.random() * players.length;
         r = parseInt(Math.floor(r));
         var playerModel = players[r];
-        return playerModel;
+        return playerModel.clone();
 
     }
-	
-    function loaded(models) {
-        createWorld(models);
+
+    function loaded(mdls) {
+        models = mdls;
+        connectToServer();
     }
 
-	function init() {
+    function init(i) {
+        ip = i;
+        gameStatus.active = false;
         modelManager = new DungeonHop.ModelManager();
         modelManager.init(this);
-        server = new DungeonHop.TestServer();
     }
-	
+
+    function connectToServer() {
+        server = io(ip);
+        getId();
+        //waitForStart();
+        getPlayers();
+        waitForStart();
+    }
+
+    function waitForStart() {
+        server.on("startGame", function () {
+            console.log("starting");
+            gameStatus.active = true;
+            updatePlayers();
+        });
+    }
+
+    function getPlayers() {
+        server.on("newPlayer", function (id, xPos, zPos) {
+            console.log("retrieving player");
+            if (enemyPlayers[id] == undefined && id != playerId) {
+                console.log("added new player");
+                var enemy = new DungeonHop.Enemy();
+                var model = getPlayerModel();
+                enemy.init(model, xPos, zPos);
+                scene.add(enemy.getObject());
+                enemyPlayers[id] = enemy;
+            }
+            console.log("enemy players:");
+            console.log(enemyPlayers);
+        });
+    }
+
+    function updatePlayers(){
+        server.on("updatePlayer", function (id, xPos, zPos) {
+            console.log("updating player");
+            if (enemyPlayers[id] != undefined && id != playerId) {
+                enemyPlayers[id].updatePosition(xPos,zPos);
+            }
+        });
+    }
+
+    function getId() {
+        server.on("setPlayerId", function (id) {
+            playerId = id;
+            console.log("player id: " + playerId);
+            createWorld();
+        });
+    }
+
     that.loaded = loaded;
     that.init = init;
     return that;

@@ -57,8 +57,7 @@ DungeonHop.World = function () {
     //creates the new chunk and adds the collision information the matrix
     function createChunk() {
         var chunk = new DungeonHop.Chunk();
-        var obstacles = chunk.init(scene, actualChunk_Z_Position, obstacleModels, server);
-        addToMatrix(obstacles);
+        chunk.init(scene, actualChunk_Z_Position, obstacleModels, server,addToMatrix);
         actualChunk_Z_Position--;
     }
 
@@ -70,8 +69,9 @@ DungeonHop.World = function () {
         }
     }
 
-    function addToMatrix(obstacles) {
-        worldMatrix[actualChunk_Z_Position] = obstacles;
+    function addToMatrix(obstacles,zPosition) {
+        console.log(obstacles);
+        worldMatrix[zPosition] = obstacles;
     }
 
     //returns the status of the requested fiel in the matrix to check if the player can move

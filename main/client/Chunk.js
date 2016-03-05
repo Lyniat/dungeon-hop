@@ -90,10 +90,18 @@ DungeonHop.Chunk = function () {
         }
     }
 	
-	function init(scene, zPosition, obstacleMdls,srv) {
+	function init(scene, zPosition, obstacleMdls,srv,func) {
         server = srv;
         obstacleModels = obstacleMdls;
-        var chunk = server.getChunkAt(zPosition);
+        //var chunk = server.getChunkAt(zPosition);
+        server.emit('getChunkAt', zPosition);
+        server.on("getChunkAtResp"+zPosition, function(result) {
+            initChunk(scene,zPosition,obstacleMdls,result);
+            func(matrix,zPosition);
+        });
+    }
+
+    function initChunk(scene, zPosition, obstacleMdls,chunk){
         var groundType = chunk[chunkSize];
         if(groundType == 0) {
             addGround(zPosition);
@@ -104,7 +112,6 @@ DungeonHop.Chunk = function () {
         addWall(zPosition,chunkSize+borderSize);
         addObstacles(zPosition,chunk);
         addToScene(scene);
-        return matrix;
     }
 
 
