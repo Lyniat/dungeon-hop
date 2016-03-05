@@ -1,18 +1,9 @@
 var DungeonHop = DungeonHop || {};
-DungeonHop.Enemy = function () {
+DungeonHop.Opponent = function () {
     var that = {},
         object,
+        oldPosition,
         moveDirection = new THREE.Vector3(),
-        world,
-        rotationDirection = new THREE.Vector3(),
-        rotation = new THREE.Vector3(),
-        moving = false,
-        nextPosition = new THREE.Vector3(),
-        normalScale,
-        time = 0,
-        moving,
-        falling,
-        gameStatus,
         playerId,
         server;
 
@@ -27,10 +18,23 @@ DungeonHop.Enemy = function () {
         object.position.z = z;
     }
 
-    function updateServer(){
-        var xPos = object.position.x;
-        var zPos = object.position.z;
-        server.emit("updatePosition",playerId,xPos,zPos);
+    function rotate() {
+        if (moveDirection.x == -1) {
+            //left
+            object.rotation.y = Math.PI / 2;
+        }
+        if (moveDirection.x == 1) {
+            //left
+            object.rotation.y = -Math.PI / 2;
+        }
+        if (moveDirection.z == -1) {
+            //forward
+            object.rotation.y = 0;
+        }
+        if (moveDirection.z == 1) {
+            //backward
+            object.rotation.y = Math.PI;
+        }
     }
 
     function getPosition() {
@@ -43,16 +47,23 @@ DungeonHop.Enemy = function () {
 
     function init(geometry,x,z) {
         loadPlayer(geometry,x,z);
+        oldPosition = new THREE.Vector3(x,0,z);
     }
 
     function updatePosition(x,z){
         object.position.x = x;
         object.position.z = z;
+        moveDirection.x = x - oldPosition.x;
+        moveDirection.z = z - oldPosition.z;
+        rotate();
+        oldPosition.x = x;
+        oldPosition.z = z;
         console.log("updated enemy position");
     }
 
     that.init = init;
     that.getObject = getObject;
+    that.getPosition = getPosition;
     that.updatePosition = updatePosition;
     return that;
 };

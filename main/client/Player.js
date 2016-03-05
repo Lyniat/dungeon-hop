@@ -16,7 +16,8 @@ DungeonHop.Player = function () {
         falling,
         gameStatus,
         playerId,
-        server;
+        server,
+        opponents;
 
 
     //load the player model (a cube for testing)
@@ -30,6 +31,7 @@ DungeonHop.Player = function () {
     }
 
     function onKeyUp(evt) {
+        evt.preventDefault();
         if (evt.keyCode == "87") {
             moveDirection.z = -1;
         }
@@ -45,6 +47,7 @@ DungeonHop.Player = function () {
     }
 
     function onKeyDown(evt) {
+        evt.preventDefault();
         if (evt.keyCode == "87") {
             setDucking(true);
         }
@@ -126,10 +129,22 @@ DungeonHop.Player = function () {
 
             rotate(moveDirection);
 
+            //check if no obstacle is blocking
             field = world.getEntryInMatrix(object.position.x + moveDirection.x, object.position.z + moveDirection.z);
             if (field >= 0 || field == undefined) {
                 moveDirection = new THREE.Vector3(0, 0, 0);
                 return;
+            }
+
+            //check if no other player is blocking
+            for (var i = 0; i < opponents.length; i++){
+                var opponent = opponents[i];
+                if (opponent != undefined && opponent != null){
+                    if (opponent.getPosition().x == object.position.x + moveDirection.x && opponent.getPosition().z == object.position.z + moveDirection.z ){
+                        moveDirection = new THREE.Vector3(0, 0, 0);
+                        return;
+                    }
+                }
             }
 
             object.position.add(moveDirection);
@@ -153,6 +168,10 @@ DungeonHop.Player = function () {
         object.position.y -= deltaTime * 3;
     }
 
+    function die(){
+        falling = true;
+    }
+
     function update(deltaTime) {
         move(deltaTime);
     }
@@ -165,12 +184,13 @@ DungeonHop.Player = function () {
         return object;
     }
 
-    function init(geometry, wrld,gameStat,srv,id) {
+    function init(geometry, wrld,gameStat,srv,id,enms) {
         world = wrld;
         normalScale = geometry.scale.y;
         gameStatus = gameStat;
         server = srv;
         playerId = id;
+        opponents = enms;
         loadPlayer(geometry);
         addListeners();
     }
@@ -179,5 +199,6 @@ DungeonHop.Player = function () {
     that.getPosition = getPosition;
     that.getObject = getObject;
     that.update = update;
+    that.die = die;
     return that;
 };

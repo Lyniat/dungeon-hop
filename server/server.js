@@ -10,6 +10,7 @@
         main = require("./js/MainServer.js").MainServer,
         requiredPlayers = 2,
         actualPlayers = 0,
+        readyPlayers = 0,
         players = [];
 
     var mainServer = new main();
@@ -32,8 +33,9 @@
         socket.on('disconnect', function () {
             console.log("player disconnected");
             actualPlayers--;
+            readyPlayers--;
             console.log("Actual players: " + actualPlayers + "\n" + (requiredPlayers - actualPlayers) + " more players are required to start\n");
-            if(actualPlayers == 0){
+            if (actualPlayers == 0) {
                 console.log("no players, resetting server");
                 players = [];
                 mainServer = new main();
@@ -52,22 +54,38 @@
                     console.log("informing clients about player " + i + " at " + player.x + ", " + player.z);
                 }
             }
+        });
 
-            if (players.length - 1 == requiredPlayers) {
+        socket.on("playerReady", function () {
+            readyPlayers++;
+            if (players.length - 1 == requiredPlayers && readyPlayers == actualPlayers) {
                 console.log("game starts now");
-                //io.sockets.emit("startGame");
+                io.sockets.emit("startGame");
             }
-
         });
 
         socket.on("updatePosition", function (id, xPos, zPos) {
             players[id].x = xPos;
             players[id].z = zPos;
             console.log("player " + id + " moved to " + xPos + ", " + zPos);
-            for (var i = 0; i < players.length; i++){
+            for (var i = 0; i < players.length; i++) {
                 var player = players[i];
                 if (player != undefined && player != null) {
-                    io.sockets.emit("updatePlayer",id, xPos, zPos);
+                    io.sockets.emit("updatePlayer", id, xPos, zPos);
+                }
+            }
+            var removingChunk = mainServer.setPlayerToPosition(id, xPos, zPos);
+            if (removingChunk != null) {
+                console.log("removing main chunk: " + removingChunk);
+                io.sockets.emit("removeChunk", removingChunk);
+
+                for (var i = 0; i < players.length; i++) {
+                    var player = players[i];
+                    if (player != undefined && player != null) {
+                        if (player.z == removingChunk) {
+                            io.sockets.emit("destroyPlayer", i);
+                        }
+                    }
                 }
             }
         });

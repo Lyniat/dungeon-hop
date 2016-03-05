@@ -97,7 +97,7 @@ DungeonHop.Chunk = function () {
         server.emit('getChunkAt', zPosition);
         server.on("getChunkAtResp"+zPosition, function(result) {
             initChunk(scene,zPosition,obstacleMdls,result);
-            func(matrix,zPosition);
+            func(matrix,zPosition,that);
         });
     }
 
@@ -114,9 +114,18 @@ DungeonHop.Chunk = function () {
         addToScene(scene);
     }
 
+    function destroyChunk(scene){
+        console.log("destroying");
+        var i;
+        for (i = 0; i < objects.length; i++) {
+            scene.remove(objects[i]);
+        }
+    }
+
 
 
     that.init = init;
+    that.destroyChunk = destroyChunk;
     return that;
 
 };

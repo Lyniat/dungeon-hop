@@ -20,8 +20,9 @@ DungeonHop = (function () {
         gameStatus = {},
         playerId = -1,
         models,
-        enemyPlayers = [],
-        ip;
+        opponentPlayers = [],
+        ip,
+        startButton;
 
 
     //creates a new scene with light and shadow
@@ -78,7 +79,7 @@ DungeonHop = (function () {
         world = new DungeonHop.World();
         world.init(scene, models, player, server);
 
-        player.init(playerModel, world, gameStatus, server, playerId);
+        player.init(playerModel, world, gameStatus, server, playerId,opponentPlayers);
         scene.add(player.getObject());
 
         cameraObj = new DungeonHop.PlayerCamera();
@@ -116,10 +117,16 @@ DungeonHop = (function () {
     }
 
     function init(i) {
+        startButton = document.getElementById("start");
+        startButton.addEventListener("click",startClicked);
         ip = i;
         gameStatus.active = false;
         modelManager = new DungeonHop.ModelManager();
         modelManager.init(this);
+    }
+
+    function startClicked(){
+        server.emit("playerReady");
     }
 
     function connectToServer() {
@@ -135,30 +142,51 @@ DungeonHop = (function () {
             console.log("starting");
             gameStatus.active = true;
             updatePlayers();
+            waitForRemovingChunks();
+            waitForDestroyingPlayers();
         });
     }
 
     function getPlayers() {
         server.on("newPlayer", function (id, xPos, zPos) {
             console.log("retrieving player");
-            if (enemyPlayers[id] == undefined && id != playerId) {
+            if (opponentPlayers[id] == undefined && id != playerId) {
                 console.log("added new player");
-                var enemy = new DungeonHop.Enemy();
+                var opponent = new DungeonHop.Opponent();
                 var model = getPlayerModel();
-                enemy.init(model, xPos, zPos);
-                scene.add(enemy.getObject());
-                enemyPlayers[id] = enemy;
+                opponent.init(model, xPos, zPos);
+                scene.add(opponent.getObject());
+                opponentPlayers[id] = opponent;
             }
             console.log("enemy players:");
-            console.log(enemyPlayers);
+            console.log(opponentPlayers);
+        });
+    }
+
+    function waitForRemovingChunks(){
+        server.on("removeChunk", function (pos) {
+            console.log("removing chunk "+pos);
+            world.removeChunk(pos);
+        });
+    }
+
+    function waitForDestroyingPlayers(){
+        server.on("destroyPlayer", function (id) {
+            console.log("destroying player");
+            if (id == playerId) {
+                player.die();
+            }
+            else if(opponentPlayers[id] != undefined ){
+                scene.remove(opponentPlayers[id]);
+            }
         });
     }
 
     function updatePlayers(){
         server.on("updatePlayer", function (id, xPos, zPos) {
             console.log("updating player");
-            if (enemyPlayers[id] != undefined && id != playerId) {
-                enemyPlayers[id].updatePosition(xPos,zPos);
+            if (opponentPlayers[id] != undefined && id != playerId) {
+                opponentPlayers[id].updatePosition(xPos,zPos);
             }
         });
     }

@@ -6,11 +6,7 @@ DungeonHop.World = function () {
     "use strict";
     /* eslint-env browser  */
     var that = {},
-        count = 3,
         timer,
-        time = document.querySelector('#timer'),
-        seconds = 0,
-        startButton = document.querySelector('#start'),
         worldMatrix = [],
         actualChunk_Z_Position = 0,
         models,
@@ -18,46 +14,13 @@ DungeonHop.World = function () {
         scene,
         player,
         server,
-        loadDistance = 20;
-
-    function startTimer() {
-        var min, sec;
-        seconds++;
-        min = Math.floor(seconds / 60);
-        sec = Math.floor(seconds % 60);
-        if (min < 10) {
-            min = "0" + min;
-        }
-        if (sec < 10) {
-            sec = "0" + sec;
-        }
-        time.innerHTML = min + ":" + sec;
-    }
-
-    function onStartButtonClicked() {
-        timer = setInterval(function () {
-            handleCountdown(count);
-        }, 1000);
-        timer();
-    }
-
-    //handles a countdown and starts the timer
-    function handleCountdown() {
-        if (count == 0) {
-            time.innerHTML = "START";
-            clearInterval(timer);
-            setInterval(startTimer, 1000);
-        } else {
-            time.innerHTML = count;
-            count--;
-        }
-    }
-
+        loadDistance = 20,
+        chunks = [];
 
     //creates the new chunk and adds the collision information the matrix
     function createChunk() {
         var chunk = new DungeonHop.Chunk();
-        chunk.init(scene, actualChunk_Z_Position, obstacleModels, server,addToMatrix);
+        chunk.init(scene, actualChunk_Z_Position, obstacleModels, server,addToWorld);
         actualChunk_Z_Position--;
     }
 
@@ -69,9 +32,9 @@ DungeonHop.World = function () {
         }
     }
 
-    function addToMatrix(obstacles,zPosition) {
-        console.log(obstacles);
+    function addToWorld(obstacles,zPosition,chunk) {
         worldMatrix[zPosition] = obstacles;
+        chunks[zPosition] = chunk;
     }
 
     //returns the status of the requested fiel in the matrix to check if the player can move
@@ -90,7 +53,6 @@ DungeonHop.World = function () {
         for (z = 0; z > -16; z--) {
             createChunk();
         }
-        startButton.addEventListener("click", onStartButtonClicked);
     }
 
     function getObstacleModels() {
@@ -105,8 +67,14 @@ DungeonHop.World = function () {
         }
     }
 
+    function removeChunk(pos){
+        console.log(chunks[pos]);
+        chunks[pos].destroyChunk(scene);
+    }
+
     that.update = update;
     that.getEntryInMatrix = getEntryInMatrix;
     that.init = init;
+    that.removeChunk = removeChunk;
     return that;
 };
