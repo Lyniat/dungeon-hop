@@ -139,7 +139,7 @@ DungeonHop.Player = function () {
     function updateServer(){
         var xPos = object.position.x;
         var zPos = object.position.z;
-        serverInterface.updatePlayerPosition(playerId,xPos,zPos);
+        serverInterface.updatePlayerPosition(xPos,zPos);
     }
 
     function fallDown(deltaTime) {
@@ -161,6 +161,7 @@ DungeonHop.Player = function () {
     function getObject() {
         return object;
     }
+
 
     function init(geometry, wrld,gameStat,srv,id,enms) {
         world = wrld;

@@ -1,4 +1,4 @@
-MainServer = function () {
+MainLogic= function () {
     "use strict";
     /* eslint-env browser  */
     var that = {};
@@ -126,4 +126,4 @@ MainServer = function () {
     //module.exports.getChunkAt = getChunkAt;
     //module.exports.test = test;
 };
-module.exports.MainServer = MainServer;
+module.exports.MainLogic = MainLogic;

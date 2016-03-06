@@ -2,23 +2,41 @@
     "use strict";
     /* eslint-env node */
 
-    var express = require("express"),
+    var that = {},
+        express = require("express"),
         app = express(),
         server = require("http").Server(app),
         io = require("socket.io")(server),
         pg = require("pg"),
-        main = require("./js/MainServer.js").MainServer,
+        main = require("./js/MainLogic.js").MainLogic,
+        serverInst = require("./js/ServerInstance.js").ServerInstance,
         requiredPlayers = 2,
         actualPlayers = 0,
         readyPlayers = 0,
-        players = [];
+        players = [],
+        serverInstances = [],
+        serverInstance = null;
 
-    var mainServer = new main();
+    var mainLogic = new main();
 
 
     app.use(express.static(__dirname + "/../main"));
 
+    io.sockets.on('connection', function (socket) {
+        if(serverInstance == null){
+            serverInstance = new serverInst();
+            serverInstance.init(that);
+            console.log("new server created");
+        }
+        serverInstance.addClient(socket);
+    });
 
+    function destroyServer(){
+        serverInstance = null;
+        console.log("server destroyed");
+    }
+
+    /*
     io.sockets.on('connection', function (socket) {
         actualPlayers++;
         console.log("Actual players: " + actualPlayers + "\n" + (requiredPlayers - actualPlayers) + " more players are required to start\n");
@@ -26,7 +44,7 @@
         socket.emit("setPlayerId", actualPlayers);
 
         socket.on('getChunkAt', function (zPosition) {
-            var chunk = mainServer.getChunkAt(zPosition);
+            var chunk = mainLogic.getChunkAt(zPosition);
             socket.emit("getChunkAtResp" + zPosition, chunk);
         });
 
@@ -38,7 +56,7 @@
             if (actualPlayers == 0) {
                 console.log("no players, resetting server");
                 players = [];
-                mainServer = new main();
+                mainLogic = new main();
             }
         });
 
@@ -75,7 +93,7 @@
                     io.sockets.emit("updatePlayer", id, xPos, zPos);
                 }
             }
-            var removingChunk = mainServer.setPlayerToPosition(id, xPos, zPos);
+            var removingChunk = mainLogic.setPlayerToPosition(id, xPos, zPos);
             if (removingChunk != null) {
                 console.log("removing main chunk: " + removingChunk);
                 io.sockets.emit("removeChunk", removingChunk);
@@ -92,7 +110,11 @@
         });
     });
 
+    */
+
     server.listen(port, function () {
         console.log("Running on port", port);
     });
+
+    that.destroyServer = destroyServer;
 })((process.env.PORT || 8080), process.env.DATABASE_URL);

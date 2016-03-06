@@ -61,8 +61,14 @@
 <script src="js/socket.io.js"></script>
 
 <script>
-    var ip = prompt("Please enter the server address", "localhost:8080");
+    var cookie = document.cookie;
+    var lastIp = cookie.split("=")[1];
+    if (lastIp == "" || lastIp == null){
+        lastIp = "localhost:8080";
+    }
+    var ip = prompt("Please enter the server address", lastIp);
     if (ip != null) {
+        document.cookie="lastIp="+ip;
         DungeonHop.init(ip);
     }
     (function(){var script=document.createElement('script');script.onload=function(){var stats=new Stats();stats.domElement.style.cssText='position:fixed;left:0;top:0;z-index:10000';document.body.appendChild(stats.domElement);requestAnimationFrame(function loop(){stats.update();requestAnimationFrame(loop)});};script.src='//rawgit.com/mrdoob/stats.js/master/build/stats.min.js';document.head.appendChild(script);})()

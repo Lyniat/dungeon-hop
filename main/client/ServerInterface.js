@@ -37,8 +37,8 @@ DungeonHop.ServerInterface = function () {
         });
     }
 
-    function updatePlayerPosition(playerId,xPos,zPos){
-        server.emit("updatePosition",playerId,xPos,zPos);
+    function updatePlayerPosition(xPos,zPos){
+        server.emit("updatePosition",xPos,zPos);
     }
 
     function setLoaded(xPos,zPos){
