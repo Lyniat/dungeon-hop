@@ -16,13 +16,13 @@ DungeonHop = (function () {
         player,
         directionalLight,
         world,
-        server,
         gameStatus = {},
         playerId = -1,
         models,
         opponentPlayers = [],
         ip,
-        startButton;
+        startButton,
+        serverInterface;
 
 
     //creates a new scene with light and shadow
@@ -72,22 +72,22 @@ DungeonHop = (function () {
         renderer.render(scene, cameraObj.camera);
     };
 
-    function createWorld() {
+    function createWorld(id) {
+        playerId = id;
         var playerModel = getPlayerModel();
         player = new DungeonHop.Player();
 
         world = new DungeonHop.World();
-        world.init(scene, models, player, server);
+        world.init(scene, models, player, serverInterface);
 
-        player.init(playerModel, world, gameStatus, server, playerId,opponentPlayers);
+        player.init(playerModel, world, gameStatus, serverInterface, playerId, opponentPlayers);
         scene.add(player.getObject());
 
         cameraObj = new DungeonHop.PlayerCamera();
         cameraObj.init(player, gameStatus);
 
         setScene();
-        server.emit("loaded", playerId, player.getPosition().x, player.getPosition().z);
-        console.log("loading: " + playerId);
+        serverInterface.setLoaded(player.getPosition().x, player.getPosition().z);
         render();
     }
 
@@ -113,93 +113,65 @@ DungeonHop = (function () {
 
     function loaded(mdls) {
         models = mdls;
-        connectToServer();
+        //connectToServer();
+        serverInterface = new DungeonHop.ServerInterface();
+        serverInterface.init(that, ip);
     }
 
     function init(i) {
         startButton = document.getElementById("start");
-        startButton.addEventListener("click",startClicked);
+        startButton.addEventListener("click", startClicked);
         ip = i;
         gameStatus.active = false;
         modelManager = new DungeonHop.ModelManager();
         modelManager.init(this);
     }
 
-    function startClicked(){
-        server.emit("playerReady");
+    function startClicked() {
+        serverInterface.setReady();
     }
 
-    function connectToServer() {
-        server = io(ip);
-        getId();
-        //waitForStart();
-        getPlayers();
-        waitForStart();
+    function startGame(){
+        gameStatus.active = true;
     }
 
-    function waitForStart() {
-        server.on("startGame", function () {
-            console.log("starting");
-            gameStatus.active = true;
-            updatePlayers();
-            waitForRemovingChunks();
-            waitForDestroyingPlayers();
-        });
+    function setPlayers(id, xPos, zPos) {
+        if (opponentPlayers[id] == undefined && id != playerId) {
+            console.log("added new player");
+            var opponent = new DungeonHop.Opponent();
+            var model = getPlayerModel();
+            opponent.init(model, xPos, zPos);
+            scene.add(opponent.getObject());
+            opponentPlayers[id] = opponent;
+        }
     }
 
-    function getPlayers() {
-        server.on("newPlayer", function (id, xPos, zPos) {
-            console.log("retrieving player");
-            if (opponentPlayers[id] == undefined && id != playerId) {
-                console.log("added new player");
-                var opponent = new DungeonHop.Opponent();
-                var model = getPlayerModel();
-                opponent.init(model, xPos, zPos);
-                scene.add(opponent.getObject());
-                opponentPlayers[id] = opponent;
-            }
-            console.log("enemy players:");
-            console.log(opponentPlayers);
-        });
+    function removeChunk(pos){
+        world.removeChunk(pos);
     }
 
-    function waitForRemovingChunks(){
-        server.on("removeChunk", function (pos) {
-            console.log("removing chunk "+pos);
-            world.removeChunk(pos);
-        });
+    function destroyPlayer(id){
+        if (id == playerId) {
+            player.die();
+        }
+        else if (opponentPlayers[id] != undefined) {
+            scene.remove(opponentPlayers[id]);
+        }
     }
 
-    function waitForDestroyingPlayers(){
-        server.on("destroyPlayer", function (id) {
-            console.log("destroying player");
-            if (id == playerId) {
-                player.die();
-            }
-            else if(opponentPlayers[id] != undefined ){
-                scene.remove(opponentPlayers[id]);
-            }
-        });
-    }
-
-    function updatePlayers(){
-        server.on("updatePlayer", function (id, xPos, zPos) {
-            console.log("updating player");
-            if (opponentPlayers[id] != undefined && id != playerId) {
-                opponentPlayers[id].updatePosition(xPos,zPos);
-            }
-        });
-    }
-
-    function getId() {
-        server.on("setPlayerId", function (id) {
-            playerId = id;
-            console.log("player id: " + playerId);
-            createWorld();
-        });
+    function updatePlayers(id, xPos, zPos) {
+        if (opponentPlayers[id] != undefined && id != playerId) {
+            opponentPlayers[id].updatePosition(xPos, zPos);
+        }
     }
 
     that.loaded = loaded;
+    that.startGame = startGame;
+    that.setPlayers = setPlayers;
+    that.createWorld = createWorld;
+    that.updatePlayers = updatePlayers;
+    that.removeChunk = removeChunk;
+    that.destroyPlayer = destroyPlayer;
     that.init = init;
     return that;
 })();

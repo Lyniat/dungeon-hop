@@ -57,6 +57,7 @@
         });
 
         socket.on("playerReady", function () {
+            console.log("player ready");
             readyPlayers++;
             if (players.length - 1 == requiredPlayers && readyPlayers == actualPlayers) {
                 console.log("game starts now");

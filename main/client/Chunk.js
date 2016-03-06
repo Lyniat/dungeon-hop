@@ -11,7 +11,10 @@ DungeonHop.Chunk = function () {
 		chunkSize = 32,
 		borderSize = 16,
         obstacleModels,
-        server;
+        serverInterface,
+        scene,
+        zPosition,
+        worldCallbackFunction;
 
     function addGround(zPosition) {
         var geometry = new THREE.BoxGeometry(chunkSize, 0.5, 1),
@@ -90,18 +93,30 @@ DungeonHop.Chunk = function () {
         }
     }
 	
-	function init(scene, zPosition, obstacleMdls,srv,func) {
-        server = srv;
+	function init(sc, zPos, obstacleMdls,srv,func) {
+        serverInterface = srv;
         obstacleModels = obstacleMdls;
+        scene = sc;
+        zPosition = zPos;
+        worldCallbackFunction = func;
         //var chunk = server.getChunkAt(zPosition);
-        server.emit('getChunkAt', zPosition);
-        server.on("getChunkAtResp"+zPosition, function(result) {
+        serverInterface.getChunkAt(zPosition,onCallback);
+        /*
+        //server.emit('getChunkAt', zPosition);
+        //server.on("getChunkAtResp"+zPosition, function(result) {
             initChunk(scene,zPosition,obstacleMdls,result);
             func(matrix,zPosition,that);
         });
+        */
     }
 
-    function initChunk(scene, zPosition, obstacleMdls,chunk){
+    function onCallback(result) {
+        initChunk(result);
+        worldCallbackFunction(matrix,zPosition,that);
+    }
+
+
+    function initChunk(chunk){
         var groundType = chunk[chunkSize];
         if(groundType == 0) {
             addGround(zPosition);

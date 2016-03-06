@@ -6,17 +6,12 @@ DungeonHop.Player = function () {
         object,
         moveDirection = new THREE.Vector3(),
         world,
-        rotationDirection = new THREE.Vector3(),
-        rotation = new THREE.Vector3(),
-        moving = false,
-        nextPosition = new THREE.Vector3(),
         normalScale,
         time = 0,
-        moving,
         falling,
         gameStatus,
         playerId,
-        server,
+        serverInterface,
         opponents;
 
 
@@ -66,23 +61,6 @@ DungeonHop.Player = function () {
         window.addEventListener("keydown", onKeyDown, false);
         window.addEventListener("keyup", onKeyUp, false);
     }
-
-    /*
-     function onKeyUp(evt) {
-     if (evt.keyCode == "87") {
-     moveDirection.z = 0;
-     }
-     if (evt.keyCode == "83") {
-     moveDirection.z = 0;
-     }
-     if (evt.keyCode == "65") {
-     moveDirection.x = 0;
-     }
-     if (evt.keyCode == "68") {
-     moveDirection.x = 0;
-     }
-     }
-     */
 
     function rotate() {
         if (moveDirection.x == -1) {
@@ -161,7 +139,7 @@ DungeonHop.Player = function () {
     function updateServer(){
         var xPos = object.position.x;
         var zPos = object.position.z;
-        server.emit("updatePosition",playerId,xPos,zPos);
+        serverInterface.updatePlayerPosition(playerId,xPos,zPos);
     }
 
     function fallDown(deltaTime) {
@@ -188,7 +166,7 @@ DungeonHop.Player = function () {
         world = wrld;
         normalScale = geometry.scale.y;
         gameStatus = gameStat;
-        server = srv;
+        serverInterface = srv;
         playerId = id;
         opponents = enms;
         loadPlayer(geometry);

@@ -13,14 +13,14 @@ DungeonHop.World = function () {
         obstacleModels = [],
         scene,
         player,
-        server,
+        serverInterface,
         loadDistance = 20,
         chunks = [];
 
     //creates the new chunk and adds the collision information the matrix
     function createChunk() {
         var chunk = new DungeonHop.Chunk();
-        chunk.init(scene, actualChunk_Z_Position, obstacleModels, server,addToWorld);
+        chunk.init(scene, actualChunk_Z_Position, obstacleModels, serverInterface,addToWorld);
         actualChunk_Z_Position--;
     }
 
@@ -44,7 +44,7 @@ DungeonHop.World = function () {
     }
 
     function init(sc, mdls, pl, srv) {
-        server = srv;
+        serverInterface = srv;
         var z;
         player = pl;
         models = mdls;
