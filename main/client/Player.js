@@ -12,7 +12,8 @@ DungeonHop.Player = function () {
         gameStatus,
         playerId,
         serverInterface,
-        opponents;
+        opponents,
+        moving = false;
 
 
     //load the player model (a cube for testing)
@@ -91,6 +92,10 @@ DungeonHop.Player = function () {
     }
 
     function move(deltaTime) {
+        if(moving == true){
+            moveDirection = new THREE.Vector3(0, 0, 0);
+            return;
+        }
         if(!gameStatus.active){
             return;
         }
@@ -101,9 +106,13 @@ DungeonHop.Player = function () {
             fallDown(deltaTime);
             return;
         }
+        //prevent from going out of map
+        if (moveDirection.z + object.position.z > 0){
+            moveDirection = new THREE.Vector3(0, 0, 0);
+            return;
+        }
         if (moveDirection.z != 0 || moveDirection.x != 0) {
             setDucking(false);
-            console.log("move");
 
             rotate(moveDirection);
 
@@ -125,10 +134,11 @@ DungeonHop.Player = function () {
                 }
             }
 
-            object.position.add(moveDirection);
-            moveDirection = new THREE.Vector3(0, 0, 0);
-            console.log("player position: x: " + object.position.x + " z: " + object.position.z);
+            //object.position.add(moveDirection);
+            moving = true;
             updateServer();
+            movePosition(10,moveDirection.x,moveDirection.z);
+            moveDirection = new THREE.Vector3(0, 0, 0);
             if (field == -2) {
                 falling = true;
             }
@@ -136,10 +146,28 @@ DungeonHop.Player = function () {
 
     }
 
+    function movePosition(t,x,z){
+        setTimeout(function() {
+            t--;
+            object.position.x += x/10;
+            object.position.z += z/10;
+            object.position.y = t/10;
+            if(t > 0) {
+                movePosition(t,x,z);
+            }
+            else{
+                object.position.x = Math.round(object.position.x);
+                object.position.z = Math.round(object.position.z);
+                moving = false;
+            }
+
+        }, 10);
+    }
+
     function updateServer(){
-        var xPos = object.position.x;
-        var zPos = object.position.z;
-        serverInterface.updatePlayerPosition(xPos,zPos);
+        var x = object.position.x + moveDirection.x;
+        var z = object.position.z + moveDirection.z;
+        serverInterface.updatePlayerPosition(x,z);
     }
 
     function fallDown(deltaTime) {
