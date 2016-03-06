@@ -13,6 +13,7 @@ DungeonHop.ServerInterface = function () {
         getId();
         getPlayers();
         waitForStart();
+        waitForInfoText();
     }
 
     function getId() {
@@ -57,6 +58,12 @@ DungeonHop.ServerInterface = function () {
             waitForRemovingChunks();
             waitForDestroyingPlayers();
             mainClass.startGame();
+        });
+    }
+
+    function waitForInfoText(){
+        server.on("setInfoText", function (text) {
+            mainClass.setInfoText(text);
         });
     }
 

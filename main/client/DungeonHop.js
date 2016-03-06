@@ -9,6 +9,7 @@ DungeonHop = (function () {
     var that = {},
         scene = new THREE.Scene(),
         canvas = document.getElementById("canvas"),
+        infoText = document.getElementById("info-text"),
         renderer = new THREE.WebGLRenderer({canvas: canvas}),
         modelManager,
         cameraObj,
@@ -116,9 +117,11 @@ DungeonHop = (function () {
         //connectToServer();
         serverInterface = new DungeonHop.ServerInterface();
         serverInterface.init(that, ip);
+        infoText.innerHTML = "PRESS START IF YOU ARE READY";
     }
 
     function init(i) {
+        infoText.innerHTML = "LOADING...";
         startButton = document.getElementById("start");
         startButton.addEventListener("click", startClicked);
         ip = i;
@@ -129,6 +132,7 @@ DungeonHop = (function () {
 
     function startClicked() {
         serverInterface.setReady();
+        infoText.innerHTML = "Waiting for other Players";
     }
 
     function startGame(){
@@ -165,6 +169,11 @@ DungeonHop = (function () {
         }
     }
 
+    function setInfoText(text){
+        console.log("info text: " + text);
+        infoText.innerHTML = text;
+    }
+
     that.loaded = loaded;
     that.startGame = startGame;
     that.setPlayers = setPlayers;
@@ -172,6 +181,7 @@ DungeonHop = (function () {
     that.updatePlayers = updatePlayers;
     that.removeChunk = removeChunk;
     that.destroyPlayer = destroyPlayer;
+    that.setInfoText = setInfoText;
     that.init = init;
     return that;
 })();

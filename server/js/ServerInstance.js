@@ -68,10 +68,35 @@ ServerInstance = function () {
     }
 
     function startGame() {
-        console.log("game starts now");
+        console.log("starting countdown");
+        setInfoTextForClients("GAME STARTS IN 3");
+        setTimeout(function() {
+            setInfoTextForClients("2");
+            setTimeout(function() {
+                setInfoTextForClients("1");
+                setTimeout(function() {
+                    setInfoTextForClients("GO!");
+
+
+                    console.log("game starts now");
+                    for (var i = 0; i < clients.length; i++) {
+                        var client = clients[i];
+                        client.getSocket().emit("startGame");
+                    }
+
+                    setTimeout(function() {
+                        setInfoTextForClients("");
+                    }, 1000);
+                }, 1000);
+            }, 1000);
+        }, 1000);
+    }
+
+    function setInfoTextForClients(text){
         for (var i = 0; i < clients.length; i++) {
             var client = clients[i];
-            client.getSocket().emit("startGame");
+            console.log("info text for "+i);
+            client.getSocket().emit("setInfoText",text);
         }
     }
 
