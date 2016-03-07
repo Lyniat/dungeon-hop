@@ -77,9 +77,12 @@ nav.navbar.navbar-inverse.navbar-fixed-top {
 
     text-align:center;
     vertical-align:middle;
-    color:#00ff00;
+    color:#fff;
+	background-color: #572F0C;
     z-index: 10;
-    position: absolute;
+    position: relative;
+	
+	
 }
 
 .navbar-nav .timecode{
@@ -107,7 +110,7 @@ nav.navbar.navbar-inverse.navbar-fixed-top {
     background-color: #572F0C;
 }
 .blue_bright{
-    backgorund-color:#4A90E2;
+    background-color:#4A90E2;
 }
 .blue_dark{
     background-color:#3D77BA;
@@ -116,7 +119,7 @@ nav.navbar.navbar-inverse.navbar-fixed-top {
     background-color:#F8E71C;
 }
 .orange_bright{
-    backgorund-color:#F8AF1C;
+    background-color:#F8AF1C;
 }
 .orange_dark{
     background-color: #F14612;
