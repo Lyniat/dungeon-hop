@@ -14,6 +14,7 @@ DungeonHop.ServerInterface = function () {
         getPlayers();
         waitForStart();
         waitForInfoText();
+        waitForEnemy();
     }
 
     function getId() {
@@ -51,12 +52,16 @@ DungeonHop.ServerInterface = function () {
         server.emit("playerReady");
     }
 
+    function setPlayerDead(){
+        server.emit("playerDead");
+    }
+
     function waitForStart() {
         server.on("startGame", function () {
             console.log("starting");
             waitForUpdatingPlayers();
             waitForRemovingChunks();
-            waitForDestroyingPlayers();
+            waitForDeadPlayer();
             mainClass.startGame();
         });
     }
@@ -81,15 +86,26 @@ DungeonHop.ServerInterface = function () {
         });
     }
 
-    function waitForDestroyingPlayers(){
-        server.on("destroyPlayer", function (id) {
-            console.log("destroying player");
-            mainClass.destroyPlayer(id);
+    function waitForEnemy(){
+        server.on("createNewEnemy", function (id,xPos,zPos) {
+            console.log("creat new enemy at "+xPos);
+            mainClass.createNewEnemy(id,xPos,zPos);
+        });
+        server.on("updateEnemyPosition", function (id,xPos) {
+            mainClass.updateEnemyPosition(id,xPos);
+        });
+    }
+
+    function waitForDeadPlayer(){
+        server.on("setPlayerDead", function (id) {
+            console.log("player "+id+" dead");
+            mainClass.setPlayerDead(id);
         });
     }
 
     that.getChunkAt = getChunkAt;
     that.updatePlayerPosition = updatePlayerPosition;
+    that.setPlayerDead = setPlayerDead;
     that.setLoaded = setLoaded;
     that.setReady = setReady;
     that.init = init;

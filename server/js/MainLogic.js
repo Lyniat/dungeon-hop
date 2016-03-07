@@ -1,10 +1,17 @@
-MainLogic= function () {
+MainLogic = function () {
     "use strict";
     /* eslint-env browser  */
-    var that = {};
+    var that = {},
+        enemyClass = require("./Enemy.js").Enemy,
+        enemies = [],
+        server;
     var world = [];
-    var chunkSize = 32;
+    var chunkSize = 24;
     var players = [];
+
+    function init(srv){
+        server = srv;
+    }
 
 //returns the chunk at the zPosition
 //if the wanted chunk has not been created it will generate a new one in createNewChunk
@@ -18,7 +25,7 @@ MainLogic= function () {
         }
 
         if (world[zPosition] == undefined) {
-            chunk = createNewChunk();
+            chunk = createNewChunk(zPosition);
             world[zPosition] = chunk;
             return chunk;
         } else {
@@ -36,7 +43,7 @@ MainLogic= function () {
     }
 
 //generates a new chunk with random obstacles
-    function createNewChunk() {
+    function createNewChunk(zPos) {
         var i, r, obstacleId;
         var chunk = [];
 
@@ -48,7 +55,7 @@ MainLogic= function () {
                 chunk[i] = -2;
                 //always keep the middle empty
 
-                if (i == 16) {
+                if (i == chunkSize/2) {
                     chunk[i] = -5;
                     continue;
                 }
@@ -61,11 +68,11 @@ MainLogic= function () {
             chunk[chunkSize] = 1;
         }
         //normal ground
-        else {
+        else if (r > 0.2 && r < 0.8){
             for (i = 0; i < chunkSize; i++) {
                 chunk[i] = -1;
                 //always keep the middle empty
-                if (i == 16) {
+                if (i == chunkSize/2) {
                     continue;
                 }
                 r = Math.random();
@@ -75,6 +82,24 @@ MainLogic= function () {
                 }
             }
             chunk[chunkSize] = 0;
+        }
+        //enemy ground
+        else{
+            for (i = 0; i < chunkSize; i++) {
+                //keep empty
+                chunk[i] = -1;
+            }
+            chunk[chunkSize] = 0;
+
+            //create enemies
+            for(var j = 0; j < 5; j++) {
+                var enemy = new Enemy();
+                var newId = enemies.length;
+                var xPos = Math.round((chunkSize/6) * j);
+                enemy.init(newId, chunkSize, server, that,xPos, zPos);
+                enemies.push(enemy);
+            }
+            //chunk[chunkSize+1] = newId;
         }
         return chunk;
     }
@@ -87,7 +112,7 @@ MainLogic= function () {
         return r;
     }
 
-    function setPlayerToPosition(id,x,z){
+    function setPlayerToPosition(id, x, z) {
         var player = {};
         player.x = x;
         player.z = z;
@@ -95,32 +120,38 @@ MainLogic= function () {
         return checkRemovingChunks();
     }
 
-    function checkRemovingChunks(){
+    function checkRemovingChunks() {
         var smallestZ = 0;
         var maxChunks = 10;
-        for(var i = 0; i < players.length; i++){
+        for (var i = 0; i < players.length; i++) {
             var player = players[i];
-            if (player == undefined){
+            if (player == undefined) {
                 continue;
             }
-            if (player.z < smallestZ){
+            if (player.z < smallestZ) {
                 smallestZ = player.z;
             }
         }
         var removingChunk = smallestZ + maxChunks;
-        if(removingChunk > 0){
+        if (removingChunk > 0) {
             return null;
         }
-        if(world[removingChunk] != null){
+        if (world[removingChunk] != null) {
             world[removingChunk] = null;
-            console.log("removing chunk"+removingChunk);
+            console.log("removing chunk" + removingChunk);
             return removingChunk;
         }
         return null;
     }
 
+    function getAllEnemies(){
+        return enemies;
+    }
+
+    that.init = init;
     that.getChunkAt = getChunkAt;
     that.setPlayerToPosition = setPlayerToPosition;
+    that.getAllEnemies = getAllEnemies;
     return that;
 
     //module.exports.getChunkAt = getChunkAt;

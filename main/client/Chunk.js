@@ -8,7 +8,7 @@ DungeonHop.Chunk = function () {
     var that = {},
 		objects = [],
         matrix = [],
-		chunkSize = 32,
+		chunkSize = 24,
 		borderSize = 16,
         obstacleModels,
         serverInterface,
@@ -101,13 +101,6 @@ DungeonHop.Chunk = function () {
         worldCallbackFunction = func;
         //var chunk = server.getChunkAt(zPosition);
         serverInterface.getChunkAt(zPosition,onCallback);
-        /*
-        //server.emit('getChunkAt', zPosition);
-        //server.on("getChunkAtResp"+zPosition, function(result) {
-            initChunk(scene,zPosition,obstacleMdls,result);
-            func(matrix,zPosition,that);
-        });
-        */
     }
 
     function onCallback(result) {

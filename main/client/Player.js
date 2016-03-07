@@ -13,6 +13,7 @@ DungeonHop.Player = function () {
         playerId,
         serverInterface,
         opponents,
+        enemies,
         moving = false;
 
 
@@ -134,10 +135,21 @@ DungeonHop.Player = function () {
                 }
             }
 
+            //check if enemy is colliding
+            for (var i = 0; i < enemies.length; i++){
+                var enemy = enemies[i];
+                if (enemy != undefined && enemy != null){
+                    if (enemy.getPosition().x == object.position.x + moveDirection.x && enemy.getPosition().z == object.position.z + moveDirection.z ){
+                        console.log("enemy collision!");
+                        informEnemyCollision();
+                    }
+                }
+            }
+
             //object.position.add(moveDirection);
             moving = true;
             updateServer();
-            movePosition(10,moveDirection.x,moveDirection.z);
+            movePosition(5,moveDirection.x,moveDirection.z);
             moveDirection = new THREE.Vector3(0, 0, 0);
             if (field == -2) {
                 falling = true;
@@ -149,9 +161,9 @@ DungeonHop.Player = function () {
     function movePosition(t,x,z){
         setTimeout(function() {
             t--;
-            object.position.x += x/10;
-            object.position.z += z/10;
-            object.position.y = t/10;
+            object.position.x += x/5;
+            object.position.z += z/5;
+            object.position.y = t/5;
             if(t > 0) {
                 movePosition(t,x,z);
             }
@@ -174,6 +186,11 @@ DungeonHop.Player = function () {
         object.position.y -= deltaTime * 3;
     }
 
+    function informEnemyCollision(){
+        serverInterface.setPlayerDead;
+        die();
+    }
+
     function die(){
         falling = true;
     }
@@ -191,13 +208,14 @@ DungeonHop.Player = function () {
     }
 
 
-    function init(geometry, wrld,gameStat,srv,id,enms) {
+    function init(geometry, wrld,gameStat,srv,id,opps,enms) {
         world = wrld;
         normalScale = geometry.scale.y;
         gameStatus = gameStat;
         serverInterface = srv;
         playerId = id;
-        opponents = enms;
+        opponents = opps;
+        enemies = enms;
         loadPlayer(geometry);
         addListeners();
     }
@@ -207,5 +225,6 @@ DungeonHop.Player = function () {
     that.getObject = getObject;
     that.update = update;
     that.die = die;
+    that.informEnemyCollision = informEnemyCollision;
     return that;
 };

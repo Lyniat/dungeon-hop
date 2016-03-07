@@ -14,7 +14,7 @@ DungeonHop.World = function () {
         scene,
         player,
         serverInterface,
-        loadDistance = 20,
+        loadDistance = 30,
         chunks = [];
 
     //creates the new chunk and adds the collision information the matrix

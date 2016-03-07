@@ -9,6 +9,7 @@ ServerInstance = function () {
     function init(main) {
         mainServer = main;
         mainLogic = new mainLogicClass();
+        mainLogic.init(that);
     }
 
     function addClient(clientSocket) {
@@ -67,6 +68,16 @@ ServerInstance = function () {
         }
     }
 
+    function setPlayerDead(id) {
+        console.log("player "+id+" dead");
+        for (var i = 0; i < clients.length; i++) {
+            var client = clients[i];
+            if (client.getId() != id) {
+                client.getSocket().emit("setPlayerDead", id);
+            }
+        }
+    }
+
     function startGame() {
         console.log("starting countdown");
         setInfoTextForClients("GAME STARTS IN 3");
@@ -100,6 +111,36 @@ ServerInstance = function () {
         }
     }
 
+    function updateEnemyPosition(id,xPos){
+        for (var i = 0; i < clients.length; i++) {
+            var client = clients[i];
+            client.getSocket().emit("updateEnemyPosition",id,xPos);
+        }
+    }
+
+    function createNewEnemy(id,xPos,zPos){
+        for (var i = 0; i < clients.length; i++) {
+            var client = clients[i];
+            client.getSocket().emit("createNewEnemy",id,xPos,zPos);
+        }
+    }
+
+    function updateEnemiesForClient(id){
+        for (var i = 0; i < clients.length; i++) {
+            var client = clients[i];
+            if (client.getId() == id) {
+                var enemies = mainLogic.getAllEnemies();
+                for (var j = 0; j < enemies.length; j++) {
+                    var enemy = enemies[j];
+                    var enemyId = enemy.getId();
+                    var xPos = enemy.getPosition().x;
+                    var zPos = enemy.getPosition().z;
+                    client.getSocket().emit("createNewEnemy",enemyId,xPos,zPos);
+                }
+            }
+        }
+    }
+
     that.init = init;
     that.addClient = addClient;
     that.refreshAllClients = refreshAllClients;
@@ -107,7 +148,11 @@ ServerInstance = function () {
     that.destroyClient = destroyClient;
     that.getChunkAt = getChunkAt;
     that.setPlayerReady = setPlayerReady;
+    that.setPlayerDead = setPlayerDead;
     that.updatePlayerPosition = updatePlayerPosition;
+    that.updateEnemyPosition = updateEnemyPosition;
+    that.createNewEnemy = createNewEnemy;
+    that.updateEnemiesForClient = updateEnemiesForClient;
     return that;
 }
 ;
@@ -138,6 +183,7 @@ Client = function () {
                 zPos = z;
                 server.refreshAllClients();
             }
+            server.updateEnemiesForClient(id);
         });
 
         socket.on('disconnect', function () {
@@ -160,6 +206,10 @@ Client = function () {
             xPos = x;
             zPos = z;
             server.updatePlayerPosition(id, xPos, zPos);
+        });
+
+        socket.on("playerDead",function(){
+            server.setPlayerDead(id);
         });
 
     }

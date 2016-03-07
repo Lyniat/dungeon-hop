@@ -21,6 +21,7 @@ DungeonHop = (function () {
         playerId = -1,
         models,
         opponentPlayers = [],
+        enemies = [],
         ip,
         startButton,
         serverInterface;
@@ -75,13 +76,13 @@ DungeonHop = (function () {
 
     function createWorld(id) {
         playerId = id;
-        var playerModel = getPlayerModel();
+        var playerModel = getPlayerModel(id);
         player = new DungeonHop.Player();
 
         world = new DungeonHop.World();
         world.init(scene, models, player, serverInterface);
 
-        player.init(playerModel, world, gameStatus, serverInterface, playerId, opponentPlayers);
+        player.init(playerModel, world, gameStatus, serverInterface, playerId, opponentPlayers, enemies);
         scene.add(player.getObject());
 
         cameraObj = new DungeonHop.PlayerCamera();
@@ -90,9 +91,11 @@ DungeonHop = (function () {
         setScene();
         serverInterface.setLoaded(player.getPosition().x, player.getPosition().z);
         render();
+
+        infoText.innerHTML = "PRESS START IF YOU ARE READY";
     }
 
-    function getPlayerModel() {
+    function getPlayerModel(id) {
         var i, players = [];
         //get all player models
         for (i = 0; i < models.length; i++) {
@@ -101,6 +104,32 @@ DungeonHop = (function () {
                 var modelId = model["id"];
                 var modelObject = model["object"];
                 players[modelId] = modelObject;
+            }
+        }
+
+        if(id < 0) {
+            //get random player model
+            var r = Math.random() * players.length;
+            r = parseInt(Math.floor(r));
+            var playerModel = players[r];
+            return playerModel.clone();
+        }
+        else {
+            var playerModel = players[id];
+            return playerModel.clone();
+        }
+    }
+
+    function getEnemyModel() {
+        var i, players = [];
+        //get all player models
+        for (i = 0; i < models.length; i++) {
+            var model = models[i];
+            if (model["type"] == "enemies") {
+                if(model["name"] == "geckocube"){
+                    var enemyModel = model["object"];
+                    return enemyModel.clone();
+                }
             }
         }
 
@@ -117,7 +146,7 @@ DungeonHop = (function () {
         //connectToServer();
         serverInterface = new DungeonHop.ServerInterface();
         serverInterface.init(that, ip);
-        infoText.innerHTML = "PRESS START IF YOU ARE READY";
+        infoText.innerHTML = "CONNECTING TO SERVER";
     }
 
     function init(i) {
@@ -135,7 +164,7 @@ DungeonHop = (function () {
         infoText.innerHTML = "Waiting for other Players";
     }
 
-    function startGame(){
+    function startGame() {
         gameStatus.active = true;
     }
 
@@ -143,18 +172,18 @@ DungeonHop = (function () {
         if (opponentPlayers[id] == undefined && id != playerId) {
             console.log("added new player");
             var opponent = new DungeonHop.Opponent();
-            var model = getPlayerModel();
+            var model = getPlayerModel(id);
             opponent.init(model, xPos, zPos);
             scene.add(opponent.getObject());
             opponentPlayers[id] = opponent;
         }
     }
 
-    function removeChunk(pos){
+    function removeChunk(pos) {
         world.removeChunk(pos);
     }
 
-    function destroyPlayer(id){
+    function setPlayerDead(id) {
         if (id == playerId) {
             player.die();
         }
@@ -169,9 +198,27 @@ DungeonHop = (function () {
         }
     }
 
-    function setInfoText(text){
+    function setInfoText(text) {
         console.log("info text: " + text);
         infoText.innerHTML = text;
+    }
+
+    function createNewEnemy(id, xPos, zPos) {
+        if (enemies[id] != undefined) {
+            return;
+        }
+        var enemy = new DungeonHop.Enemy();
+        var model = getEnemyModel();
+        enemy.init(model, xPos, zPos, player);
+        enemies[id] = enemy;
+        scene.add(enemy.getObject());
+    }
+
+    function updateEnemyPosition(id, xPos) {
+        var enemy = enemies[id];
+        if (enemy != undefined && enemy != null) {
+            enemy.updatePosition(xPos, enemy.getPosition().z);
+        }
     }
 
     that.loaded = loaded;
@@ -180,8 +227,10 @@ DungeonHop = (function () {
     that.createWorld = createWorld;
     that.updatePlayers = updatePlayers;
     that.removeChunk = removeChunk;
-    that.destroyPlayer = destroyPlayer;
+    that.setPlayerDead = setPlayerDead;
     that.setInfoText = setInfoText;
+    that.createNewEnemy = createNewEnemy;
+    that.updateEnemyPosition = updateEnemyPosition;
     that.init = init;
     return that;
 })();

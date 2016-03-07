@@ -1,11 +1,10 @@
 var DungeonHop = DungeonHop || {};
-DungeonHop.Opponent = function () {
+DungeonHop.Enemy = function () {
     var that = {},
         object,
+        player,
         oldPosition,
         moveDirection = new THREE.Vector3(),
-        playerId,
-        server,
         animationNum = 0;
 
 
@@ -27,8 +26,9 @@ DungeonHop.Opponent = function () {
         return object;
     }
 
-    function init(geometry,x,z) {
+    function init(geometry,x,z,pl) {
         loadPlayer(geometry,x,z);
+        player = pl;
         oldPosition = new THREE.Vector3(x,0,z);
     }
 
@@ -50,6 +50,14 @@ DungeonHop.Opponent = function () {
             }
 
         }, 10);
+    }
+
+    function checkPlayerCollision(x,z){
+        var nextX = x + Math.round(object.position.x);
+        var nextZ = z + Math.round(object.position.z);
+        if(player.getPosition().x == nextX && player.getPosition().z == nextZ){
+            player.informEnemyCollision();
+        }
     }
 
     function rotate() {
@@ -77,6 +85,7 @@ DungeonHop.Opponent = function () {
         object.position.z = oldPosition.z;
         var newX = x- oldPosition.x;
         var newZ = z - oldPosition.z;
+        checkPlayerCollision(newX,newZ);
         animationNum++;
         movePosition(10,newX,newZ,animationNum);
         moveDirection.x = x - oldPosition.x;
@@ -84,7 +93,7 @@ DungeonHop.Opponent = function () {
         rotate();
         oldPosition.x = x;
         oldPosition.z = z;
-        console.log("updated opponent position");
+        console.log("updated enemy position");
     }
 
     that.init = init;
