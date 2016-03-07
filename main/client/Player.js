@@ -29,6 +29,9 @@ DungeonHop.Player = function () {
 
     function onKeyUp(evt) {
         evt.preventDefault();
+        if(!gameStatus.active){
+            return;
+        }
         if (evt.keyCode == "87") {
             moveDirection.z = -1;
         }
@@ -45,6 +48,9 @@ DungeonHop.Player = function () {
 
     function onKeyDown(evt) {
         evt.preventDefault();
+        if(!gameStatus.active){
+            return;
+        }
         if (evt.keyCode == "87") {
             setDucking(true);
         }

@@ -40,7 +40,7 @@ DungeonHop.Enemy = function () {
             t--;
             object.position.x += x/10;
             object.position.z += z/10;
-            object.position.y = t/10;
+            object.position.y = 0.5-Math.abs(0.5-t/10);
             if(t > 0) {
                 movePosition(t,x,z,anNum);
             }

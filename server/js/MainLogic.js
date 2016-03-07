@@ -8,6 +8,7 @@ MainLogic = function () {
     var world = [];
     var chunkSize = 24;
     var players = [];
+    var lastPathPos = chunkSize/2;
 
     function init(srv){
         server = srv;
@@ -46,41 +47,33 @@ MainLogic = function () {
     function createNewChunk(zPos) {
         var i, r, obstacleId;
         var chunk = [];
-
         //decide if lava or normal ground
         r = Math.random();
         //lava
         if (r < 0.2) {
             for (i = 0; i < chunkSize; i++) {
                 chunk[i] = -2;
-                //always keep the middle empty
-
-                if (i == chunkSize/2) {
-                    chunk[i] = -5;
-                    continue;
-                }
-
                 r = Math.random();
                 if (r < 0.25) {
                     chunk[i] = -5;
                 }
             }
+            //create path
+            chunk = createPath(chunk,-5);
             chunk[chunkSize] = 1;
         }
         //normal ground
         else if (r > 0.2 && r < 0.8){
             for (i = 0; i < chunkSize; i++) {
                 chunk[i] = -1;
-                //always keep the middle empty
-                if (i == chunkSize/2) {
-                    continue;
-                }
                 r = Math.random();
                 if (r < 0.25) {
                     obstacleId = getRandomObstacle();
                     chunk[i] = obstacleId;
                 }
             }
+            //create path
+            chunk = createPath(chunk,-1);
             chunk[chunkSize] = 0;
         }
         //enemy ground
@@ -110,6 +103,35 @@ MainLogic = function () {
         r = Math.floor(r);
         r = parseInt(r);
         return r;
+    }
+
+    function createPath(chunk,wantedId){
+        var newPosition = lastPathPos;
+        var pathLength = Math.round(Math.random() * 5);
+        var direction = Math.random()-0.5;
+        var testString = "empty: ";
+        for (var i = 0; i <= pathLength; i++) {
+            if(direction < 0){
+                direction = -1;
+            }
+            else{
+                direction = 1;
+            }
+            newPosition = lastPathPos + i*direction;
+            if(newPosition < 0){
+                newPosition = 0;
+            }
+            if(newPosition >= chunkSize){
+                newPosition = chunkSize-1;
+            }
+            testString+=(""+newPosition+", ");
+            chunk[newPosition] = wantedId;
+
+        }
+        lastPathPos = newPosition;
+
+        console.log(testString);
+        return chunk;
     }
 
     function setPlayerToPosition(id, x, z) {
