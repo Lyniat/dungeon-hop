@@ -93,7 +93,6 @@ DungeonHop.Enemy = function () {
         rotate();
         oldPosition.x = x;
         oldPosition.z = z;
-        console.log("updated enemy position");
     }
 
     that.init = init;

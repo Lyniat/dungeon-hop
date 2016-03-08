@@ -57,6 +57,13 @@ ServerInstance = function () {
         }
     }
 
+    function removeChunk(pos){
+        for (var i = 0; i < clients.length; i++) {
+            var client = clients[i];
+            client.getSocket().emit("removeChunk", pos);
+        }
+    }
+
     function getAllClients() {
         return clients;
     }
@@ -96,7 +103,7 @@ ServerInstance = function () {
                     }
 
                     setTimeout(function() {
-                        setInfoTextForClients("");
+                        setInfoTextForClients(" ");
                     }, 1000);
                 }, 1000);
             }, 1000);
@@ -141,6 +148,15 @@ ServerInstance = function () {
         }
     }
 
+    function updateCameraPosition(id,zPos){
+        //id not neede for this
+        var removingChunk = mainLogic.updateCameraPosition(zPos);
+        if(removingChunk != null && removingChunk != undefined){
+            console.log("removing chunk "+removingChunk);
+            removeChunk(removingChunk);
+        }
+    }
+
     that.init = init;
     that.addClient = addClient;
     that.refreshAllClients = refreshAllClients;
@@ -153,6 +169,7 @@ ServerInstance = function () {
     that.updateEnemyPosition = updateEnemyPosition;
     that.createNewEnemy = createNewEnemy;
     that.updateEnemiesForClient = updateEnemiesForClient;
+    that.updateCameraPosition = updateCameraPosition;
     return that;
 }
 ;
@@ -163,6 +180,7 @@ Client = function () {
         id,
         xPos,
         zPos,
+        cameraPos,
         socket,
         server,
         playerStatus;
@@ -206,6 +224,11 @@ Client = function () {
             xPos = x;
             zPos = z;
             server.updatePlayerPosition(id, xPos, zPos);
+        });
+
+        socket.on("updateCamera", function (zPos) {
+            cameraPos = zPos;
+            server.updateCameraPosition(id,cameraPos);
         });
 
         socket.on("playerDead",function(){

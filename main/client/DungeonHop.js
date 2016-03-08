@@ -86,7 +86,7 @@ DungeonHop = (function () {
         scene.add(player.getObject());
 
         cameraObj = new DungeonHop.PlayerCamera();
-        cameraObj.init(player, gameStatus);
+        cameraObj.init(player, gameStatus,serverInterface);
 
         setScene();
         serverInterface.setLoaded(player.getPosition().x, player.getPosition().z);
@@ -179,15 +179,38 @@ DungeonHop = (function () {
         }
     }
 
+    function showInfoForTime(info,t){
+        infoText.innerHTML = info;
+        setTimeout(function() {
+            if(infoText.innerHTML == info){
+                infoText.innerHTML = " ";
+            }
+        }, t*1000);
+    }
+
     function removeChunk(pos) {
+        //check if player is outside
+        if(player.getPosition().z >= pos){
+            //not the right one but with this event, he also dies
+            player.informEnemyCollision();
+        }
+        //check if enemies are outside
+        for(var i = 0; i < enemies.length; i++){
+            var enemy = enemies[i];
+            if (enemy.getPosition().z >= pos){
+                scene.remove(enemy.getObject());
+            }
+        }
         world.removeChunk(pos);
     }
 
     function setPlayerDead(id) {
+        console.log("player dead");
         if (id == playerId) {
             player.die();
         }
         else if (opponentPlayers[id] != undefined) {
+            showInfoForTime("Player "+id+" died!",3);
             scene.remove(opponentPlayers[id]);
         }
     }

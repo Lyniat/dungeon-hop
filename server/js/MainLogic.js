@@ -4,13 +4,14 @@ MainLogic = function () {
     var that = {},
         enemyClass = require("./Enemy.js").Enemy,
         enemies = [],
+        cameraPosition = 0,
         server;
     var world = [];
     var chunkSize = 24;
-    var players = [];
-    var lastPathPos = chunkSize/2;
+    //var players = [];
+    var lastPathPos = chunkSize / 2;
 
-    function init(srv){
+    function init(srv) {
         server = srv;
     }
 
@@ -59,11 +60,11 @@ MainLogic = function () {
                 }
             }
             //create path
-            chunk = createPath(chunk,-5);
+            chunk = createPath(chunk, -5);
             chunk[chunkSize] = 1;
         }
         //normal ground
-        else if (r > 0.2 && r < 0.8){
+        else if (r > 0.2 && r < 0.8) {
             for (i = 0; i < chunkSize; i++) {
                 chunk[i] = -1;
                 r = Math.random();
@@ -73,11 +74,11 @@ MainLogic = function () {
                 }
             }
             //create path
-            chunk = createPath(chunk,-1);
+            chunk = createPath(chunk, -1);
             chunk[chunkSize] = 0;
         }
         //enemy ground
-        else{
+        else {
             for (i = 0; i < chunkSize; i++) {
                 //keep empty
                 chunk[i] = -1;
@@ -85,14 +86,13 @@ MainLogic = function () {
             chunk[chunkSize] = 0;
 
             //create enemies
-            for(var j = 0; j < 5; j++) {
+            for (var j = 0; j < 5; j++) {
                 var enemy = new Enemy();
                 var newId = enemies.length;
-                var xPos = Math.round((chunkSize/6) * j);
-                enemy.init(newId, chunkSize, server, that,xPos, zPos);
+                var xPos = Math.round((chunkSize / 6) * j);
+                enemy.init(newId, chunkSize, server, that, xPos, zPos);
                 enemies.push(enemy);
             }
-            //chunk[chunkSize+1] = newId;
         }
         return chunk;
     }
@@ -105,75 +105,67 @@ MainLogic = function () {
         return r;
     }
 
-    function createPath(chunk,wantedId){
+    function createPath(chunk, wantedId) {
         var newPosition = lastPathPos;
         var pathLength = Math.round(Math.random() * 5);
-        var direction = Math.random()-0.5;
-        var testString = "empty: ";
+        var direction = Math.random() - 0.5;
         for (var i = 0; i <= pathLength; i++) {
-            if(direction < 0){
+            if (direction < 0) {
                 direction = -1;
             }
-            else{
+            else {
                 direction = 1;
             }
-            newPosition = lastPathPos + i*direction;
-            if(newPosition < 0){
+            newPosition = lastPathPos + i * direction;
+            if (newPosition < 0) {
                 newPosition = 0;
             }
-            if(newPosition >= chunkSize){
-                newPosition = chunkSize-1;
+            if (newPosition >= chunkSize) {
+                newPosition = chunkSize - 1;
             }
-            testString+=(""+newPosition+", ");
             chunk[newPosition] = wantedId;
 
         }
         lastPathPos = newPosition;
-
-        console.log(testString);
         return chunk;
     }
 
-    function setPlayerToPosition(id, x, z) {
-        var player = {};
-        player.x = x;
-        player.z = z;
-        players[id] = player;
-        return checkRemovingChunks();
-    }
-
     function checkRemovingChunks() {
-        var smallestZ = 0;
-        var maxChunks = 10;
-        for (var i = 0; i < players.length; i++) {
-            var player = players[i];
-            if (player == undefined) {
-                continue;
-            }
-            if (player.z < smallestZ) {
-                smallestZ = player.z;
-            }
-        }
-        var removingChunk = smallestZ + maxChunks;
-        if (removingChunk > 0) {
-            return null;
-        }
-        if (world[removingChunk] != null) {
-            world[removingChunk] = null;
+        var removingChunk;
+        removingChunk = cameraPosition + 10;
+        if (removingChunk <= 0) {
+            removeEnemiesOnChunk(removingChunk);
             console.log("removing chunk" + removingChunk);
             return removingChunk;
         }
-        return null;
     }
 
-    function getAllEnemies(){
+    function removeEnemiesOnChunk(zPos) {
+        for (var enemy of enemies) {
+            if (enemy.getPosition().z == zPos) {
+                var index = enemies.indexOf(enemy);
+                console.log("removed enemy " + enemy.getId());
+                //enemies.splice(index, 1);
+                enemy = null;
+            }
+        }
+    }
+
+    function updateCameraPosition(zPos) {
+        if (zPos < cameraPosition) {
+            cameraPosition = zPos;
+        }
+        return checkRemovingChunks();
+    }
+
+    function getAllEnemies() {
         return enemies;
     }
 
     that.init = init;
     that.getChunkAt = getChunkAt;
-    that.setPlayerToPosition = setPlayerToPosition;
     that.getAllEnemies = getAllEnemies;
+    that.updateCameraPosition = updateCameraPosition;
     return that;
 
     //module.exports.getChunkAt = getChunkAt;

@@ -43,6 +43,11 @@ DungeonHop.ServerInterface = function () {
         server.emit("updatePosition",xPos,zPos);
     }
 
+    function updateCamera(zPos){
+        console.log("updating camera");
+        server.emit("updateCamera",zPos);
+    }
+
     function setLoaded(xPos,zPos){
         server.emit("loaded", playerId, xPos, zPos);
         console.log("loading: " + playerId);
@@ -105,6 +110,7 @@ DungeonHop.ServerInterface = function () {
 
     that.getChunkAt = getChunkAt;
     that.updatePlayerPosition = updatePlayerPosition;
+    that.updateCamera = updateCamera;
     that.setPlayerDead = setPlayerDead;
     that.setLoaded = setLoaded;
     that.setReady = setReady;

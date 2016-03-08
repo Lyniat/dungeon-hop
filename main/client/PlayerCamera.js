@@ -8,13 +8,10 @@ DungeonHop.PlayerCamera = function () {
 		zoom = 1 / 100,
 		camera = new THREE.OrthographicCamera(-window.innerWidth * zoom, window.innerWidth * zoom, window.innerHeight * zoom, -window.innerHeight * zoom, -100, 1000),
 		player,
+        serverInterface,
 		cameraSpeed = 0.3,
-        gameStatus;
-
-
-    
-
-  
+        gameStatus,
+        oldPosition;
 
     function updatePosition(delta) {
         var playerObj = player.getObject();
@@ -23,10 +20,10 @@ DungeonHop.PlayerCamera = function () {
         if (playerObj.position.z + 1.5 < camera.position.z) {
             camera.position.z = playerObj.position.z + 1.5;
         }
-        checkIfPlayerIsInScreen();
-    }
-
-    function checkIfPlayerIsInScreen(){
+        if(Math.ceil(camera.position.z) < oldPosition){
+            oldPosition = Math.ceil(camera.position.z);
+            serverInterface.updateCamera(oldPosition);
+        }
     }
 
     function updateCamera() {
@@ -41,15 +38,17 @@ DungeonHop.PlayerCamera = function () {
     function getCamera() {
         return camera;
     }
-	function init(pl,gameStat) {
+	function init(pl,gameStat,srv) {
         player = pl;
         gameStatus = gameStat;
+        serverInterface = srv;
         var playerObj = player.getObject(),
 			playerPosition = player.getPosition();
         camera.position.x = playerObj.position.x + 1;
         camera.position.y = playerObj.position.y + 5;
         camera.position.z = playerObj.position.z + 3;
         camera.lookAt(playerPosition);
+        oldPosition = camera.position.z;
     }
 	
 	function update(delta) {

@@ -57,7 +57,7 @@ DungeonHop.Chunk = function () {
         var obstacles = chunk;
         var i;
         var obstacle;
-        for(i = 0; i < chunkSize - 1; i++){
+        for(i = 0; i < chunkSize; i++){
             matrix[i] = obstacles[i];
             if(obstacles[i] >= 0) {
                 obstacle = obstacleModels[obstacles[i]].clone();

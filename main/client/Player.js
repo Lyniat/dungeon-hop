@@ -16,14 +16,12 @@ DungeonHop.Player = function () {
         enemies,
         moving = false;
 
-
-    //load the player model (a cube for testing)
     function loadPlayer(geometry) {
         object = geometry;
         object.castShadow = true;
         object.receiveShadow = false;
         object.position.y = 0;
-        object.position.x = playerId*5;
+        object.position.x = (playerId+1)*4;
         object.position.z = 0;
     }
 
