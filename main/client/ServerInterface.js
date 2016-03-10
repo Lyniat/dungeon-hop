@@ -5,7 +5,8 @@ DungeonHop.ServerInterface = function () {
     var that = {},
         mainClass,
         server,
-        playerId;
+        playerId,
+        playerName;
 
     
 
@@ -18,9 +19,9 @@ DungeonHop.ServerInterface = function () {
     }
 
     function getPlayers() {
-        server.on("newPlayer", function (id, xPos, zPos) {
-            console.log("retrieving player");
-            mainClass.setPlayers(id, xPos, zPos);
+        server.on("newPlayer", function (id,name, xPos, zPos) {
+            console.log("retrieving player "+name);
+            mainClass.setPlayers(id,name, xPos, zPos);
         });
     }
 
@@ -41,7 +42,7 @@ DungeonHop.ServerInterface = function () {
     }
 
     function setLoaded(xPos, zPos) {
-        server.emit("loaded", playerId, xPos, zPos);
+        server.emit("loaded", playerId,playerName, xPos, zPos);
         console.log("loading: " + playerId);
     }
 
@@ -113,10 +114,11 @@ DungeonHop.ServerInterface = function () {
             }, 5000);
         });
     }
-	function init(main, ip) {
+	function init(main, ip,name) {
         console.log("connecting to server");
         mainClass = main;
         server = io(ip);
+        playerName = name;
         console.log("server connected");
         getId();
         getPlayers();

@@ -68,14 +68,22 @@
 
 <script>
     var cookie = document.cookie;
-    var lastIp = cookie.split("=")[1];
+    var entries = cookie.split(";");
+    var lastIp = entries[0].split("=")[1];
+    var lastName = "Random Player";
+    console.log(entries);
+    if(entries[1] != undefined) {
+        lastName = entries[1].split("=")[1];
+    }
     if (lastIp == "" || lastIp == null) {
-        astIp = "52.28.150.118:8080";
+        lastIp = "52.28.150.118:8080";
     }
     var ip = prompt("Please enter the server address", lastIp);
+    var name = prompt("Please enter your player name", lastName);
     if (ip != null) {
         document.cookie = "lastIp=" + ip;
-        DungeonHop.init(ip);
+        document.cookie = "lastName="+ name;
+        DungeonHop.init(ip,name);
     }
     (function () {
         var script = document.createElement('script');

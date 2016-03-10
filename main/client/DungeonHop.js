@@ -24,7 +24,8 @@ DungeonHop = (function () {
         enemies = [],
         ip,
         startButton,
-        serverInterface;
+        serverInterface,
+        playerName = " ";
 
 
     //creates a new scene with light and shadow
@@ -72,6 +73,7 @@ DungeonHop = (function () {
         world.update();
         requestAnimationFrame(render);
         renderer.render(scene, cameraObj.camera);
+        showOpponentLabels();
         showPlayerLabels();
     };
 
@@ -145,15 +147,16 @@ DungeonHop = (function () {
         models = mdls;
         //connectToServer();
         serverInterface = new DungeonHop.ServerInterface();
-        serverInterface.init(that, ip);
+        serverInterface.init(that, ip,playerName);
         infoText.innerHTML = "CONNECTING TO SERVER";
     }
 
-    function init(i) {
+    function init(i,name) {
         infoText.innerHTML = "LOADING...";
         startButton = document.getElementById("start");
         startButton.addEventListener("click", startClicked);
         ip = i;
+        playerName = name;
         gameStatus.active = false;
         modelManager = new DungeonHop.ModelManager();
         modelManager.init(this);
@@ -168,12 +171,12 @@ DungeonHop = (function () {
         gameStatus.active = true;
     }
 
-    function setPlayers(id, xPos, zPos) {
+    function setPlayers(id,name, xPos, zPos) {
         if (opponentPlayers[id] == undefined && id != playerId) {
             console.log("added new player");
             var opponent = new DungeonHop.Opponent();
             var model = getPlayerModel(id);
-            opponent.init(model,scene, xPos, zPos);
+            opponent.init(model,scene, xPos, zPos,name);
             scene.add(opponent.getObject());
             opponentPlayers[id] = opponent;
         }
@@ -272,6 +275,31 @@ DungeonHop = (function () {
             y: vector.y
         };
 
+    }
+
+    function showOpponentLabels(){
+        for(var i = 0; i < opponentPlayers.length; i++) {
+            var opponent = opponentPlayers[i];
+            if(opponent == undefined){
+                continue;
+            }
+            console.log("see opp");
+            var proj = toScreenPosition(opponent.getObject() ,cameraObj.getCamera());
+            var label = document.getElementById("opponent-"+i+"-label");
+            console.log(label);
+            if(label == null){
+                label = document.createElement("p");
+                var t = document.createTextNode(opponent.getName());
+                label.appendChild(t);
+                label.className = "opponent-label";
+                label.id = "opponent-"+i+"-label";
+                document.body.appendChild(label);
+            }else {
+                label.style.left = proj.x + 'px';
+                label.style.top = proj.y + 'px';
+                label.style.visibility = "visible";
+            }
+        }
     }
 
     that.loaded = loaded;

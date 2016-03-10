@@ -43,8 +43,9 @@ ServerInstance = function () {
                 var wantedClient = clients[j];
                 var wantedPosition = wantedClient.getPosition();
                 var wantedId = wantedClient.getId();
+                var wantedName = wantedClient.getPlayerName();
                 if (client.getId() != wantedId) {
-                    client.getSocket().emit("newPlayer", wantedId, wantedPosition.x, wantedPosition.z);
+                    client.getSocket().emit("newPlayer", wantedId,wantedName, wantedPosition.x, wantedPosition.z);
                 }
             }
         }
@@ -197,7 +198,8 @@ Client = function () {
         cameraPos,
         socket,
         server,
-        playerStatus;
+        playerStatus,
+        playerName;
 
     function init(s, i, srv) {
         server = srv;
@@ -208,8 +210,9 @@ Client = function () {
 
         socket.emit("setPlayerId", id);
 
-        socket.on("loaded", function (i, x, z) {
+        socket.on("loaded", function (i,name, x, z) {
             console.log("player " + id + " loaded");
+            playerName = name;
             if (i == id) {
                 xPos = x;
                 zPos = z;
@@ -263,9 +266,14 @@ Client = function () {
         return socket;
     }
 
+    function getPlayerName(){
+        return playerName;
+    }
+
     that.init = init;
     that.getSocket = getSocket;
     that.getId = getId;
     that.getPosition = getPosition;
+    that.getPlayerName = getPlayerName;
     return that;
 };

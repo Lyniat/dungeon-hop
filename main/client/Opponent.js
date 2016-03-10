@@ -9,7 +9,8 @@ DungeonHop.Opponent = function () {
         playerId,
         server,
         animationNum = 0,
-        scene;
+        scene,
+        name;
 
 
     //load the player model (a cube for testing)
@@ -30,9 +31,10 @@ DungeonHop.Opponent = function () {
         return object;
     }
 
-    function init(geometry, scn, x, z) {
+    function init(geometry, scn, x, z,n) {
         scene = scn;
         loadPlayer(geometry, x, z);
+        name = n;
         oldPosition = new THREE.Vector3(x, 0, z);
     }
 
@@ -102,10 +104,15 @@ DungeonHop.Opponent = function () {
         }, 200);
     }
 
+    function getName(){
+        return name;
+    }
+
     that.init = init;
     that.getObject = getObject;
     that.getPosition = getPosition;
     that.updatePosition = updatePosition;
     that.die = die;
+    that.getName = getName;
     return that;
 };
