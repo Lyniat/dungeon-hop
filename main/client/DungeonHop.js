@@ -250,6 +250,7 @@ DungeonHop = (function () {
         var label = document.getElementById("player-label");
         label.style.left = proj.x + 'px';
         label.style.top = proj.y + 'px';
+        label.style.visibility = "visible";
     }
 
     function toScreenPosition(obj, camera)
