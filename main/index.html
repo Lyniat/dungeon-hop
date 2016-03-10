@@ -45,6 +45,7 @@
 <canvas id="canvas">
 </canvas>
 <h1 class="centered-info textshadow" id="info-text"></h1>
+<h1 id="player-label" class="player-label">YOU</h1>
 <audio id ="playersound" src="sounds/idg_blip-intermed-2816_hifi.mp3"></audio>
 <audio id ="losingsound" src="sounds/Video_Game_Splash-Ploor-699235037.mp3"></audio>
 
@@ -69,7 +70,7 @@
     var cookie = document.cookie;
     var lastIp = cookie.split("=")[1];
     if (lastIp == "" || lastIp == null) {
-        lastIp = "localhost:8080";
+        astIp = "52.28.150.118:8080";
     }
     var ip = prompt("Please enter the server address", lastIp);
     if (ip != null) {

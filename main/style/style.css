@@ -74,6 +74,16 @@ nav.navbar.navbar-inverse.navbar-fixed-top {
     margin-left:-140px;
 }
 
+.player-label{
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color:#00ff00;
+    background-color: transparent;
+    z-index: 9;
+}
+
 .centered-info{
     position: fixed;
     top: 50%;

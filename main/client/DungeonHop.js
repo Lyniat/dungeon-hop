@@ -52,9 +52,6 @@ DungeonHop = (function () {
 
         var light = new THREE.AmbientLight(0x999999); // soft white light
         scene.add(light);
-
-        var particles = new DungeonHop.Particles();
-        scene.add(particles.init());
     }
 
     //calculates the time between the frames
@@ -75,6 +72,7 @@ DungeonHop = (function () {
         world.update();
         requestAnimationFrame(render);
         renderer.render(scene, cameraObj.camera);
+        showPlayerLabels();
     };
 
     function createWorld(id) {
@@ -244,6 +242,35 @@ DungeonHop = (function () {
         if (enemy != undefined && enemy != null) {
             enemy.updatePosition(xPos, enemy.getPosition().z);
         }
+    }
+
+    //http://stackoverflow.com/questions/27409074/three-js-converting-3d-position-to-2d-screen-position-r69
+    function showPlayerLabels() {
+        var proj = toScreenPosition(player.getObject(), cameraObj.getCamera());
+        var label = document.getElementById("player-label");
+        label.style.left = proj.x + 'px';
+        label.style.top = proj.y + 'px';
+    }
+
+    function toScreenPosition(obj, camera)
+    {
+        var vector = new THREE.Vector3();
+
+        var widthHalf = 0.5*renderer.context.canvas.width;
+        var heightHalf = 0.5*renderer.context.canvas.height;
+
+        obj.updateMatrixWorld();
+        vector.setFromMatrixPosition(obj.matrixWorld);
+        vector.project(camera);
+
+        vector.x = ( vector.x * widthHalf ) + widthHalf;
+        vector.y = - ( vector.y * heightHalf ) + heightHalf;
+
+        return {
+            x: vector.x,
+            y: vector.y
+        };
+
     }
 
     that.loaded = loaded;
