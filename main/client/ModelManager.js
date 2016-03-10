@@ -18,7 +18,7 @@ DungeonHop.ModelManager = function () {
         }
     }
 	
-    function loadJSON(path,type,id) {
+    function loadJSON(path, type, id) {
         var loader = new THREE.JSONLoader();
 
         // load a resource
@@ -33,7 +33,7 @@ DungeonHop.ModelManager = function () {
 
                 var name = path.split("/")[1];
 
-                var object = {object:mesh,type:type,name:name,id:id};
+                var object = {object: mesh, type: type, name: name, id: id};
 
                 models.push(object);
                 objectsLoaded();
@@ -44,35 +44,41 @@ DungeonHop.ModelManager = function () {
     //http://stackoverflow.com/questions/14388452/how-do-i-load-a-json-object-from-a-file-with-ajax
     function fetchJSONFile(path, callback) {
         var httpRequest = new XMLHttpRequest();
-        httpRequest.onreadystatechange = function() {
+        httpRequest.onreadystatechange = function () {
             if (httpRequest.readyState === 4) {
                 if (httpRequest.status === 200) {
                     var data = JSON.parse(httpRequest.responseText);
-                    if (callback) callback(data);
-                }
+                    if (callback) {
+						callback(data);
+					}
+				}
             }
         };
         httpRequest.open('GET', path);
         httpRequest.send();
     }
 	
-	function init(app) {
-        mainApp = app;
-        fetchJSONFile('assets/models/json/files.json', function(data){
-            loadModels(data);
-        });
+	function getModelAmount(data) {
+        var modelNum = 0;
+        for (var key in data) {
+            var value = data[key];
+            for(var object in value) {
+                modelNum++;
+            }
+        }
+        return modelNum;
     }
 
-    function loadModels(data){
+    function loadModels(data) {
         modelAmount = getModelAmount(data);
-        loadObjects("players",data);
-        loadObjects("obstacles",data);
-        loadObjects("enemies",data);
+        loadObjects("players", data);
+        loadObjects("obstacles", data);
+        loadObjects("enemies", data);
     }
 
-    function loadObjects(name,files){
+    function loadObjects(name, files) {
         var content = files[name];
-        for(var key in content) {
+        for (var key in content) {
             var value = content[key];
             var objectName = value["name"];
             var id = value["id"];
@@ -82,15 +88,13 @@ DungeonHop.ModelManager = function () {
         }
     }
 
-    function getModelAmount(data){
-        var modelNum = 0;
-        for(var key in data) {
-            var value = data[key];
-            for(var object in value) {
-                modelNum++;
-            }
-        }
-        return modelNum;
+    
+	
+	function init(app) {
+        mainApp = app;
+        fetchJSONFile('assets/models/json/files.json', function (data) {
+            loadModels(data);
+        });
     }
 	
     that.init = init;

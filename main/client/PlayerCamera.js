@@ -20,7 +20,7 @@ DungeonHop.PlayerCamera = function () {
         if (playerObj.position.z + 1.5 < camera.position.z) {
             camera.position.z = playerObj.position.z + 1.5;
         }
-        if(Math.ceil(camera.position.z) < oldPosition){
+        if (Math.ceil(camera.position.z) < oldPosition) {
             oldPosition = Math.ceil(camera.position.z);
             serverInterface.updateCamera(oldPosition);
         }
@@ -38,7 +38,7 @@ DungeonHop.PlayerCamera = function () {
     function getCamera() {
         return camera;
     }
-	function init(pl,gameStat,srv) {
+	function init(pl, gameStat, srv) {
         player = pl;
         gameStatus = gameStat;
         serverInterface = srv;
@@ -52,7 +52,7 @@ DungeonHop.PlayerCamera = function () {
     }
 	
 	function update(delta) {
-        if(!gameStatus.active){
+        if (!gameStatus.active) {
             return;
         }
         updatePosition(delta);

@@ -1,5 +1,7 @@
 var DungeonHop = DungeonHop || {};
 DungeonHop.Opponent = function () {
+	"use strict";
+    /* eslint-env browser  */
     var that = {},
         object,
         oldPosition,
@@ -11,7 +13,7 @@ DungeonHop.Opponent = function () {
 
 
     //load the player model (a cube for testing)
-    function loadPlayer(geometry,x,z) {
+    function loadPlayer(geometry, x, z) {
         object = geometry;
         object.castShadow = true;
         object.receiveShadow = false;
@@ -28,25 +30,24 @@ DungeonHop.Opponent = function () {
         return object;
     }
 
-    function init(geometry,scn,x,z) {
+    function init(geometry, scn, x, z) {
         scene = scn;
-        loadPlayer(geometry,x,z);
-        oldPosition = new THREE.Vector3(x,0,z);
+        loadPlayer(geometry, x, z);
+        oldPosition = new THREE.Vector3(x, 0, z);
     }
 
-    function movePosition(t,x,z,anNum){
-        setTimeout(function() {
-            if(anNum != animationNum){
+    function movePosition(t, x, z, anNum) {
+        setTimeout(function () {
+            if (anNum != animationNum) {
                 return;
             }
             t--;
-            object.position.x += x/10;
-            object.position.z += z/10;
-            object.position.y = t/10;
-            if(t > 0) {
-                movePosition(t,x,z,anNum);
-            }
-            else{
+            object.position.x += x /  10;
+            object.position.z += z / 10;
+            object.position.y = t / 10;
+            if (t > 0) {
+                movePosition(t, x, z,  anNum);
+            } else {
                 object.position.x = Math.round(object.position.x);
                 object.position.z = Math.round(object.position.z);
             }
@@ -73,14 +74,14 @@ DungeonHop.Opponent = function () {
         }
     }
 
-    function updatePosition(x,z){
+    function updatePosition(x,z)  {
         object.position.y = 0;
         object.position.x = oldPosition.x;
         object.position.z = oldPosition.z;
-        var newX = x- oldPosition.x;
-        var newZ = z - oldPosition.z;
+        var newX = x- oldPosition.x,
+			newZ = z - oldPosition.z;
         animationNum++;
-        movePosition(10,newX,newZ,animationNum);
+        movePosition(10, newX, newZ, animationNum);
         moveDirection.x = x - oldPosition.x;
         moveDirection.z = z - oldPosition.z;
         rotate();
@@ -89,13 +90,13 @@ DungeonHop.Opponent = function () {
         console.log("updated opponent position");
     }
 
-    function die(){
+    function die() {
         scene.remove(object);
-        setTimeout(function() {
-            var particles = new DungeonHop.Particles();
-            var particleSystem = particles.init(getPosition().x,1,getPosition().z,"skull");
+        setTimeout(function () {
+            var particles = new DungeonHop.Particles(),
+				particleSystem = particles.init(getPosition().x, 1, getPosition().z, "skull");
             scene.add(particleSystem);
-            setTimeout(function() {
+            setTimeout(function () {
                 scene.remove(particleSystem);
             }, 4000);
         }, 200);

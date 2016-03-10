@@ -1,15 +1,17 @@
 var DungeonHop = DungeonHop || {};
 DungeonHop.Particles = function () {
+	"use strict";
+    /* eslint-env browser  */
     var that = {},
         particleSystem;
 
-    function init(x,y,z,tex) {
+    function init(x, y, z, tex) {
 // The number of particles in a particle system is not easily changed.
-        var particleCount = 5;
+        var particleCount = 5,
 
         // Particles are just individual vertices in a geometry
         // Create the geometry that will hold all of the vertices
-        var particles = new THREE.Geometry();
+			particles = new THREE.Geometry();
 
         // Create the vertices and add them to the particles geometry
         for (var p = 0; p < particleCount; p++) {

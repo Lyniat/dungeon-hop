@@ -20,7 +20,7 @@ DungeonHop.World = function () {
     //creates the new chunk and adds the collision information the matrix
     function createChunk() {
         var chunk = new DungeonHop.Chunk();
-        chunk.init(scene, actualChunk_Z_Position, obstacleModels, serverInterface,addToWorld);
+        chunk.init(scene, actualChunk_Z_Position, obstacleModels, serverInterface, addToWorld);
         actualChunk_Z_Position--;
     }
 
@@ -32,7 +32,7 @@ DungeonHop.World = function () {
         }
     }
 
-    function addToWorld(obstacles,zPosition,chunk) {
+    function addToWorld(obstacles, zPosition, chunk) {
         worldMatrix[zPosition] = obstacles;
         chunks[zPosition] = chunk;
     }
@@ -60,14 +60,14 @@ DungeonHop.World = function () {
         for (i = 0; i < models.length; i++) {
             var model = models[i];
             if (model["type"] == "obstacles") {
-                var modelId = model["id"];
-                var modelObject = model["object"];
+                var modelId = model["id"],
+					modelObject = model["object"];
                 obstacleModels[modelId] = modelObject;
             }
         }
     }
 
-    function removeChunk(pos){
+    function removeChunk(pos) {
         console.log(chunks[pos]);
         chunks[pos].destroyChunk(scene);
     }

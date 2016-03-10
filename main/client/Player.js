@@ -14,6 +14,8 @@ DungeonHop.Player = function () {
         serverInterface,
         opponents,
         enemies,
+		playerSound = document.getElementById("playersound"),
+		losingSound = document.getElementById("losingsound"),
         moving = false,
         scene;
 
@@ -22,44 +24,60 @@ DungeonHop.Player = function () {
         object.castShadow = true;
         object.receiveShadow = false;
         object.position.y = 0;
-        object.position.x = (playerId+1)*4;
+        object.position.x = (playerId + 1) * 4;
         object.position.z = 0;
     }
 
     function onKeyUp(evt) {
         evt.preventDefault();
-        if(!gameStatus.active){
+        if (!gameStatus.active) {
             return;
         }
         if (evt.keyCode == "87") {
             moveDirection.z = -1;
+			
         }
         if (evt.keyCode == "83") {
             moveDirection.z = 1;
+			
         }
         if (evt.keyCode == "65") {
             moveDirection.x = -1;
+			
+			
         }
         if (evt.keyCode == "68") {
-            moveDirection.x = 1;
+			moveDirection.x = 1;
+			
         }
     }
-
+	function setDucking(ducking) {
+        if (ducking) {
+            console.log(normalScale);
+            object.scale.y = normalScale / 1.15;
+        } else {
+            object.scale.y = normalScale * 1.15;
+        }
+    }
     function onKeyDown(evt) {
         evt.preventDefault();
-        if(!gameStatus.active){
+        if (!gameStatus.active) {
             return;
         }
         if (evt.keyCode == "87") {
+			playerSound.play();
             setDucking(true);
         }
         if (evt.keyCode == "83") {
+			playerSound.play();
             setDucking(true);
         }
         if (evt.keyCode == "65") {
+			playerSound.play();
             setDucking(true);
         }
         if (evt.keyCode == "68") {
+			playerSound.play();
             setDucking(true);
         }
     }
@@ -88,21 +106,16 @@ DungeonHop.Player = function () {
         }
     }
 
-    function setDucking(ducking) {
-        if (ducking) {
-            console.log(normalScale);
-            object.scale.y = normalScale / 1.15;
-        } else {
-            object.scale.y = normalScale * 1.15;
-        }
+    function fallDown(deltaTime) {
+        object.position.y -= deltaTime * 3;
     }
 
     function move(deltaTime) {
-        if(moving == true){
+        if (moving == true) {
             moveDirection = new THREE.Vector3(0, 0, 0);
             return;
         }
-        if(!gameStatus.active){
+        if (!gameStatus.active) {
             return;
         }
         var field;
@@ -113,7 +126,7 @@ DungeonHop.Player = function () {
             return;
         }
         //prevent from going out of map
-        if (moveDirection.z + object.position.z > 0){
+        if (moveDirection.z + object.position.z > 0) {
             moveDirection = new THREE.Vector3(0, 0, 0);
             return;
         }
@@ -187,9 +200,7 @@ DungeonHop.Player = function () {
         serverInterface.updatePlayerPosition(x,z);
     }
 
-    function fallDown(deltaTime) {
-        object.position.y -= deltaTime * 3;
-    }
+    
 
     function informEnemyCollision(){
         serverInterface.setPlayerDead();
@@ -198,6 +209,7 @@ DungeonHop.Player = function () {
 
     function die(){
         falling = true;
+		losingSound.play();
         setTimeout(function() {
             var particles = new DungeonHop.Particles();
             var particleSystem = particles.init(getPosition().x,1,getPosition().z,"skull");
