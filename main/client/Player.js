@@ -14,7 +14,8 @@ DungeonHop.Player = function () {
         serverInterface,
         opponents,
         enemies,
-        moving = false;
+        moving = false,
+        scene;
 
     function loadPlayer(geometry) {
         object = geometry;
@@ -156,7 +157,7 @@ DungeonHop.Player = function () {
             movePosition(5,moveDirection.x,moveDirection.z);
             moveDirection = new THREE.Vector3(0, 0, 0);
             if (field == -2) {
-                falling = true;
+                informEnemyCollision();
             }
         }
 
@@ -191,12 +192,20 @@ DungeonHop.Player = function () {
     }
 
     function informEnemyCollision(){
-        serverInterface.setPlayerDead;
+        serverInterface.setPlayerDead();
         die();
     }
 
     function die(){
         falling = true;
+        setTimeout(function() {
+            var particles = new DungeonHop.Particles();
+            var particleSystem = particles.init(getPosition().x,1,getPosition().z,"skull");
+            scene.add(particleSystem);
+            setTimeout(function() {
+                scene.remove(particleSystem);
+            }, 4000);
+        }, 200);
     }
 
     function update(deltaTime) {
@@ -212,8 +221,9 @@ DungeonHop.Player = function () {
     }
 
 
-    function init(geometry, wrld,gameStat,srv,id,opps,enms) {
+    function init(geometry, wrld,scn,gameStat,srv,id,opps,enms) {
         world = wrld;
+        scene = scn;
         normalScale = geometry.scale.y;
         gameStatus = gameStat;
         serverInterface = srv;
@@ -222,6 +232,7 @@ DungeonHop.Player = function () {
         enemies = enms;
         loadPlayer(geometry);
         addListeners();
+        scene.add(object);
     }
 
     that.init = init;

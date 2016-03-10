@@ -4,7 +4,9 @@ ServerInstance = function () {
         mainLogic,
         mainLogicClass = require("./MainLogic.js").MainLogic,
         clients = [],
-        readyPlayers = 0;
+        readyPlayers = 0,
+        deadPlayers = 0,
+        status = 0; // 0 waiting for players, 1 active --> new players cant connect
 
     function init(main) {
         mainServer = main;
@@ -71,6 +73,7 @@ ServerInstance = function () {
     function setPlayerReady() {
         readyPlayers++;
         if (readyPlayers == clients.length) {
+            status = 1;
             startGame();
         }
     }
@@ -81,6 +84,12 @@ ServerInstance = function () {
             var client = clients[i];
             if (client.getId() != id) {
                 client.getSocket().emit("setPlayerDead", id);
+            }
+            deadPlayers++;
+            if(deadPlayers >= clients.length-1){
+                setTimeout(function() {
+                    mainServer.destroyServer();
+                }, 3000);
             }
         }
     }
@@ -157,6 +166,10 @@ ServerInstance = function () {
         }
     }
 
+    function getStatus(){
+        return status;
+    }
+
     that.init = init;
     that.addClient = addClient;
     that.refreshAllClients = refreshAllClients;
@@ -170,6 +183,7 @@ ServerInstance = function () {
     that.createNewEnemy = createNewEnemy;
     that.updateEnemiesForClient = updateEnemiesForClient;
     that.updateCameraPosition = updateCameraPosition;
+    that.getStatus = getStatus;
     return that;
 }
 ;

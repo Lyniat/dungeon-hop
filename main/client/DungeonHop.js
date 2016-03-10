@@ -52,6 +52,9 @@ DungeonHop = (function () {
 
         var light = new THREE.AmbientLight(0x999999); // soft white light
         scene.add(light);
+
+        var particles = new DungeonHop.Particles();
+        scene.add(particles.init());
     }
 
     //calculates the time between the frames
@@ -82,8 +85,7 @@ DungeonHop = (function () {
         world = new DungeonHop.World();
         world.init(scene, models, player, serverInterface);
 
-        player.init(playerModel, world, gameStatus, serverInterface, playerId, opponentPlayers, enemies);
-        scene.add(player.getObject());
+        player.init(playerModel, world,scene, gameStatus, serverInterface, playerId, opponentPlayers, enemies);
 
         cameraObj = new DungeonHop.PlayerCamera();
         cameraObj.init(player, gameStatus,serverInterface);
@@ -173,7 +175,7 @@ DungeonHop = (function () {
             console.log("added new player");
             var opponent = new DungeonHop.Opponent();
             var model = getPlayerModel(id);
-            opponent.init(model, xPos, zPos);
+            opponent.init(model,scene, xPos, zPos);
             scene.add(opponent.getObject());
             opponentPlayers[id] = opponent;
         }
@@ -211,7 +213,7 @@ DungeonHop = (function () {
         }
         else if (opponentPlayers[id] != undefined) {
             showInfoForTime("Player "+id+" died!",3);
-            scene.remove(opponentPlayers[id]);
+            opponentPlayers[id].die();
         }
     }
 

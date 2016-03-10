@@ -15,6 +15,7 @@ DungeonHop.ServerInterface = function () {
         waitForStart();
         waitForInfoText();
         waitForEnemy();
+        waitForDisconnect();
     }
 
     function getId() {
@@ -58,6 +59,8 @@ DungeonHop.ServerInterface = function () {
     }
 
     function setPlayerDead(){
+        console.log("player dead");
+        mainClass.setInfoText("You died!");
         server.emit("playerDead");
     }
 
@@ -105,6 +108,15 @@ DungeonHop.ServerInterface = function () {
         server.on("setPlayerDead", function (id) {
             console.log("player "+id+" dead");
             mainClass.setPlayerDead(id);
+        });
+    }
+
+    function waitForDisconnect(){
+        server.on("disconnect", function () {
+            mainClass.setInfoText("You got disconnected from server!\nRestart in 5 seconds!");
+            setTimeout(function() {
+                location.reload();
+            }, 5000);
         });
     }
 

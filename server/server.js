@@ -15,7 +15,8 @@
         readyPlayers = 0,
         players = [],
         serverInstances = [],
-        serverInstance = null;
+        serverInstance = null,
+        clients = [];
 
     var mainLogic = new main();
 
@@ -23,16 +24,33 @@
     app.use(express.static(__dirname + "/../main"));
 
     io.sockets.on('connection', function (socket) {
+        clients.push(socket);
         if(serverInstance == null){
             serverInstance = new serverInst();
             serverInstance.init(that);
             console.log("new server created");
         }
+        else{
+            var serverStatus = serverInstance.getStatus();
+            if(serverStatus != 0){ //game is already running
+                socket.emit("setInfoText","Active Game. Can't connect.");
+                socket.disconnect();
+                return;
+            }
+        }
         serverInstance.addClient(socket);
     });
 
     function destroyServer(){
+        if(clients != undefined && clients != null) {
+            for(var client of clients){
+                if(client != null && client != undefined) {
+                    client.disconnect();
+                }
+            }
+        }
         serverInstance = null;
+        clients = [];
         console.log("server destroyed");
     }
 
