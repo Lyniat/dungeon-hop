@@ -87,7 +87,7 @@ ServerInstance = function () {
                 client.getSocket().emit("setPlayerDead", id);
             }
             deadPlayers++;
-            if(deadPlayers >= clients.length-1){
+            if(deadPlayers >= clients.length){
                 setTimeout(function() {
                     mainServer.destroyServer();
                 }, 3000);

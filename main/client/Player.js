@@ -14,8 +14,8 @@ DungeonHop.Player = function () {
         serverInterface,
         opponents,
         enemies,
-		playerSound = document.getElementById("playersound"),
-		losingSound = document.getElementById("losingsound"),
+		playerSound = "assets/sounds/jump.mp3",
+		losingSound = "assets/sounds/splash.mp3",
         moving = false,
         scene;
 
@@ -65,19 +65,15 @@ DungeonHop.Player = function () {
             return;
         }
         if (evt.keyCode == "87") {
-			playerSound.play();
             setDucking(true);
         }
         if (evt.keyCode == "83") {
-			playerSound.play();
             setDucking(true);
         }
         if (evt.keyCode == "65") {
-			playerSound.play();
             setDucking(true);
         }
         if (evt.keyCode == "68") {
-			playerSound.play();
             setDucking(true);
         }
     }
@@ -166,6 +162,8 @@ DungeonHop.Player = function () {
 
             //object.position.add(moveDirection);
             moving = true;
+            var audio = new Audio(playerSound);
+            audio.play();
             updateServer();
             movePosition(5,moveDirection.x,moveDirection.z);
             moveDirection = new THREE.Vector3(0, 0, 0);
@@ -209,7 +207,8 @@ DungeonHop.Player = function () {
 
     function die(){
         falling = true;
-		losingSound.play();
+        var audio = new Audio(losingSound);
+        audio.play();
         setTimeout(function() {
             var particles = new DungeonHop.Particles();
             var particleSystem = particles.init(getPosition().x,1,getPosition().z,"skull");

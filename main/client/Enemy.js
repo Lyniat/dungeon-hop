@@ -19,7 +19,9 @@ DungeonHop.Enemy = function () {
     }
 
     function getPosition() {
-        return object.position;
+        var x = Math.round(object.position.x);
+        var z = Math.round(object.position.z);
+        return {x:x,z:z};
     }
 
     function getObject() {
