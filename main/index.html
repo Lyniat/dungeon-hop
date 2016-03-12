@@ -78,6 +78,7 @@
     var ip = prompt("Please enter the server address. If you want to play on the official server, use 'os' as server address.", lastIp);
     var name = prompt("Please enter your player name", lastName);
     if (ip != null) {
+        ip = ip.split("!")[0];
         if(ip == "os"){
             ip = "52.28.150.118:8080";
         }
