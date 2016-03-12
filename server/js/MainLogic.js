@@ -144,7 +144,6 @@ MainLogic = function () {
         for (var enemy of enemies) {
             if (enemy.getPosition().z == zPos) {
                 var index = enemies.indexOf(enemy);
-                console.log("removed enemy " + enemy.getId());
                 //enemies.splice(index, 1);
                 enemy = null;
             }

@@ -17,7 +17,8 @@ DungeonHop.Player = function () {
 		playerSound = "assets/sounds/jump.mp3",
 		losingSound = "assets/sounds/splash.mp3",
         moving = false,
-        scene;
+        scene,
+        dead = false;
 
     function loadPlayer(geometry) {
         object = geometry;
@@ -201,8 +202,11 @@ DungeonHop.Player = function () {
     
 
     function informEnemyCollision(){
-        serverInterface.setPlayerDead();
-        die();
+        if(!dead) {
+            dead = true;
+            serverInterface.setPlayerDead();
+            die();
+        }
     }
 
     function die(){

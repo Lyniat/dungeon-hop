@@ -1,4 +1,4 @@
-(function (port, dbURL) {
+(function (port) {
     "use strict";
     /* eslint-env node */
 
@@ -10,12 +10,7 @@
         pg = require("pg"),
         main = require("./js/MainLogic.js").MainLogic,
         serverInst = require("./js/ServerInstance.js").ServerInstance,
-        requiredPlayers = 2,
-        actualPlayers = 0,
-        readyPlayers = 0,
-        players = [],
         serverInstances = [],
-        serverInstance = null,
         clients = [];
 
     var mainLogic = new main();
@@ -25,33 +20,43 @@
 
     io.sockets.on('connection', function (socket) {
         clients.push(socket);
-        if(serverInstance == null){
-            serverInstance = new serverInst();
-            serverInstance.init(that);
-            console.log("new server created");
-        }
-        else{
-            var serverStatus = serverInstance.getStatus();
-            if(serverStatus != 0){ //game is already running
-                socket.emit("setInfoText","Active Game. Can't connect.");
-                socket.disconnect();
+        connectClientToServer(socket);
+    });
+
+    function connectClientToServer(socket) {
+        for (var serverInstance of serverInstances) {
+            if (serverInstance.canJoin()) {
+                serverInstance.addClient(socket);
                 return;
             }
         }
-        serverInstance.addClient(socket);
-    });
 
-    function destroyServer(){
-        if(clients != undefined && clients != null) {
-            for(var client of clients){
-                if(client != null && client != undefined) {
-                    client.disconnect();
-                }
+        //else create new ServerInstance
+        var serverInstance = new serverInst();
+        serverInstance.init(that);
+        serverInstance.addClient(socket);
+        serverInstances.push(serverInstance);
+        console.log("new server " + (serverInstances.length -1)+ " created");
+    }
+
+    function destroyServer(that) {
+        var clients = that.getAllClients();
+        for (var client of clients) {
+            var socket = client.getSocket();
+            client.destroy();
+            socket.emit("newGame");
+        }
+        var i;
+        for (i = 0; i < serverInstances.length; i++) {
+            var serverInst = serverInstances[i];
+            if (serverInst == that) {
+                console.log("destroyed server " + i);
+                break;
             }
         }
-        serverInstance = null;
-        clients = [];
-        console.log("server destroyed");
+        serverInstances.splice(i, 1);
+        that.destroy();
+        that = null;
     }
 
     server.listen(port, function () {

@@ -3,6 +3,7 @@ DungeonHop.ServerInterface = function () {
 	"use strict";
     /* eslint-env browser  */
     var that = {},
+        handler,
         mainClass,
         server,
         playerId,
@@ -114,8 +115,9 @@ DungeonHop.ServerInterface = function () {
             }, 5000);
         });
     }
-	function init(main, ip,name) {
+	function init(hndlr,main, ip,name) {
         console.log("connecting to server");
+        handler = hndlr;
         mainClass = main;
         server = io(ip);
         playerName = name;
@@ -126,7 +128,19 @@ DungeonHop.ServerInterface = function () {
         waitForInfoText();
         waitForEnemy();
         waitForDisconnect();
+        waitForNewGame();
     }
+
+    function setMain(main){
+        mainClass = main;
+    }
+
+    function waitForNewGame(){
+        server.on("newGame", function () {
+            handler.createNewGame();
+        });
+    }
+
     that.getChunkAt = getChunkAt;
     that.updatePlayerPosition = updatePlayerPosition;
     that.updateCamera = updateCamera;
@@ -134,5 +148,6 @@ DungeonHop.ServerInterface = function () {
     that.setLoaded = setLoaded;
     that.setReady = setReady;
     that.init = init;
+    that.setMain = setMain;
     return that;
 };

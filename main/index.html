@@ -42,13 +42,12 @@
         </div><!--/.nav-collapse -->
     </div>
 </nav>
-<canvas id="canvas">
-</canvas>
 <h1 class="centered-info textshadow" id="info-text"></h1>
 <h1 id="player-label" class="player-label" style="visibility: hidden;">YOU</h1>
 
 <script src="js/three.min.js"></script>
-<script src="client/DungeonHop.js"></script>
+<script src="client/GameHandler.js"></script>
+<script src="client/GameInstance.js"></script>
 <script src="client/ServerInterface.js"></script>
 <script src="client/Enemy.js"></script>
 <script src="client/PlayerCamera.js"></script>
@@ -76,12 +75,16 @@
     if (lastIp == "" || lastIp == null) {
         lastIp = "52.28.150.118:8080";
     }
-    var ip = prompt("Please enter the server address", lastIp);
+    var ip = prompt("Please enter the server address. If you want to play on the official server, use 'os' as server address.", lastIp);
     var name = prompt("Please enter your player name", lastName);
     if (ip != null) {
+        if(ip == "os"){
+            ip = "52.28.150.118:8080";
+        }
         document.cookie = "lastIp=" + ip;
         document.cookie = "lastName="+ name;
-        DungeonHop.init(ip,name);
+        GameHandler.init(ip,name);
+        //DungeonHop.init(ip,name);
     }
     (function () {
         var script = document.createElement('script');

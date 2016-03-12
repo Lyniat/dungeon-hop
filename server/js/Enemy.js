@@ -17,7 +17,6 @@ Enemy = function () {
         xPos = x;
         zPos = z;
         waitTime = Math.random() + 0.3;
-        console.log("created enemy with id "+id+" at "+z);
         server.createNewEnemy(id,xPos,zPos);
         move();
     }

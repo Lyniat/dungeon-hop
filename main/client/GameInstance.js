@@ -3,7 +3,7 @@
  */
 
 var DungeonHop = DungeonHop || {};
-DungeonHop = (function () {
+DungeonHop.GameInstance = function () {
     "use strict";
     /* eslint-env browser  */
     var that = {},
@@ -143,6 +143,7 @@ DungeonHop = (function () {
 
     }
 
+    /*
     function loaded(mdls) {
         models = mdls;
         //connectToServer();
@@ -150,7 +151,19 @@ DungeonHop = (function () {
         serverInterface.init(that, ip,playerName);
         infoText.innerHTML = "CONNECTING TO SERVER";
     }
+    */
 
+    function init(i,name,mdls,srv){
+        ip = i;
+        playerName = name;
+        models = mdls;
+        serverInterface = srv;
+        gameStatus.active = false;
+        startButton = document.getElementById("start");
+        startButton.addEventListener("click", startClicked);
+    }
+
+    /*
     function init(i,name) {
         infoText.innerHTML = "LOADING...";
         startButton = document.getElementById("start");
@@ -161,6 +174,7 @@ DungeonHop = (function () {
         modelManager = new DungeonHop.ModelManager();
         modelManager.init(this);
     }
+    */
 
     function startClicked() {
         serverInterface.setReady();
@@ -302,7 +316,6 @@ DungeonHop = (function () {
         }
     }
 
-    that.loaded = loaded;
     that.startGame = startGame;
     that.setPlayers = setPlayers;
     that.createWorld = createWorld;
@@ -314,4 +327,4 @@ DungeonHop = (function () {
     that.updateEnemyPosition = updateEnemyPosition;
     that.init = init;
     return that;
-})();
+};
