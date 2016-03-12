@@ -115,13 +115,15 @@ DungeonHop.ServerInterface = function () {
             }, 5000);
         });
     }
-	function init(hndlr,main, ip,name) {
+	function init(hndlr,main, ip,name,gameId) {
         console.log("connecting to server");
         handler = hndlr;
         mainClass = main;
         server = io(ip);
         playerName = name;
         console.log("server connected");
+        server.emit("joinGame",gameId);
+        waitForPrivateId();
         getId();
         getPlayers();
         waitForStart();
@@ -129,6 +131,12 @@ DungeonHop.ServerInterface = function () {
         waitForEnemy();
         waitForDisconnect();
         waitForNewGame();
+    }
+
+    function waitForPrivateId(){
+        server.on("privateId", function (id) {
+            console.warn("your private game id is "+id);
+        });
     }
 
     function setMain(main){

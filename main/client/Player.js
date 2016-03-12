@@ -163,10 +163,10 @@ DungeonHop.Player = function () {
 
             //object.position.add(moveDirection);
             moving = true;
-            var audio = new Audio(playerSound);
-            audio.play();
+            //var audio = new Audio(playerSound);
+            //audio.play();
             updateServer();
-            movePosition(5,moveDirection.x,moveDirection.z);
+            movePosition(2.5,moveDirection.x,moveDirection.z);
             moveDirection = new THREE.Vector3(0, 0, 0);
             if (field == -2) {
                 informEnemyCollision();
@@ -178,9 +178,9 @@ DungeonHop.Player = function () {
     function movePosition(t,x,z){
         setTimeout(function() {
             t--;
-            object.position.x += x/5;
-            object.position.z += z/5;
-            object.position.y = t/5;
+            object.position.x += x/2.5;
+            object.position.z += z/2.5;
+            object.position.y = t/2.5;
             if(t > 0) {
                 movePosition(t,x,z);
             }

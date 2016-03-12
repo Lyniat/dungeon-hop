@@ -6,13 +6,31 @@ ServerInstance = function () {
         clients = [],
         readyPlayers = 0,
         deadPlayers = 0,
-        status = 0, // 0 waiting for players, 1 active --> new players cant connect, 2 full, waiting for start
-        maxPlayers = 2;
+        status = 0, // 0 waiting for players, 1 active --> new players cant connect, 2 full, waiting for start, 3 private game
+        maxPlayers = 3,
+        gameId;
 
     function init(main) {
         mainServer = main;
         mainLogic = new mainLogicClass();
         mainLogic.init(that);
+        setGameId();
+        return gameId;
+    }
+
+    function setGameId() {
+        var char;
+        var string = "";
+        for (var i = 0; i < 8; i++) {
+            var r = Math.random();
+            if (r > 0.5) {
+                char = Math.floor(Math.random() * 10);
+            } else {
+                char = String.fromCharCode(Math.floor(Math.random() * 26) + 65);
+            }
+            string += char;
+        }
+        gameId = string;
     }
 
     function addClient(clientSocket) {
@@ -175,8 +193,11 @@ ServerInstance = function () {
         return status;
     }
 
-    function canJoin() {
+    function canJoin(gId) {
         if (status == 0) {
+            return true;
+        }
+        else if(status == 3 && gameId == gId){
             return true;
         }
         return false;

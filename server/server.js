@@ -19,24 +19,35 @@
     app.use(express.static(__dirname + "/../main"));
 
     io.sockets.on('connection', function (socket) {
-        clients.push(socket);
-        connectClientToServer(socket);
+        socket.on("joinGame", function(id){
+            if(id == "private"){
+                createNewServer(socket,true)
+            }else{
+
+            }
+            connectClientToServer(socket,id);
+        });
     });
 
-    function connectClientToServer(socket) {
+    function createNewServer(socket,isPrivate){
+        var serverInstance = new serverInst();
+        var serverId = serverInstance.init(that);
+        serverInstance.addClient(socket);
+        serverInstances.push(serverInstance);
+        console.log("new server " + (serverInstances.length -1)+ " created with id: "+serverId);
+        if(isPrivate){
+            socket.emit("privateId",serverId);
+        }
+    }
+
+    function connectClientToServer(socket,id) {
         for (var serverInstance of serverInstances) {
-            if (serverInstance.canJoin()) {
+            if (serverInstance.canJoin(id)) {
                 serverInstance.addClient(socket);
                 return;
             }
         }
-
-        //else create new ServerInstance
-        var serverInstance = new serverInst();
-        serverInstance.init(that);
-        serverInstance.addClient(socket);
-        serverInstances.push(serverInstance);
-        console.log("new server " + (serverInstances.length -1)+ " created");
+        createNewServer(socket,false);
     }
 
     function destroyServer(that) {

@@ -10,8 +10,7 @@ DungeonHop.GameInstance = function () {
         scene = new THREE.Scene(),
         canvas = document.getElementById("canvas"),
         infoText = document.getElementById("info-text"),
-        renderer = new THREE.WebGLRenderer({canvas: canvas}),
-        modelManager,
+        renderer,
         cameraObj,
         lastTime = Date.now(),
         player,
@@ -30,12 +29,6 @@ DungeonHop.GameInstance = function () {
 
     //creates a new scene with light and shadow
     function setScene() {
-        renderer.setSize(window.innerWidth, window.innerHeight);
-        renderer.setClearColor(0xbb0000, 1); //lava red sky
-        document.body.appendChild(renderer.domElement);
-
-        renderer.shadowMap.enabled = true;
-        renderer.shadowMapSoft = true;
 
         //directional light
         directionalLight = new THREE.DirectionalLight(0xffaaaa, 1);
@@ -153,7 +146,8 @@ DungeonHop.GameInstance = function () {
     }
     */
 
-    function init(i,name,mdls,srv){
+    function init(i,name,mdls,srv,rend){
+        renderer = rend;
         ip = i;
         playerName = name;
         models = mdls;
@@ -297,10 +291,8 @@ DungeonHop.GameInstance = function () {
             if(opponent == undefined){
                 continue;
             }
-            console.log("see opp");
             var proj = toScreenPosition(opponent.getObject() ,cameraObj.getCamera());
             var label = document.getElementById("opponent-"+i+"-label");
-            console.log(label);
             if(label == null){
                 label = document.createElement("p");
                 var t = document.createTextNode(opponent.getName());
@@ -316,6 +308,14 @@ DungeonHop.GameInstance = function () {
         }
     }
 
+    function destroy(){
+        for( var i = scene.children.length - 1; i >= 0; i--) {
+            var obj = scene.children[i];
+            //renderer.deallocateObject(obj);
+            scene.remove(obj);
+        }
+    }
+
     that.startGame = startGame;
     that.setPlayers = setPlayers;
     that.createWorld = createWorld;
@@ -326,5 +326,6 @@ DungeonHop.GameInstance = function () {
     that.createNewEnemy = createNewEnemy;
     that.updateEnemyPosition = updateEnemyPosition;
     that.init = init;
+    that.destroy = destroy;
     return that;
 };

@@ -6,13 +6,22 @@ GameHandler = (function () {
         modelManager,
         models,
         serverInterface,
-        activeGame = null;
+        activeGame = null,
+        renderer;
 
 
     function init(i, name) {
         var canvas = document.createElement("canvas");
         canvas.id = "canvas";
         document.body.appendChild(canvas);
+        renderer = new THREE.WebGLRenderer({canvas: canvas});
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        renderer.setClearColor(0xbb0000, 1); //lava red sky
+        document.body.appendChild(renderer.domElement);
+
+        renderer.shadowMap.enabled = true;
+        renderer.shadowMapSoft = true;
+
         infoText.innerHTML = "LOADING...";
         ip = i;
         playerName = name;
@@ -26,11 +35,9 @@ GameHandler = (function () {
     }
 
     function createNewGame() {
-        //remove old
-        document.getElementById("canvas").remove();
-        var canvas = document.createElement("canvas");
-        canvas.id = "canvas";
-        document.body.appendChild(canvas);
+        if(activeGame != undefined) {
+            activeGame.destroy();
+        }
 
         var labels = document.getElementsByClassName("opponent-label");
         for(var i = 0; i < labels.length; i++){
@@ -42,7 +49,7 @@ GameHandler = (function () {
         activeGame = new DungeonHop.GameInstance();
         serverInterface.init(that, activeGame, ip, playerName);
         infoText.innerHTML = "CONNECTING TO SERVER";
-        activeGame.init(ip, playerName, models, serverInterface);
+        activeGame.init(ip, playerName, models, serverInterface, renderer);
     }
 
     that.loaded = loaded;
