@@ -1,1 +1,59 @@
-var _0x1d61=["\x69\x6E\x66\x6F\x2D\x74\x65\x78\x74","\x67\x65\x74\x45\x6C\x65\x6D\x65\x6E\x74\x42\x79\x49\x64","\x63\x61\x6E\x76\x61\x73","\x63\x72\x65\x61\x74\x65\x45\x6C\x65\x6D\x65\x6E\x74","\x69\x64","\x61\x70\x70\x65\x6E\x64\x43\x68\x69\x6C\x64","\x62\x6F\x64\x79","\x69\x6E\x6E\x65\x72\x48\x54\x4D\x4C","\x4C\x4F\x41\x44\x49\x4E\x47\x2E\x2E\x2E","\x69\x6E\x69\x74","\x72\x65\x6D\x6F\x76\x65","\x6F\x70\x70\x6F\x6E\x65\x6E\x74\x2D\x6C\x61\x62\x65\x6C","\x67\x65\x74\x45\x6C\x65\x6D\x65\x6E\x74\x73\x42\x79\x43\x6C\x61\x73\x73\x4E\x61\x6D\x65","\x6C\x65\x6E\x67\x74\x68","\x43\x4F\x4E\x4E\x45\x43\x54\x49\x4E\x47\x20\x54\x4F\x20\x53\x45\x52\x56\x45\x52","\x6C\x6F\x61\x64\x65\x64","\x63\x72\x65\x61\x74\x65\x4E\x65\x77\x47\x61\x6D\x65"];GameHandler=(function(){var _0xcd31x1={},_0xcd31x2=document[_0x1d61[1]](_0x1d61[0]),_0xcd31x3,_0xcd31x4,_0xcd31x5,_0xcd31x6,_0xcd31x7,_0xcd31x8=null;function _0xcd31x9(_0xcd31xa,_0xcd31xb){var _0xcd31xc=document[_0x1d61[3]](_0x1d61[2]);_0xcd31xc[_0x1d61[4]]=_0x1d61[2];document[_0x1d61[6]][_0x1d61[5]](_0xcd31xc);_0xcd31x2[_0x1d61[7]]=_0x1d61[8];_0xcd31x3=_0xcd31xa;_0xcd31x4=_0xcd31xb;_0xcd31x5= new DungeonHop.ModelManager();_0xcd31x5[_0x1d61[9]](this)}function _0xcd31xd(_0xcd31xe){_0xcd31x6=_0xcd31xe;_0xcd31xf()}function _0xcd31xf(){document[_0x1d61[1]](_0x1d61[2])[_0x1d61[10]]();var _0xcd31xc=document[_0x1d61[3]](_0x1d61[2]);_0xcd31xc[_0x1d61[4]]=_0x1d61[2];document[_0x1d61[6]][_0x1d61[5]](_0xcd31xc);var _0xcd31x10=document[_0x1d61[12]](_0x1d61[11]);for(var _0xcd31xa=0;_0xcd31xa<_0xcd31x10[_0x1d61[13]];_0xcd31xa++){_0xcd31x10[_0xcd31xa][_0x1d61[10]]()};_0xcd31x7= new DungeonHop.ServerInterface();_0xcd31x8= new DungeonHop.GameInstance();_0xcd31x7[_0x1d61[9]](_0xcd31x1,_0xcd31x8,_0xcd31x3,_0xcd31x4);_0xcd31x2[_0x1d61[7]]=_0x1d61[14];_0xcd31x8[_0x1d61[9]](_0xcd31x3,_0xcd31x4,_0xcd31x6,_0xcd31x7)}_0xcd31x1[_0x1d61[15]]=_0xcd31xd;_0xcd31x1[_0x1d61[9]]=_0xcd31x9;_0xcd31x1[_0x1d61[16]]=_0xcd31xf;return _0xcd31x1})()
+GameHandler = (function () {
+    var that = {},
+        infoText = document.getElementById("info-text"),
+        ip,
+        playerName,
+        modelManager,
+        models,
+        serverInterface,
+        activeGame = null,
+        renderer;
+
+
+    function init(i, name) {
+        var canvas = document.createElement("canvas");
+        canvas.id = "canvas";
+        document.body.appendChild(canvas);
+        renderer = new THREE.WebGLRenderer({canvas: canvas});
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        renderer.setClearColor(0xbb0000, 1); //lava red sky
+        document.body.appendChild(renderer.domElement);
+
+        renderer.shadowMap.enabled = true;
+        renderer.shadowMapSoft = true;
+
+        infoText.innerHTML = "LOADING...";
+        ip = i;
+        playerName = name;
+        modelManager = new DungeonHop.ModelManager();
+        modelManager.init(this);
+    }
+
+    function loaded(mdls) {
+        models = mdls;
+        createNewGame();
+    }
+
+    function createNewGame() {
+        if(activeGame != undefined) {
+            activeGame.destroy();
+        }
+
+        var labels = document.getElementsByClassName("opponent-label");
+        for(var i = 0; i < labels.length; i++){
+            labels[i].remove();
+        }
+
+        //create new
+        serverInterface = new DungeonHop.ServerInterface();
+        activeGame = new DungeonHop.GameInstance();
+        serverInterface.init(that, activeGame, ip, playerName);
+        infoText.innerHTML = "CONNECTING TO SERVER";
+        activeGame.init(ip, playerName, models, serverInterface, renderer);
+    }
+
+    that.loaded = loaded;
+    that.init = init;
+    that.createNewGame = createNewGame;
+    return that;
+})();

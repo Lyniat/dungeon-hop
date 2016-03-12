@@ -1,1 +1,102 @@
-var _0xe81f=["\x4D\x6F\x64\x65\x6C\x4D\x61\x6E\x61\x67\x65\x72","\x75\x73\x65\x20\x73\x74\x72\x69\x63\x74","\x6C\x6F\x61\x64\x65\x64","\x61\x73\x73\x65\x74\x73\x2F\x6D\x6F\x64\x65\x6C\x73\x2F\x6A\x73\x6F\x6E\x2F","\x2E\x6A\x73","\x73\x65\x74","\x73\x63\x61\x6C\x65","\x2F","\x73\x70\x6C\x69\x74","\x70\x75\x73\x68","\x6C\x6F\x61\x64","\x6F\x6E\x72\x65\x61\x64\x79\x73\x74\x61\x74\x65\x63\x68\x61\x6E\x67\x65","\x72\x65\x61\x64\x79\x53\x74\x61\x74\x65","\x73\x74\x61\x74\x75\x73","\x72\x65\x73\x70\x6F\x6E\x73\x65\x54\x65\x78\x74","\x70\x61\x72\x73\x65","\x47\x45\x54","\x6F\x70\x65\x6E","\x73\x65\x6E\x64","\x70\x6C\x61\x79\x65\x72\x73","\x6F\x62\x73\x74\x61\x63\x6C\x65\x73","\x65\x6E\x65\x6D\x69\x65\x73","\x6E\x61\x6D\x65","\x69\x64","\x6C\x6F\x67","\x61\x73\x73\x65\x74\x73\x2F\x6D\x6F\x64\x65\x6C\x73\x2F\x6A\x73\x6F\x6E\x2F\x66\x69\x6C\x65\x73\x2E\x6A\x73\x6F\x6E","\x69\x6E\x69\x74"];var DungeonHop=DungeonHop||{};DungeonHop[_0xe81f[0]]=function(){_0xe81f[1];var _0x3a56x2={},_0x3a56x3,_0x3a56x4=[],_0x3a56x5=0,_0x3a56x6;function _0x3a56x7(){_0x3a56x5++;if(_0x3a56x5==_0x3a56x6){_0x3a56x3[_0xe81f[2]](_0x3a56x4)}}function _0x3a56x8(_0x3a56x9,_0x3a56xa,_0x3a56xb){var _0x3a56xc= new THREE.JSONLoader();_0x3a56xc[_0xe81f[10]](_0xe81f[3]+_0x3a56x9+_0xe81f[4],function(_0x3a56xd,_0x3a56xe){var _0x3a56xf= new THREE.MultiMaterial(_0x3a56xe),_0x3a56x10= new THREE.Mesh(_0x3a56xd,_0x3a56xf);_0x3a56x10[_0xe81f[6]][_0xe81f[5]](1/16,1/16,1/16);var _0x3a56x11=_0x3a56x9[_0xe81f[8]](_0xe81f[7])[1];var _0x3a56x12={object:_0x3a56x10,type:_0x3a56xa,name:_0x3a56x11,id:_0x3a56xb};_0x3a56x4[_0xe81f[9]](_0x3a56x12);_0x3a56x7()})}function _0x3a56x13(_0x3a56x9,_0x3a56x14){var _0x3a56x15= new XMLHttpRequest();_0x3a56x15[_0xe81f[11]]=function(){if(_0x3a56x15[_0xe81f[12]]===4){if(_0x3a56x15[_0xe81f[13]]===200){var _0x3a56x16=JSON[_0xe81f[15]](_0x3a56x15[_0xe81f[14]]);if(_0x3a56x14){_0x3a56x14(_0x3a56x16)}}}};_0x3a56x15[_0xe81f[17]](_0xe81f[16],_0x3a56x9);_0x3a56x15[_0xe81f[18]]()}function _0x3a56x17(_0x3a56x16){var _0x3a56x18=0;for(var _0x3a56x19 in _0x3a56x16){var _0x3a56x1a=_0x3a56x16[_0x3a56x19];for(var _0x3a56x12 in _0x3a56x1a){_0x3a56x18++}};return _0x3a56x18}function _0x3a56x1b(_0x3a56x16){_0x3a56x6=_0x3a56x17(_0x3a56x16);_0x3a56x1c(_0xe81f[19],_0x3a56x16);_0x3a56x1c(_0xe81f[20],_0x3a56x16);_0x3a56x1c(_0xe81f[21],_0x3a56x16)}function _0x3a56x1c(_0x3a56x11,_0x3a56x1d){var _0x3a56x1e=_0x3a56x1d[_0x3a56x11];for(var _0x3a56x19 in _0x3a56x1e){var _0x3a56x1a=_0x3a56x1e[_0x3a56x19];var _0x3a56x1f=_0x3a56x1a[_0xe81f[22]];var _0x3a56xb=_0x3a56x1a[_0xe81f[23]];var _0x3a56x9=_0x3a56x11+_0xe81f[7]+_0x3a56x1f;console[_0xe81f[24]](_0x3a56x9);_0x3a56x8(_0x3a56x11+_0xe81f[7]+_0x3a56x1f,_0x3a56x11,_0x3a56xb)}}function _0x3a56x20(_0x3a56x21){_0x3a56x3=_0x3a56x21;_0x3a56x13(_0xe81f[25],function(_0x3a56x16){_0x3a56x1b(_0x3a56x16)})}_0x3a56x2[_0xe81f[26]]=_0x3a56x20;return _0x3a56x2}
+/**
+ * Created by laurin on 22.02.16.
+ */
+var DungeonHop = DungeonHop || {};
+DungeonHop.ModelManager = function () {
+	"use strict";
+    /* eslint-env browser  */
+    var that = {},
+		mainApp,
+		models = [],
+		loadedModels = 0,
+        modelAmount;
+	
+	function objectsLoaded() {
+        loadedModels++;
+        if (loadedModels == modelAmount) {
+            mainApp.loaded(models);
+        }
+    }
+	
+    function loadJSON(path, type, id) {
+        var loader = new THREE.JSONLoader();
+
+        // load a resource
+        loader.load(
+            // resource URL
+            "assets/models/json/" + path + ".js",
+            //when resource is loaded
+            function (geometry, materials) {
+                var material = new THREE.MultiMaterial(materials),
+					mesh = new THREE.Mesh(geometry, material);
+                mesh.scale.set(1 / 16, 1 / 16, 1 / 16);
+
+                var name = path.split("/")[1];
+
+                var object = {object: mesh, type: type, name: name, id: id};
+
+                models.push(object);
+                objectsLoaded();
+            }
+        );
+    }
+
+    //http://stackoverflow.com/questions/14388452/how-do-i-load-a-json-object-from-a-file-with-ajax
+    function fetchJSONFile(path, callback) {
+        var httpRequest = new XMLHttpRequest();
+        httpRequest.onreadystatechange = function () {
+            if (httpRequest.readyState === 4) {
+                if (httpRequest.status === 200) {
+                    var data = JSON.parse(httpRequest.responseText);
+                    if (callback) {
+						callback(data);
+					}
+				}
+            }
+        };
+        httpRequest.open('GET', path);
+        httpRequest.send();
+    }
+	
+	function getModelAmount(data) {
+        var modelNum = 0;
+        for (var key in data) {
+            var value = data[key];
+            for(var object in value) {
+                modelNum++;
+            }
+        }
+        return modelNum;
+    }
+
+    function loadModels(data) {
+        modelAmount = getModelAmount(data);
+        loadObjects("players", data);
+        loadObjects("obstacles", data);
+        loadObjects("enemies", data);
+    }
+
+    function loadObjects(name, files) {
+        var content = files[name];
+        for (var key in content) {
+            var value = content[key];
+            var objectName = value["name"];
+            var id = value["id"];
+            var path = name+"/"+objectName;
+            console.log(path);
+            loadJSON(name+"/"+objectName,name,id);
+        }
+    }
+
+    
+	
+	function init(app) {
+        mainApp = app;
+        fetchJSONFile('assets/models/json/files.json', function (data) {
+            loadModels(data);
+        });
+    }
+	
+    that.init = init;
+    return that;
+};

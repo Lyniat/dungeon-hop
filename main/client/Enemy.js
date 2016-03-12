@@ -1,1 +1,105 @@
-var _0xb759=["\x45\x6E\x65\x6D\x79","\x63\x61\x73\x74\x53\x68\x61\x64\x6F\x77","\x72\x65\x63\x65\x69\x76\x65\x53\x68\x61\x64\x6F\x77","\x79","\x70\x6F\x73\x69\x74\x69\x6F\x6E","\x78","\x7A","\x72\x6F\x75\x6E\x64","\x61\x62\x73","\x67\x65\x74\x50\x6F\x73\x69\x74\x69\x6F\x6E","\x69\x6E\x66\x6F\x72\x6D\x45\x6E\x65\x6D\x79\x43\x6F\x6C\x6C\x69\x73\x69\x6F\x6E","\x72\x6F\x74\x61\x74\x69\x6F\x6E","\x50\x49","\x69\x6E\x69\x74","\x67\x65\x74\x4F\x62\x6A\x65\x63\x74","\x75\x70\x64\x61\x74\x65\x50\x6F\x73\x69\x74\x69\x6F\x6E"];var DungeonHop=DungeonHop||{};DungeonHop[_0xb759[0]]=function(){var _0x1d55x2={},_0x1d55x3,_0x1d55x4,_0x1d55x5,_0x1d55x6= new THREE.Vector3(),_0x1d55x7=0;function _0x1d55x8(_0x1d55x9,_0x1d55xa,_0x1d55xb){_0x1d55x3=_0x1d55x9;_0x1d55x3[_0xb759[1]]=true;_0x1d55x3[_0xb759[2]]=false;_0x1d55x3[_0xb759[4]][_0xb759[3]]=0;_0x1d55x3[_0xb759[4]][_0xb759[5]]=_0x1d55xa;_0x1d55x3[_0xb759[4]][_0xb759[6]]=_0x1d55xb}function _0x1d55xc(){var _0x1d55xa=Math[_0xb759[7]](_0x1d55x3[_0xb759[4]][_0xb759[5]]);var _0x1d55xb=Math[_0xb759[7]](_0x1d55x3[_0xb759[4]][_0xb759[6]]);return {x:_0x1d55xa,z:_0x1d55xb}}function _0x1d55xd(){return _0x1d55x3}function _0x1d55xe(_0x1d55x9,_0x1d55xa,_0x1d55xb,_0x1d55xf){_0x1d55x8(_0x1d55x9,_0x1d55xa,_0x1d55xb);_0x1d55x4=_0x1d55xf;_0x1d55x5= new THREE.Vector3(_0x1d55xa,0,_0x1d55xb)}function _0x1d55x10(_0x1d55x11,_0x1d55xa,_0x1d55xb,_0x1d55x12){setTimeout(function(){if(_0x1d55x12!=_0x1d55x7){return};_0x1d55x11--;_0x1d55x3[_0xb759[4]][_0xb759[5]]+=_0x1d55xa/10;_0x1d55x3[_0xb759[4]][_0xb759[6]]+=_0x1d55xb/10;_0x1d55x3[_0xb759[4]][_0xb759[3]]=0.5-Math[_0xb759[8]](0.5-_0x1d55x11/10);if(_0x1d55x11>0){_0x1d55x10(_0x1d55x11,_0x1d55xa,_0x1d55xb,_0x1d55x12)}else {_0x1d55x3[_0xb759[4]][_0xb759[5]]=Math[_0xb759[7]](_0x1d55x3[_0xb759[4]][_0xb759[5]]);_0x1d55x3[_0xb759[4]][_0xb759[6]]=Math[_0xb759[7]](_0x1d55x3[_0xb759[4]][_0xb759[6]])}},10)}function _0x1d55x13(_0x1d55xa,_0x1d55xb){var _0x1d55x14=_0x1d55xa+Math[_0xb759[7]](_0x1d55x3[_0xb759[4]][_0xb759[5]]);var _0x1d55x15=_0x1d55xb+Math[_0xb759[7]](_0x1d55x3[_0xb759[4]][_0xb759[6]]);if(_0x1d55x4[_0xb759[9]]()[_0xb759[5]]==_0x1d55x14&&_0x1d55x4[_0xb759[9]]()[_0xb759[6]]==_0x1d55x15){_0x1d55x4[_0xb759[10]]()}}function _0x1d55x16(){if(_0x1d55x6[_0xb759[5]]== -1){_0x1d55x3[_0xb759[11]][_0xb759[3]]=Math[_0xb759[12]]/2};if(_0x1d55x6[_0xb759[5]]==1){_0x1d55x3[_0xb759[11]][_0xb759[3]]=-Math[_0xb759[12]]/2};if(_0x1d55x6[_0xb759[6]]== -1){_0x1d55x3[_0xb759[11]][_0xb759[3]]=0};if(_0x1d55x6[_0xb759[6]]==1){_0x1d55x3[_0xb759[11]][_0xb759[3]]=Math[_0xb759[12]]}}function _0x1d55x17(_0x1d55xa,_0x1d55xb){_0x1d55x3[_0xb759[4]][_0xb759[3]]=0;_0x1d55x3[_0xb759[4]][_0xb759[5]]=_0x1d55x5[_0xb759[5]];_0x1d55x3[_0xb759[4]][_0xb759[6]]=_0x1d55x5[_0xb759[6]];var _0x1d55x18=_0x1d55xa-_0x1d55x5[_0xb759[5]];var _0x1d55x19=_0x1d55xb-_0x1d55x5[_0xb759[6]];_0x1d55x13(_0x1d55x18,_0x1d55x19);_0x1d55x7++;_0x1d55x10(10,_0x1d55x18,_0x1d55x19,_0x1d55x7);_0x1d55x6[_0xb759[5]]=_0x1d55xa-_0x1d55x5[_0xb759[5]];_0x1d55x6[_0xb759[6]]=_0x1d55xb-_0x1d55x5[_0xb759[6]];_0x1d55x16();_0x1d55x5[_0xb759[5]]=_0x1d55xa;_0x1d55x5[_0xb759[6]]=_0x1d55xb}_0x1d55x2[_0xb759[13]]=_0x1d55xe;_0x1d55x2[_0xb759[14]]=_0x1d55xd;_0x1d55x2[_0xb759[9]]=_0x1d55xc;_0x1d55x2[_0xb759[15]]=_0x1d55x17;return _0x1d55x2}
+var DungeonHop = DungeonHop || {};
+DungeonHop.Enemy = function () {
+    var that = {},
+        object,
+        player,
+        oldPosition,
+        moveDirection = new THREE.Vector3(),
+        animationNum = 0;
+
+
+    //load the player model (a cube for testing)
+    function loadPlayer(geometry,x,z) {
+        object = geometry;
+        object.castShadow = true;
+        object.receiveShadow = false;
+        object.position.y = 0;
+        object.position.x = x;
+        object.position.z = z;
+    }
+
+    function getPosition() {
+        var x = Math.round(object.position.x);
+        var z = Math.round(object.position.z);
+        return {x:x,z:z};
+    }
+
+    function getObject() {
+        return object;
+    }
+
+    function init(geometry,x,z,pl) {
+        loadPlayer(geometry,x,z);
+        player = pl;
+        oldPosition = new THREE.Vector3(x,0,z);
+    }
+
+    function movePosition(t,x,z,anNum){
+        setTimeout(function() {
+            if(anNum != animationNum){
+                return;
+            }
+            t--;
+            object.position.x += x/10;
+            object.position.z += z/10;
+            object.position.y = 0.5-Math.abs(0.5-t/10);
+            if(t > 0) {
+                movePosition(t,x,z,anNum);
+            }
+            else{
+                object.position.x = Math.round(object.position.x);
+                object.position.z = Math.round(object.position.z);
+            }
+
+        }, 10);
+    }
+
+    function checkPlayerCollision(x,z){
+        var nextX = x + Math.round(object.position.x);
+        var nextZ = z + Math.round(object.position.z);
+        if(player.getPosition().x == nextX && player.getPosition().z == nextZ){
+            player.informEnemyCollision();
+        }
+    }
+
+    function rotate() {
+        if (moveDirection.x == -1) {
+            //left
+            object.rotation.y = Math.PI / 2;
+        }
+        if (moveDirection.x == 1) {
+            //left
+            object.rotation.y = -Math.PI / 2;
+        }
+        if (moveDirection.z == -1) {
+            //forward
+            object.rotation.y = 0;
+        }
+        if (moveDirection.z == 1) {
+            //backward
+            object.rotation.y = Math.PI;
+        }
+    }
+
+    function updatePosition(x,z){
+        object.position.y = 0;
+        object.position.x = oldPosition.x;
+        object.position.z = oldPosition.z;
+        var newX = x- oldPosition.x;
+        var newZ = z - oldPosition.z;
+        checkPlayerCollision(newX,newZ);
+        animationNum++;
+        movePosition(10,newX,newZ,animationNum);
+        moveDirection.x = x - oldPosition.x;
+        moveDirection.z = z - oldPosition.z;
+        rotate();
+        oldPosition.x = x;
+        oldPosition.z = z;
+    }
+
+    that.init = init;
+    that.getObject = getObject;
+    that.getPosition = getPosition;
+    that.updatePosition = updatePosition;
+    return that;
+};

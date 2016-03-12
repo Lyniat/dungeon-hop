@@ -1,1 +1,331 @@
-var _0x58ec=["\x47\x61\x6D\x65\x49\x6E\x73\x74\x61\x6E\x63\x65","\x75\x73\x65\x20\x73\x74\x72\x69\x63\x74","\x63\x61\x6E\x76\x61\x73","\x67\x65\x74\x45\x6C\x65\x6D\x65\x6E\x74\x42\x79\x49\x64","\x69\x6E\x66\x6F\x2D\x74\x65\x78\x74","\x6E\x6F\x77","\x20","\x69\x6E\x6E\x65\x72\x57\x69\x64\x74\x68","\x69\x6E\x6E\x65\x72\x48\x65\x69\x67\x68\x74","\x73\x65\x74\x53\x69\x7A\x65","\x73\x65\x74\x43\x6C\x65\x61\x72\x43\x6F\x6C\x6F\x72","\x64\x6F\x6D\x45\x6C\x65\x6D\x65\x6E\x74","\x61\x70\x70\x65\x6E\x64\x43\x68\x69\x6C\x64","\x62\x6F\x64\x79","\x65\x6E\x61\x62\x6C\x65\x64","\x73\x68\x61\x64\x6F\x77\x4D\x61\x70","\x73\x68\x61\x64\x6F\x77\x4D\x61\x70\x53\x6F\x66\x74","\x73\x65\x74","\x70\x6F\x73\x69\x74\x69\x6F\x6E","\x63\x61\x73\x74\x53\x68\x61\x64\x6F\x77","\x6E\x65\x61\x72","\x63\x61\x6D\x65\x72\x61","\x73\x68\x61\x64\x6F\x77","\x66\x61\x72","\x6C\x65\x66\x74","\x72\x69\x67\x68\x74","\x74\x6F\x70","\x62\x6F\x74\x74\x6F\x6D","\x61\x64\x64","\x75\x70\x64\x61\x74\x65","\x72\x65\x6E\x64\x65\x72","\x69\x6E\x69\x74","\x78","\x67\x65\x74\x50\x6F\x73\x69\x74\x69\x6F\x6E","\x7A","\x73\x65\x74\x4C\x6F\x61\x64\x65\x64","\x69\x6E\x6E\x65\x72\x48\x54\x4D\x4C","\x50\x52\x45\x53\x53\x20\x53\x54\x41\x52\x54\x20\x49\x46\x20\x59\x4F\x55\x20\x41\x52\x45\x20\x52\x45\x41\x44\x59","\x6C\x65\x6E\x67\x74\x68","\x74\x79\x70\x65","\x70\x6C\x61\x79\x65\x72\x73","\x69\x64","\x6F\x62\x6A\x65\x63\x74","\x72\x61\x6E\x64\x6F\x6D","\x66\x6C\x6F\x6F\x72","\x63\x6C\x6F\x6E\x65","\x65\x6E\x65\x6D\x69\x65\x73","\x6E\x61\x6D\x65","\x67\x65\x63\x6B\x6F\x63\x75\x62\x65","\x61\x63\x74\x69\x76\x65","\x73\x74\x61\x72\x74","\x63\x6C\x69\x63\x6B","\x61\x64\x64\x45\x76\x65\x6E\x74\x4C\x69\x73\x74\x65\x6E\x65\x72","\x73\x65\x74\x52\x65\x61\x64\x79","\x57\x61\x69\x74\x69\x6E\x67\x20\x66\x6F\x72\x20\x6F\x74\x68\x65\x72\x20\x50\x6C\x61\x79\x65\x72\x73","\x61\x64\x64\x65\x64\x20\x6E\x65\x77\x20\x70\x6C\x61\x79\x65\x72","\x6C\x6F\x67","\x67\x65\x74\x4F\x62\x6A\x65\x63\x74","\x69\x6E\x66\x6F\x72\x6D\x45\x6E\x65\x6D\x79\x43\x6F\x6C\x6C\x69\x73\x69\x6F\x6E","\x72\x65\x6D\x6F\x76\x65","\x72\x65\x6D\x6F\x76\x65\x43\x68\x75\x6E\x6B","\x70\x6C\x61\x79\x65\x72\x20\x64\x65\x61\x64","\x64\x69\x65","\x50\x6C\x61\x79\x65\x72\x20","\x20\x64\x69\x65\x64\x21","\x75\x70\x64\x61\x74\x65\x50\x6F\x73\x69\x74\x69\x6F\x6E","\x69\x6E\x66\x6F\x20\x74\x65\x78\x74\x3A\x20","\x67\x65\x74\x43\x61\x6D\x65\x72\x61","\x70\x6C\x61\x79\x65\x72\x2D\x6C\x61\x62\x65\x6C","\x73\x74\x79\x6C\x65","\x70\x78","\x79","\x76\x69\x73\x69\x62\x69\x6C\x69\x74\x79","\x76\x69\x73\x69\x62\x6C\x65","\x77\x69\x64\x74\x68","\x63\x6F\x6E\x74\x65\x78\x74","\x68\x65\x69\x67\x68\x74","\x75\x70\x64\x61\x74\x65\x4D\x61\x74\x72\x69\x78\x57\x6F\x72\x6C\x64","\x6D\x61\x74\x72\x69\x78\x57\x6F\x72\x6C\x64","\x73\x65\x74\x46\x72\x6F\x6D\x4D\x61\x74\x72\x69\x78\x50\x6F\x73\x69\x74\x69\x6F\x6E","\x70\x72\x6F\x6A\x65\x63\x74","\x73\x65\x65\x20\x6F\x70\x70","\x6F\x70\x70\x6F\x6E\x65\x6E\x74\x2D","\x2D\x6C\x61\x62\x65\x6C","\x70","\x63\x72\x65\x61\x74\x65\x45\x6C\x65\x6D\x65\x6E\x74","\x67\x65\x74\x4E\x61\x6D\x65","\x63\x72\x65\x61\x74\x65\x54\x65\x78\x74\x4E\x6F\x64\x65","\x63\x6C\x61\x73\x73\x4E\x61\x6D\x65","\x6F\x70\x70\x6F\x6E\x65\x6E\x74\x2D\x6C\x61\x62\x65\x6C","\x73\x74\x61\x72\x74\x47\x61\x6D\x65","\x73\x65\x74\x50\x6C\x61\x79\x65\x72\x73","\x63\x72\x65\x61\x74\x65\x57\x6F\x72\x6C\x64","\x75\x70\x64\x61\x74\x65\x50\x6C\x61\x79\x65\x72\x73","\x73\x65\x74\x50\x6C\x61\x79\x65\x72\x44\x65\x61\x64","\x73\x65\x74\x49\x6E\x66\x6F\x54\x65\x78\x74","\x63\x72\x65\x61\x74\x65\x4E\x65\x77\x45\x6E\x65\x6D\x79","\x75\x70\x64\x61\x74\x65\x45\x6E\x65\x6D\x79\x50\x6F\x73\x69\x74\x69\x6F\x6E"];var DungeonHop=DungeonHop||{};DungeonHop[_0x58ec[0]]=function(){_0x58ec[1];var _0xb828x2={},_0xb828x3= new THREE.Scene(),_0xb828x4=document[_0x58ec[3]](_0x58ec[2]),_0xb828x5=document[_0x58ec[3]](_0x58ec[4]),_0xb828x6= new THREE.WebGLRenderer({canvas:_0xb828x4}),_0xb828x7,_0xb828x8,_0xb828x9=Date[_0x58ec[5]](),_0xb828xa,_0xb828xb,_0xb828xc,_0xb828xd={},_0xb828xe=-1,_0xb828xf,_0xb828x10=[],_0xb828x11=[],_0xb828x12,_0xb828x13,_0xb828x14,_0xb828x15=_0x58ec[6];function _0xb828x16(){_0xb828x6[_0x58ec[9]](window[_0x58ec[7]],window[_0x58ec[8]]);_0xb828x6[_0x58ec[10]](0xbb0000,1);document[_0x58ec[13]][_0x58ec[12]](_0xb828x6[_0x58ec[11]]);_0xb828x6[_0x58ec[15]][_0x58ec[14]]=true;_0xb828x6[_0x58ec[16]]=true;_0xb828xb= new THREE.DirectionalLight(0xffaaaa,1);_0xb828xb[_0x58ec[18]][_0x58ec[17]](-1,1.75,1.5);_0xb828xb[_0x58ec[19]]=true;_0xb828xb[_0x58ec[22]][_0x58ec[21]][_0x58ec[20]]= -5;_0xb828xb[_0x58ec[22]][_0x58ec[21]][_0x58ec[23]]=5;_0xb828xb[_0x58ec[22]][_0x58ec[21]][_0x58ec[24]]= -5;_0xb828xb[_0x58ec[22]][_0x58ec[21]][_0x58ec[25]]=5;_0xb828xb[_0x58ec[22]][_0x58ec[21]][_0x58ec[26]]=5;_0xb828xb[_0x58ec[22]][_0x58ec[21]][_0x58ec[27]]= -5;_0xb828x3[_0x58ec[28]](_0xb828xb);var _0xb828x17= new THREE.AmbientLight(0x999999);_0xb828x3[_0x58ec[28]](_0xb828x17)}function _0xb828x18(){var _0xb828x19=Date[_0x58ec[5]]();var _0xb828x1a=_0xb828x19-_0xb828x9;_0xb828x9=_0xb828x19;_0xb828x1a/=1000;return _0xb828x1a}var _0xb828x1b=function(){var _0xb828x1a=_0xb828x18();_0xb828xa[_0x58ec[29]](_0xb828x1a);_0xb828x8[_0x58ec[29]](_0xb828x1a);_0xb828xc[_0x58ec[29]]();requestAnimationFrame(_0xb828x1b);_0xb828x6[_0x58ec[30]](_0xb828x3,_0xb828x8[_0x58ec[21]]);_0xb828x47();_0xb828x3e()};function _0xb828x1c(_0xb828x1d){_0xb828xe=_0xb828x1d;var _0xb828x1e=_0xb828x1f(_0xb828x1d);_0xb828xa= new DungeonHop.Player();_0xb828xc= new DungeonHop.World();_0xb828xc[_0x58ec[31]](_0xb828x3,_0xb828xf,_0xb828xa,_0xb828x14);_0xb828xa[_0x58ec[31]](_0xb828x1e,_0xb828xc,_0xb828x3,_0xb828xd,_0xb828x14,_0xb828xe,_0xb828x10,_0xb828x11);_0xb828x8= new DungeonHop.PlayerCamera();_0xb828x8[_0x58ec[31]](_0xb828xa,_0xb828xd,_0xb828x14);_0xb828x16();_0xb828x14[_0x58ec[35]](_0xb828xa[_0x58ec[33]]()[_0x58ec[32]],_0xb828xa[_0x58ec[33]]()[_0x58ec[34]]);_0xb828x1b();_0xb828x5[_0x58ec[36]]=_0x58ec[37]}function _0xb828x1f(_0xb828x1d){var _0xb828x20,_0xb828x21=[];for(_0xb828x20=0;_0xb828x20<_0xb828xf[_0x58ec[38]];_0xb828x20++){var _0xb828x22=_0xb828xf[_0xb828x20];if(_0xb828x22[_0x58ec[39]]==_0x58ec[40]){var _0xb828x23=_0xb828x22[_0x58ec[41]];var _0xb828x24=_0xb828x22[_0x58ec[42]];_0xb828x21[_0xb828x23]=_0xb828x24}};if(_0xb828x1d<0){var _0xb828x25=Math[_0x58ec[43]]()*_0xb828x21[_0x58ec[38]];_0xb828x25=parseInt(Math[_0x58ec[44]](_0xb828x25));var _0xb828x1e=_0xb828x21[_0xb828x25];return _0xb828x1e[_0x58ec[45]]()}else {var _0xb828x1e=_0xb828x21[_0xb828x1d];return _0xb828x1e[_0x58ec[45]]()}}function _0xb828x26(){var _0xb828x20,_0xb828x21=[];for(_0xb828x20=0;_0xb828x20<_0xb828xf[_0x58ec[38]];_0xb828x20++){var _0xb828x22=_0xb828xf[_0xb828x20];if(_0xb828x22[_0x58ec[39]]==_0x58ec[46]){if(_0xb828x22[_0x58ec[47]]==_0x58ec[48]){var _0xb828x27=_0xb828x22[_0x58ec[42]];return _0xb828x27[_0x58ec[45]]()}}};var _0xb828x25=Math[_0x58ec[43]]()*_0xb828x21[_0x58ec[38]];_0xb828x25=parseInt(Math[_0x58ec[44]](_0xb828x25));var _0xb828x1e=_0xb828x21[_0xb828x25];return _0xb828x1e[_0x58ec[45]]()}function _0xb828x28(_0xb828x20,_0xb828x29,_0xb828x2a,_0xb828x2b){_0xb828x12=_0xb828x20;_0xb828x15=_0xb828x29;_0xb828xf=_0xb828x2a;_0xb828x14=_0xb828x2b;_0xb828xd[_0x58ec[49]]=false;_0xb828x13=document[_0x58ec[3]](_0x58ec[50]);_0xb828x13[_0x58ec[52]](_0x58ec[51],_0xb828x2c)}function _0xb828x2c(){_0xb828x14[_0x58ec[53]]();_0xb828x5[_0x58ec[36]]=_0x58ec[54]}function _0xb828x2d(){_0xb828xd[_0x58ec[49]]=true}function _0xb828x2e(_0xb828x1d,_0xb828x29,_0xb828x2f,_0xb828x30){if(_0xb828x10[_0xb828x1d]==undefined&&_0xb828x1d!=_0xb828xe){console[_0x58ec[56]](_0x58ec[55]);var _0xb828x31= new DungeonHop.Opponent();var _0xb828x22=_0xb828x1f(_0xb828x1d);_0xb828x31[_0x58ec[31]](_0xb828x22,_0xb828x3,_0xb828x2f,_0xb828x30,_0xb828x29);_0xb828x3[_0x58ec[28]](_0xb828x31[_0x58ec[57]]());_0xb828x10[_0xb828x1d]=_0xb828x31}}function _0xb828x32(_0xb828x33,_0xb828x34){_0xb828x5[_0x58ec[36]]=_0xb828x33;setTimeout(function(){if(_0xb828x5[_0x58ec[36]]==_0xb828x33){_0xb828x5[_0x58ec[36]]=_0x58ec[6]}},_0xb828x34*1000)}function _0xb828x35(_0xb828x36){if(_0xb828xa[_0x58ec[33]]()[_0x58ec[34]]>=_0xb828x36){_0xb828xa[_0x58ec[58]]()};for(var _0xb828x20=0;_0xb828x20<_0xb828x11[_0x58ec[38]];_0xb828x20++){var _0xb828x37=_0xb828x11[_0xb828x20];if(_0xb828x37[_0x58ec[33]]()[_0x58ec[34]]>=_0xb828x36){_0xb828x3[_0x58ec[59]](_0xb828x37[_0x58ec[57]]())}};_0xb828xc[_0x58ec[60]](_0xb828x36)}function _0xb828x38(_0xb828x1d){console[_0x58ec[56]](_0x58ec[61]);if(_0xb828x1d==_0xb828xe){_0xb828xa[_0x58ec[62]]()}else {if(_0xb828x10[_0xb828x1d]!=undefined){_0xb828x32(_0x58ec[63]+_0xb828x1d+_0x58ec[64],3);_0xb828x10[_0xb828x1d][_0x58ec[62]]()}}}function _0xb828x39(_0xb828x1d,_0xb828x2f,_0xb828x30){if(_0xb828x10[_0xb828x1d]!=undefined&&_0xb828x1d!=_0xb828xe){_0xb828x10[_0xb828x1d][_0x58ec[65]](_0xb828x2f,_0xb828x30)}}function _0xb828x3a(_0xb828x3b){console[_0x58ec[56]](_0x58ec[66]+_0xb828x3b);_0xb828x5[_0x58ec[36]]=_0xb828x3b}function _0xb828x3c(_0xb828x1d,_0xb828x2f,_0xb828x30){if(_0xb828x11[_0xb828x1d]!=undefined){return};var _0xb828x37= new DungeonHop.Enemy();var _0xb828x22=_0xb828x26();_0xb828x37[_0x58ec[31]](_0xb828x22,_0xb828x2f,_0xb828x30,_0xb828xa);_0xb828x11[_0xb828x1d]=_0xb828x37;_0xb828x3[_0x58ec[28]](_0xb828x37[_0x58ec[57]]())}function _0xb828x3d(_0xb828x1d,_0xb828x2f){var _0xb828x37=_0xb828x11[_0xb828x1d];if(_0xb828x37!=undefined&&_0xb828x37!=null){_0xb828x37[_0x58ec[65]](_0xb828x2f,_0xb828x37[_0x58ec[33]]()[_0x58ec[34]])}}function _0xb828x3e(){var _0xb828x3f=_0xb828x41(_0xb828xa[_0x58ec[57]](),_0xb828x8[_0x58ec[67]]());var _0xb828x40=document[_0x58ec[3]](_0x58ec[68]);_0xb828x40[_0x58ec[69]][_0x58ec[24]]=_0xb828x3f[_0x58ec[32]]+_0x58ec[70];_0xb828x40[_0x58ec[69]][_0x58ec[26]]=_0xb828x3f[_0x58ec[71]]+_0x58ec[70];_0xb828x40[_0x58ec[69]][_0x58ec[72]]=_0x58ec[73]}function _0xb828x41(_0xb828x42,_0xb828x43){var _0xb828x44= new THREE.Vector3();var _0xb828x45=0.5*_0xb828x6[_0x58ec[75]][_0x58ec[2]][_0x58ec[74]];var _0xb828x46=0.5*_0xb828x6[_0x58ec[75]][_0x58ec[2]][_0x58ec[76]];_0xb828x42[_0x58ec[77]]();_0xb828x44[_0x58ec[79]](_0xb828x42[_0x58ec[78]]);_0xb828x44[_0x58ec[80]](_0xb828x43);_0xb828x44[_0x58ec[32]]=(_0xb828x44[_0x58ec[32]]*_0xb828x45)+_0xb828x45;_0xb828x44[_0x58ec[71]]=-(_0xb828x44[_0x58ec[71]]*_0xb828x46)+_0xb828x46;return {x:_0xb828x44[_0x58ec[32]],y:_0xb828x44[_0x58ec[71]]}}function _0xb828x47(){for(var _0xb828x20=0;_0xb828x20<_0xb828x10[_0x58ec[38]];_0xb828x20++){var _0xb828x31=_0xb828x10[_0xb828x20];if(_0xb828x31==undefined){continue};console[_0x58ec[56]](_0x58ec[81]);var _0xb828x3f=_0xb828x41(_0xb828x31[_0x58ec[57]](),_0xb828x8[_0x58ec[67]]());var _0xb828x40=document[_0x58ec[3]](_0x58ec[82]+_0xb828x20+_0x58ec[83]);console[_0x58ec[56]](_0xb828x40);if(_0xb828x40==null){_0xb828x40=document[_0x58ec[85]](_0x58ec[84]);var _0xb828x34=document[_0x58ec[87]](_0xb828x31[_0x58ec[86]]());_0xb828x40[_0x58ec[12]](_0xb828x34);_0xb828x40[_0x58ec[88]]=_0x58ec[89];_0xb828x40[_0x58ec[41]]=_0x58ec[82]+_0xb828x20+_0x58ec[83];document[_0x58ec[13]][_0x58ec[12]](_0xb828x40)}else {_0xb828x40[_0x58ec[69]][_0x58ec[24]]=_0xb828x3f[_0x58ec[32]]+_0x58ec[70];_0xb828x40[_0x58ec[69]][_0x58ec[26]]=_0xb828x3f[_0x58ec[71]]+_0x58ec[70];_0xb828x40[_0x58ec[69]][_0x58ec[72]]=_0x58ec[73]}}}_0xb828x2[_0x58ec[90]]=_0xb828x2d;_0xb828x2[_0x58ec[91]]=_0xb828x2e;_0xb828x2[_0x58ec[92]]=_0xb828x1c;_0xb828x2[_0x58ec[93]]=_0xb828x39;_0xb828x2[_0x58ec[60]]=_0xb828x35;_0xb828x2[_0x58ec[94]]=_0xb828x38;_0xb828x2[_0x58ec[95]]=_0xb828x3a;_0xb828x2[_0x58ec[96]]=_0xb828x3c;_0xb828x2[_0x58ec[97]]=_0xb828x3d;_0xb828x2[_0x58ec[31]]=_0xb828x28;return _0xb828x2}
+/*
+ global THREE
+ */
+
+var DungeonHop = DungeonHop || {};
+DungeonHop.GameInstance = function () {
+    "use strict";
+    /* eslint-env browser  */
+    var that = {},
+        scene = new THREE.Scene(),
+        canvas = document.getElementById("canvas"),
+        infoText = document.getElementById("info-text"),
+        renderer,
+        cameraObj,
+        lastTime = Date.now(),
+        player,
+        directionalLight,
+        world,
+        gameStatus = {},
+        playerId = -1,
+        models,
+        opponentPlayers = [],
+        enemies = [],
+        ip,
+        startButton,
+        serverInterface,
+        playerName = " ";
+
+
+    //creates a new scene with light and shadow
+    function setScene() {
+
+        //directional light
+        directionalLight = new THREE.DirectionalLight(0xffaaaa, 1);
+        directionalLight.position.set(-1, 1.75, 1.5);
+        directionalLight.castShadow = true;
+        directionalLight.shadow.camera.near = -5;
+        directionalLight.shadow.camera.far = 5;
+
+        directionalLight.shadow.camera.left = -5;
+        directionalLight.shadow.camera.right = 5;
+        directionalLight.shadow.camera.top = 5;
+        directionalLight.shadow.camera.bottom = -5;
+
+        scene.add(directionalLight);
+
+        var light = new THREE.AmbientLight(0x999999); // soft white light
+        scene.add(light);
+    }
+
+    //calculates the time between the frames
+    function getDeltaTime() {
+        var actualTime = Date.now();
+        var delta = actualTime - lastTime;
+        lastTime = actualTime;
+        delta /= 1000;
+        return delta;
+    }
+
+    //renders the scene every frame
+    var render = function () {
+        //waitForStart();
+        var delta = getDeltaTime();
+        player.update(delta);
+        cameraObj.update(delta);
+        world.update();
+        requestAnimationFrame(render);
+        renderer.render(scene, cameraObj.camera);
+        showOpponentLabels();
+        showPlayerLabels();
+    };
+
+    function createWorld(id) {
+        playerId = id;
+        var playerModel = getPlayerModel(id);
+        player = new DungeonHop.Player();
+
+        world = new DungeonHop.World();
+        world.init(scene, models, player, serverInterface);
+
+        player.init(playerModel, world,scene, gameStatus, serverInterface, playerId, opponentPlayers, enemies);
+
+        cameraObj = new DungeonHop.PlayerCamera();
+        cameraObj.init(player, gameStatus,serverInterface);
+
+        setScene();
+        serverInterface.setLoaded(player.getPosition().x, player.getPosition().z);
+        render();
+
+        infoText.innerHTML = "PRESS START IF YOU ARE READY";
+    }
+
+    function getPlayerModel(id) {
+        var i, players = [];
+        //get all player models
+        for (i = 0; i < models.length; i++) {
+            var model = models[i];
+            if (model["type"] == "players") {
+                var modelId = model["id"];
+                var modelObject = model["object"];
+                players[modelId] = modelObject;
+            }
+        }
+
+        if(id < 0) {
+            //get random player model
+            var r = Math.random() * players.length;
+            r = parseInt(Math.floor(r));
+            var playerModel = players[r];
+            return playerModel.clone();
+        }
+        else {
+            var playerModel = players[id];
+            return playerModel.clone();
+        }
+    }
+
+    function getEnemyModel() {
+        var i, players = [];
+        //get all player models
+        for (i = 0; i < models.length; i++) {
+            var model = models[i];
+            if (model["type"] == "enemies") {
+                if(model["name"] == "geckocube"){
+                    var enemyModel = model["object"];
+                    return enemyModel.clone();
+                }
+            }
+        }
+
+        //get random player model
+        var r = Math.random() * players.length;
+        r = parseInt(Math.floor(r));
+        var playerModel = players[r];
+        return playerModel.clone();
+
+    }
+
+    /*
+    function loaded(mdls) {
+        models = mdls;
+        //connectToServer();
+        serverInterface = new DungeonHop.ServerInterface();
+        serverInterface.init(that, ip,playerName);
+        infoText.innerHTML = "CONNECTING TO SERVER";
+    }
+    */
+
+    function init(i,name,mdls,srv,rend){
+        renderer = rend;
+        ip = i;
+        playerName = name;
+        models = mdls;
+        serverInterface = srv;
+        gameStatus.active = false;
+        startButton = document.getElementById("start");
+        startButton.addEventListener("click", startClicked);
+    }
+
+    /*
+    function init(i,name) {
+        infoText.innerHTML = "LOADING...";
+        startButton = document.getElementById("start");
+        startButton.addEventListener("click", startClicked);
+        ip = i;
+        playerName = name;
+        gameStatus.active = false;
+        modelManager = new DungeonHop.ModelManager();
+        modelManager.init(this);
+    }
+    */
+
+    function startClicked() {
+        serverInterface.setReady();
+        infoText.innerHTML = "Waiting for other Players";
+    }
+
+    function startGame() {
+        gameStatus.active = true;
+    }
+
+    function setPlayers(id,name, xPos, zPos) {
+        if (opponentPlayers[id] == undefined && id != playerId) {
+            console.log("added new player");
+            var opponent = new DungeonHop.Opponent();
+            var model = getPlayerModel(id);
+            opponent.init(model,scene, xPos, zPos,name);
+            scene.add(opponent.getObject());
+            opponentPlayers[id] = opponent;
+        }
+    }
+
+    function showInfoForTime(info,t){
+        infoText.innerHTML = info;
+        setTimeout(function() {
+            if(infoText.innerHTML == info){
+                infoText.innerHTML = " ";
+            }
+        }, t*1000);
+    }
+
+    function removeChunk(pos) {
+        //check if player is outside
+        if(player.getPosition().z >= pos){
+            //not the right one but with this event, he also dies
+            player.informEnemyCollision();
+        }
+        //check if enemies are outside
+        for(var i = 0; i < enemies.length; i++){
+            var enemy = enemies[i];
+            if (enemy.getPosition().z >= pos){
+                scene.remove(enemy.getObject());
+            }
+        }
+        world.removeChunk(pos);
+    }
+
+    function setPlayerDead(id) {
+        console.log("player dead");
+        if (id == playerId) {
+            player.die();
+        }
+        else if (opponentPlayers[id] != undefined) {
+            showInfoForTime("Player "+id+" died!",3);
+            opponentPlayers[id].die();
+        }
+    }
+
+    function updatePlayers(id, xPos, zPos) {
+        if (opponentPlayers[id] != undefined && id != playerId) {
+            opponentPlayers[id].updatePosition(xPos, zPos);
+        }
+    }
+
+    function setInfoText(text) {
+        console.log("info text: " + text);
+        infoText.innerHTML = text;
+    }
+
+    function createNewEnemy(id, xPos, zPos) {
+        if (enemies[id] != undefined) {
+            return;
+        }
+        var enemy = new DungeonHop.Enemy();
+        var model = getEnemyModel();
+        enemy.init(model, xPos, zPos, player);
+        enemies[id] = enemy;
+        scene.add(enemy.getObject());
+    }
+
+    function updateEnemyPosition(id, xPos) {
+        var enemy = enemies[id];
+        if (enemy != undefined && enemy != null) {
+            enemy.updatePosition(xPos, enemy.getPosition().z);
+        }
+    }
+
+    //http://stackoverflow.com/questions/27409074/three-js-converting-3d-position-to-2d-screen-position-r69
+    function showPlayerLabels() {
+        var proj = toScreenPosition(player.getObject(), cameraObj.getCamera());
+        var label = document.getElementById("player-label");
+        label.style.left = proj.x + 'px';
+        label.style.top = proj.y + 'px';
+        label.style.visibility = "visible";
+    }
+
+    function toScreenPosition(obj, camera)
+    {
+        var vector = new THREE.Vector3();
+
+        var widthHalf = 0.5*renderer.context.canvas.width;
+        var heightHalf = 0.5*renderer.context.canvas.height;
+
+        obj.updateMatrixWorld();
+        vector.setFromMatrixPosition(obj.matrixWorld);
+        vector.project(camera);
+
+        vector.x = ( vector.x * widthHalf ) + widthHalf;
+        vector.y = - ( vector.y * heightHalf ) + heightHalf;
+
+        return {
+            x: vector.x,
+            y: vector.y
+        };
+
+    }
+
+    function showOpponentLabels(){
+        for(var i = 0; i < opponentPlayers.length; i++) {
+            var opponent = opponentPlayers[i];
+            if(opponent == undefined){
+                continue;
+            }
+            var proj = toScreenPosition(opponent.getObject() ,cameraObj.getCamera());
+            var label = document.getElementById("opponent-"+i+"-label");
+            if(label == null){
+                label = document.createElement("p");
+                var t = document.createTextNode(opponent.getName());
+                label.appendChild(t);
+                label.className = "opponent-label";
+                label.id = "opponent-"+i+"-label";
+                document.body.appendChild(label);
+            }else {
+                label.style.left = proj.x + 'px';
+                label.style.top = proj.y + 'px';
+                label.style.visibility = "visible";
+            }
+        }
+    }
+
+    function destroy(){
+        for( var i = scene.children.length - 1; i >= 0; i--) {
+            var obj = scene.children[i];
+            //renderer.deallocateObject(obj);
+            scene.remove(obj);
+        }
+    }
+
+    that.startGame = startGame;
+    that.setPlayers = setPlayers;
+    that.createWorld = createWorld;
+    that.updatePlayers = updatePlayers;
+    that.removeChunk = removeChunk;
+    that.setPlayerDead = setPlayerDead;
+    that.setInfoText = setInfoText;
+    that.createNewEnemy = createNewEnemy;
+    that.updateEnemyPosition = updateEnemyPosition;
+    that.init = init;
+    that.destroy = destroy;
+    return that;
+};

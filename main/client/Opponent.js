@@ -1,1 +1,118 @@
-var _0x9ffe=["\x4F\x70\x70\x6F\x6E\x65\x6E\x74","\x75\x73\x65\x20\x73\x74\x72\x69\x63\x74","\x63\x61\x73\x74\x53\x68\x61\x64\x6F\x77","\x72\x65\x63\x65\x69\x76\x65\x53\x68\x61\x64\x6F\x77","\x79","\x70\x6F\x73\x69\x74\x69\x6F\x6E","\x78","\x7A","\x72\x6F\x75\x6E\x64","\x72\x6F\x74\x61\x74\x69\x6F\x6E","\x50\x49","\x75\x70\x64\x61\x74\x65\x64\x20\x6F\x70\x70\x6F\x6E\x65\x6E\x74\x20\x70\x6F\x73\x69\x74\x69\x6F\x6E","\x6C\x6F\x67","\x72\x65\x6D\x6F\x76\x65","\x73\x6B\x75\x6C\x6C","\x69\x6E\x69\x74","\x61\x64\x64","\x67\x65\x74\x4F\x62\x6A\x65\x63\x74","\x67\x65\x74\x50\x6F\x73\x69\x74\x69\x6F\x6E","\x75\x70\x64\x61\x74\x65\x50\x6F\x73\x69\x74\x69\x6F\x6E","\x64\x69\x65","\x67\x65\x74\x4E\x61\x6D\x65"];var DungeonHop=DungeonHop||{};DungeonHop[_0x9ffe[0]]=function(){_0x9ffe[1];var _0x7202x2={},_0x7202x3,_0x7202x4,_0x7202x5= new THREE.Vector3(),_0x7202x6,_0x7202x7,_0x7202x8=0,_0x7202x9,_0x7202xa;function _0x7202xb(_0x7202xc,_0x7202xd,_0x7202xe){_0x7202x3=_0x7202xc;_0x7202x3[_0x9ffe[2]]=true;_0x7202x3[_0x9ffe[3]]=false;_0x7202x3[_0x9ffe[5]][_0x9ffe[4]]=0;_0x7202x3[_0x9ffe[5]][_0x9ffe[6]]=_0x7202xd;_0x7202x3[_0x9ffe[5]][_0x9ffe[7]]=_0x7202xe}function _0x7202xf(){return _0x7202x3[_0x9ffe[5]]}function _0x7202x10(){return _0x7202x3}function _0x7202x11(_0x7202xc,_0x7202x12,_0x7202xd,_0x7202xe,_0x7202x13){_0x7202x9=_0x7202x12;_0x7202xb(_0x7202xc,_0x7202xd,_0x7202xe);_0x7202xa=_0x7202x13;_0x7202x4= new THREE.Vector3(_0x7202xd,0,_0x7202xe)}function _0x7202x14(_0x7202x15,_0x7202xd,_0x7202xe,_0x7202x16){setTimeout(function(){if(_0x7202x16!=_0x7202x8){return};_0x7202x15--;_0x7202x3[_0x9ffe[5]][_0x9ffe[6]]+=_0x7202xd/10;_0x7202x3[_0x9ffe[5]][_0x9ffe[7]]+=_0x7202xe/10;_0x7202x3[_0x9ffe[5]][_0x9ffe[4]]=_0x7202x15/10;if(_0x7202x15>0){_0x7202x14(_0x7202x15,_0x7202xd,_0x7202xe,_0x7202x16)}else {_0x7202x3[_0x9ffe[5]][_0x9ffe[6]]=Math[_0x9ffe[8]](_0x7202x3[_0x9ffe[5]][_0x9ffe[6]]);_0x7202x3[_0x9ffe[5]][_0x9ffe[7]]=Math[_0x9ffe[8]](_0x7202x3[_0x9ffe[5]][_0x9ffe[7]])}},10)}function _0x7202x17(){if(_0x7202x5[_0x9ffe[6]]== -1){_0x7202x3[_0x9ffe[9]][_0x9ffe[4]]=Math[_0x9ffe[10]]/2};if(_0x7202x5[_0x9ffe[6]]==1){_0x7202x3[_0x9ffe[9]][_0x9ffe[4]]=-Math[_0x9ffe[10]]/2};if(_0x7202x5[_0x9ffe[7]]== -1){_0x7202x3[_0x9ffe[9]][_0x9ffe[4]]=0};if(_0x7202x5[_0x9ffe[7]]==1){_0x7202x3[_0x9ffe[9]][_0x9ffe[4]]=Math[_0x9ffe[10]]}}function _0x7202x18(_0x7202xd,_0x7202xe){_0x7202x3[_0x9ffe[5]][_0x9ffe[4]]=0;_0x7202x3[_0x9ffe[5]][_0x9ffe[6]]=_0x7202x4[_0x9ffe[6]];_0x7202x3[_0x9ffe[5]][_0x9ffe[7]]=_0x7202x4[_0x9ffe[7]];var _0x7202x19=_0x7202xd-_0x7202x4[_0x9ffe[6]],_0x7202x1a=_0x7202xe-_0x7202x4[_0x9ffe[7]];_0x7202x8++;_0x7202x14(10,_0x7202x19,_0x7202x1a,_0x7202x8);_0x7202x5[_0x9ffe[6]]=_0x7202xd-_0x7202x4[_0x9ffe[6]];_0x7202x5[_0x9ffe[7]]=_0x7202xe-_0x7202x4[_0x9ffe[7]];_0x7202x17();_0x7202x4[_0x9ffe[6]]=_0x7202xd;_0x7202x4[_0x9ffe[7]]=_0x7202xe;console[_0x9ffe[12]](_0x9ffe[11])}function _0x7202x1b(){_0x7202x9[_0x9ffe[13]](_0x7202x3);setTimeout(function(){var _0x7202x1c= new DungeonHop.Particles(),_0x7202x1d=_0x7202x1c[_0x9ffe[15]](_0x7202xf()[_0x9ffe[6]],1,_0x7202xf()[_0x9ffe[7]],_0x9ffe[14]);_0x7202x9[_0x9ffe[16]](_0x7202x1d);setTimeout(function(){_0x7202x9[_0x9ffe[13]](_0x7202x1d)},4000)},200)}function _0x7202x1e(){return _0x7202xa}_0x7202x2[_0x9ffe[15]]=_0x7202x11;_0x7202x2[_0x9ffe[17]]=_0x7202x10;_0x7202x2[_0x9ffe[18]]=_0x7202xf;_0x7202x2[_0x9ffe[19]]=_0x7202x18;_0x7202x2[_0x9ffe[20]]=_0x7202x1b;_0x7202x2[_0x9ffe[21]]=_0x7202x1e;return _0x7202x2}
+var DungeonHop = DungeonHop || {};
+DungeonHop.Opponent = function () {
+	"use strict";
+    /* eslint-env browser  */
+    var that = {},
+        object,
+        oldPosition,
+        moveDirection = new THREE.Vector3(),
+        playerId,
+        server,
+        animationNum = 0,
+        scene,
+        name;
+
+
+    //load the player model (a cube for testing)
+    function loadPlayer(geometry, x, z) {
+        object = geometry;
+        object.castShadow = true;
+        object.receiveShadow = false;
+        object.position.y = 0;
+        object.position.x = x;
+        object.position.z = z;
+    }
+
+    function getPosition() {
+        return object.position;
+    }
+
+    function getObject() {
+        return object;
+    }
+
+    function init(geometry, scn, x, z,n) {
+        scene = scn;
+        loadPlayer(geometry, x, z);
+        name = n;
+        oldPosition = new THREE.Vector3(x, 0, z);
+    }
+
+    function movePosition(t, x, z, anNum) {
+        setTimeout(function () {
+            if (anNum != animationNum) {
+                return;
+            }
+            t--;
+            object.position.x += x /  10;
+            object.position.z += z / 10;
+            object.position.y = t / 10;
+            if (t > 0) {
+                movePosition(t, x, z,  anNum);
+            } else {
+                object.position.x = Math.round(object.position.x);
+                object.position.z = Math.round(object.position.z);
+            }
+
+        }, 10);
+    }
+
+    function rotate() {
+        if (moveDirection.x == -1) {
+            //left
+            object.rotation.y = Math.PI / 2;
+        }
+        if (moveDirection.x == 1) {
+            //left
+            object.rotation.y = -Math.PI / 2;
+        }
+        if (moveDirection.z == -1) {
+            //forward
+            object.rotation.y = 0;
+        }
+        if (moveDirection.z == 1) {
+            //backward
+            object.rotation.y = Math.PI;
+        }
+    }
+
+    function updatePosition(x,z)  {
+        object.position.y = 0;
+        object.position.x = oldPosition.x;
+        object.position.z = oldPosition.z;
+        var newX = x- oldPosition.x,
+			newZ = z - oldPosition.z;
+        animationNum++;
+        movePosition(10, newX, newZ, animationNum);
+        moveDirection.x = x - oldPosition.x;
+        moveDirection.z = z - oldPosition.z;
+        rotate();
+        oldPosition.x = x;
+        oldPosition.z = z;
+        console.log("updated opponent position");
+    }
+
+    function die() {
+        scene.remove(object);
+        setTimeout(function () {
+            var particles = new DungeonHop.Particles(),
+				particleSystem = particles.init(getPosition().x, 1, getPosition().z, "skull");
+            scene.add(particleSystem);
+            setTimeout(function () {
+                scene.remove(particleSystem);
+            }, 4000);
+        }, 200);
+    }
+
+    function getName(){
+        return name;
+    }
+
+    that.init = init;
+    that.getObject = getObject;
+    that.getPosition = getPosition;
+    that.updatePosition = updatePosition;
+    that.die = die;
+    that.getName = getName;
+    return that;
+};

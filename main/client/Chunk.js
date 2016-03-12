@@ -1,1 +1,139 @@
-var _0x92b7=["\x43\x68\x75\x6E\x6B","\x75\x73\x65\x20\x73\x74\x72\x69\x63\x74","\x7A","\x70\x6F\x73\x69\x74\x69\x6F\x6E","\x79","\x78","\x63\x61\x73\x74\x53\x68\x61\x64\x6F\x77","\x72\x65\x63\x65\x69\x76\x65\x53\x68\x61\x64\x6F\x77","\x70\x75\x73\x68","\x63\x6C\x6F\x6E\x65","\x6F\x62\x73\x74\x61\x63\x6C\x65\x20\x69\x64\x3A\x20","\x6C\x6F\x67","\x72\x6F\x74\x61\x74\x69\x6F\x6E","\x50\x49","\x6C\x65\x6E\x67\x74\x68","\x61\x64\x64","\x67\x65\x74\x43\x68\x75\x6E\x6B\x41\x74","\x64\x65\x73\x74\x72\x6F\x79\x69\x6E\x67","\x72\x65\x6D\x6F\x76\x65","\x69\x6E\x69\x74","\x64\x65\x73\x74\x72\x6F\x79\x43\x68\x75\x6E\x6B"];var DungeonHop=DungeonHop||{};DungeonHop[_0x92b7[0]]=function(){_0x92b7[1];var _0xb214x2={},_0xb214x3=[],_0xb214x4=[],_0xb214x5=24,_0xb214x6=16,_0xb214x7,_0xb214x8,_0xb214x9,_0xb214xa,_0xb214xb;function _0xb214xc(_0xb214xa){var _0xb214xd= new THREE.BoxGeometry(_0xb214x5,0.5,1),_0xb214xe= new THREE.MeshLambertMaterial({color:0x999999}),_0xb214xf= new THREE.Mesh(_0xb214xd,_0xb214xe);_0xb214xf[_0x92b7[3]][_0x92b7[2]]=_0xb214xa;_0xb214xf[_0x92b7[3]][_0x92b7[4]]= -0.25;_0xb214xf[_0x92b7[3]][_0x92b7[5]]=_0xb214x5/2-0.5;_0xb214xf[_0x92b7[6]]=false;_0xb214xf[_0x92b7[7]]=true;_0xb214x3[_0x92b7[8]](_0xb214xf)}function _0xb214x10(_0xb214xa){var _0xb214xd= new THREE.BoxGeometry(_0xb214x5,0.1,1),_0xb214xe= new THREE.MeshLambertMaterial({color:0xbb0000}),_0xb214xf= new THREE.Mesh(_0xb214xd,_0xb214xe);_0xb214xf[_0x92b7[3]][_0x92b7[2]]=_0xb214xa;_0xb214xf[_0x92b7[3]][_0x92b7[4]]= -0.25;_0xb214xf[_0x92b7[3]][_0x92b7[5]]=_0xb214x5/2-0.5;_0xb214x3[_0x92b7[8]](_0xb214xf)}function _0xb214x11(_0xb214xa,_0xb214x12){var _0xb214xd= new THREE.BoxGeometry(_0xb214x6,3,1),_0xb214xe= new THREE.MeshLambertMaterial({color:0x444444}),_0xb214xf= new THREE.Mesh(_0xb214xd,_0xb214xe);_0xb214xf[_0x92b7[3]][_0x92b7[2]]=_0xb214xa;_0xb214xf[_0x92b7[3]][_0x92b7[4]]=0;_0xb214xf[_0x92b7[3]][_0x92b7[5]]=-_0xb214x6/2-0.5+_0xb214x12;_0xb214x3[_0x92b7[8]](_0xb214xf)}function _0xb214x13(_0xb214xa,_0xb214x14){var _0xb214x15=_0xb214x14;var _0xb214x16;var _0xb214x17;for(_0xb214x16=0;_0xb214x16<_0xb214x5;_0xb214x16++){_0xb214x4[_0xb214x16]=_0xb214x15[_0xb214x16];if(_0xb214x15[_0xb214x16]>=0){_0xb214x17=_0xb214x7[_0xb214x15[_0xb214x16]][_0x92b7[9]]();_0xb214x17[_0x92b7[3]][_0x92b7[2]]=_0xb214xa;_0xb214x17[_0x92b7[3]][_0x92b7[5]]=_0xb214x16;_0xb214x17[_0x92b7[6]]=true;_0xb214x17[_0x92b7[7]]=false;_0xb214x3[_0x92b7[8]](_0xb214x17)};if(_0xb214x15[_0xb214x16]<= -3){var _0xb214x18=(_0xb214x15[_0xb214x16]+3)*(-1);console[_0x92b7[11]](_0x92b7[10]+_0xb214x18);_0xb214x17=_0xb214x7[_0xb214x18][_0x92b7[9]]();_0xb214x17[_0x92b7[3]][_0x92b7[2]]=_0xb214xa;_0xb214x17[_0x92b7[3]][_0x92b7[5]]=_0xb214x16;_0xb214x17[_0x92b7[12]][_0x92b7[5]]=Math[_0x92b7[13]];_0xb214x17[_0x92b7[6]]=true;_0xb214x17[_0x92b7[7]]=false;_0xb214x3[_0x92b7[8]](_0xb214x17)}}}function _0xb214x19(_0xb214x9){var _0xb214x16;for(_0xb214x16=0;_0xb214x16<_0xb214x3[_0x92b7[14]];_0xb214x16++){_0xb214x9[_0x92b7[15]](_0xb214x3[_0xb214x16])}}function _0xb214x1a(_0xb214x1b,_0xb214x1c,_0xb214x1d,_0xb214x1e,_0xb214x1f){_0xb214x8=_0xb214x1e;_0xb214x7=_0xb214x1d;_0xb214x9=_0xb214x1b;_0xb214xa=_0xb214x1c;_0xb214xb=_0xb214x1f;_0xb214x8[_0x92b7[16]](_0xb214xa,_0xb214x20)}function _0xb214x20(_0xb214x21){_0xb214x22(_0xb214x21);_0xb214xb(_0xb214x4,_0xb214xa,_0xb214x2)}function _0xb214x22(_0xb214x14){var _0xb214x23=_0xb214x14[_0xb214x5];if(_0xb214x23==0){_0xb214xc(_0xb214xa)}else {_0xb214x10(_0xb214xa)};_0xb214x11(_0xb214xa,0);_0xb214x11(_0xb214xa,_0xb214x5+_0xb214x6);_0xb214x13(_0xb214xa,_0xb214x14);_0xb214x19(_0xb214x9)}function _0xb214x24(_0xb214x9){console[_0x92b7[11]](_0x92b7[17]);var _0xb214x16;for(_0xb214x16=0;_0xb214x16<_0xb214x3[_0x92b7[14]];_0xb214x16++){_0xb214x9[_0x92b7[18]](_0xb214x3[_0xb214x16])}}_0xb214x2[_0x92b7[19]]=_0xb214x1a;_0xb214x2[_0x92b7[20]]=_0xb214x24;return _0xb214x2}
+/**
+ * Created by laurin on 23.02.16.
+ */
+var DungeonHop = DungeonHop || {};
+DungeonHop.Chunk = function () {
+	"use strict";
+    /* eslint-env browser  */
+    var that = {},
+		objects = [],
+        matrix = [],
+		chunkSize = 24,
+		borderSize = 16,
+        obstacleModels,
+        serverInterface,
+        scene,
+        zPosition,
+        worldCallbackFunction;
+
+    function addGround(zPosition) {
+        var geometry = new THREE.BoxGeometry(chunkSize, 0.5, 1),
+			material = new THREE.MeshLambertMaterial({ color: 0x999999}),
+			mesh = new THREE.Mesh(geometry, material);
+        mesh.position.z = zPosition;
+        mesh.position.y = -0.25;
+        mesh.position.x = chunkSize / 2 - 0.5;
+
+        mesh.castShadow = false;
+        mesh.receiveShadow = true;
+
+        objects.push(mesh);
+    }
+
+    function addLava(zPosition) {
+        var geometry = new THREE.BoxGeometry(chunkSize, 0.1, 1),
+            material = new THREE.MeshLambertMaterial({ color: 0xbb0000}),
+            mesh = new THREE.Mesh(geometry, material);
+        mesh.position.z = zPosition;
+        mesh.position.y = -0.25;
+        mesh.position.x = chunkSize / 2 - 0.5;
+        objects.push(mesh);
+    }
+
+    //adds a wall on the side of the dungeon
+    function addWall(zPosition,xPosition){
+        var geometry = new THREE.BoxGeometry(borderSize, 3, 1),
+            material = new THREE.MeshLambertMaterial({ color: 0x444444}),
+            mesh = new THREE.Mesh(geometry, material);
+        mesh.position.z = zPosition;
+        mesh.position.y = 0;
+        mesh.position.x = -borderSize/2 -0.5 + xPosition;
+        objects.push(mesh);
+    }
+
+    //requests the wanted chunk from the server
+    //creates a new matrix for collision and adds the object the array
+    function addObstacles(zPosition,chunk) {
+        var obstacles = chunk;
+        var i;
+        var obstacle;
+        for(i = 0; i < chunkSize; i++){
+            matrix[i] = obstacles[i];
+            if(obstacles[i] >= 0) {
+                obstacle = obstacleModels[obstacles[i]].clone();
+                obstacle.position.z = zPosition;
+                obstacle.position.x = i;
+
+                obstacle.castShadow = true;
+                obstacle.receiveShadow = false;
+
+                objects.push(obstacle);
+            }
+            if(obstacles[i] <= -3) {
+                var obstacleId = (obstacles[i] +3)*(-1);
+                console.log("obstacle id: "+obstacleId);
+                obstacle = obstacleModels[obstacleId].clone();
+                obstacle.position.z = zPosition;
+                obstacle.position.x = i;
+                obstacle.rotation.x = Math.PI;
+
+                obstacle.castShadow = true;
+                obstacle.receiveShadow = false;
+
+                objects.push(obstacle);
+            }
+        }
+    }
+
+    //adds the models to the visual scene
+    function addToScene(scene) {
+        var i;
+        for (i = 0; i < objects.length; i++) {
+            scene.add(objects[i]);
+        }
+    }
+	
+	function init(sc, zPos, obstacleMdls,srv,func) {
+        serverInterface = srv;
+        obstacleModels = obstacleMdls;
+        scene = sc;
+        zPosition = zPos;
+        worldCallbackFunction = func;
+        //var chunk = server.getChunkAt(zPosition);
+        serverInterface.getChunkAt(zPosition,onCallback);
+    }
+
+    function onCallback(result) {
+        initChunk(result);
+        worldCallbackFunction(matrix,zPosition,that);
+    }
+
+
+    function initChunk(chunk){
+        var groundType = chunk[chunkSize];
+        if(groundType == 0) {
+            addGround(zPosition);
+        }else{
+            addLava(zPosition);
+        }
+        addWall(zPosition,0);
+        addWall(zPosition,chunkSize+borderSize);
+        addObstacles(zPosition,chunk);
+        addToScene(scene);
+    }
+
+    function destroyChunk(scene){
+        console.log("destroying");
+        var i;
+        for (i = 0; i < objects.length; i++) {
+            scene.remove(objects[i]);
+        }
+    }
+
+
+
+    that.init = init;
+    that.destroyChunk = destroyChunk;
+    return that;
+
+};
