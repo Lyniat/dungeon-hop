@@ -88,7 +88,7 @@ DungeonHop.GameInstance = function () {
         serverInterface.setLoaded(player.getPosition().x, player.getPosition().z);
         render();
 
-        infoText.innerHTML = "PRESS START IF YOU ARE READY";
+        infoText.innerHTML = "PRESS START IF YOU ARE READY, "+playerName;
     }
 
     function getPlayerModel(id) {

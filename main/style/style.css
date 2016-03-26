@@ -72,6 +72,12 @@ nav.navbar.navbar-inverse.navbar-fixed-top {
 }
 .gameinfo{
     margin-left:-140px;
+    display: inline-flex;
+    color:#fff;
+}
+.nav h5{
+    color:#fff;
+    margin:16px 10px 0 0;
 }
 
 .player-label{
@@ -105,8 +111,15 @@ nav.navbar.navbar-inverse.navbar-fixed-top {
     transform: translate(-50%, -50%);
     z-index: 10;
     color:#fff;
-	background-color: transparent;
+	background-color: rgba(69,40,14, 0.9);
+    
+    padding:50px;
     z-index: 10;
+    width: 100%
+    border-radius: 3px 3px 3px 3px;
+    -moz-border-radius: 3px 3px 3px 3px;
+    -webkit-border-radius: 3px 3px 3px 3px;
+    border: 1px solid #45280E;
 
 
 }
@@ -117,9 +130,16 @@ nav.navbar.navbar-inverse.navbar-fixed-top {
     text-align: center;
     float: left;
     margin-right: 40px;
-    margin-top: 8px;
+    margin-top: 4px;
     background-color:#8B572A;
-    padding:8px 12px 0px 12px;
+    padding:8px 22px 0px 22px;
+    border-radius: 3px 3px 3px 3px;
+    -moz-border-radius: 3px 3px 3px 3px;
+    -webkit-border-radius: 3px 3px 3px 3px;
+    border: 1px solid #45280E;
+    -webkit-box-shadow: inset 0px 0px 5px 0px rgba(0,0,0,0.75);
+-moz-box-shadow: inset 0px 0px 5px 0px rgba(0,0,0,0.75);
+box-shadow: inset 0px 0px 5px 0px rgba(0,0,0,0.75);
 }
 
 /******************/
