@@ -44,8 +44,8 @@ DungeonHop.World = function () {
     }
 
     function init(sc, mdls, pl, srv) {
-        serverInterface = srv;
         var z;
+        serverInterface = srv;
         player = pl;
         models = mdls;
         scene = sc;
@@ -56,12 +56,15 @@ DungeonHop.World = function () {
     }
 
     function getObstacleModels() {
-        var i;
+        var i,
+            model,
+            modelId,
+            modelObject;
         for (i = 0; i < models.length; i++) {
-            var model = models[i];
+            model = models[i];
             if (model["type"] == "obstacles") {
-                var modelId = model["id"],
-					modelObject = model["object"];
+                modelId = model["id"];
+                modelObject = model["object"];
                 obstacleModels[modelId] = modelObject;
             }
         }

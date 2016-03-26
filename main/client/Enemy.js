@@ -1,3 +1,6 @@
+/*
+ global THREE
+ */
 var DungeonHop = DungeonHop || {};
 DungeonHop.Enemy = function () {
     var that = {},
@@ -82,11 +85,13 @@ DungeonHop.Enemy = function () {
     }
 
     function updatePosition(x,z){
+        var newX,
+            newZ;
         object.position.y = 0;
         object.position.x = oldPosition.x;
         object.position.z = oldPosition.z;
-        var newX = x- oldPosition.x;
-        var newZ = z - oldPosition.z;
+        newX = x- oldPosition.x;
+        newZ = z - oldPosition.z;
         checkPlayerCollision(newX,newZ);
         animationNum++;
         movePosition(10,newX,newZ,animationNum);

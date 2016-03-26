@@ -1,25 +1,27 @@
-/**
- * Created by laurin on 22.02.16.
+/*
+ global THREE
  */
 var DungeonHop = DungeonHop || {};
 DungeonHop.ModelManager = function () {
-	"use strict";
+    "use strict";
     /* eslint-env browser  */
     var that = {},
-		mainApp,
-		models = [],
-		loadedModels = 0,
+        mainApp,
+        models = [],
+        loadedModels = 0,
         modelAmount;
-	
-	function objectsLoaded() {
+
+    function objectsLoaded() {
         loadedModels++;
         if (loadedModels == modelAmount) {
             mainApp.loaded(models);
         }
     }
-	
+
     function loadJSON(path, type, id) {
-        var loader = new THREE.JSONLoader();
+        var loader = new THREE.JSONLoader(),
+            name,
+            object;
 
         // load a resource
         loader.load(
@@ -28,12 +30,12 @@ DungeonHop.ModelManager = function () {
             //when resource is loaded
             function (geometry, materials) {
                 var material = new THREE.MultiMaterial(materials),
-					mesh = new THREE.Mesh(geometry, material);
+                    mesh = new THREE.Mesh(geometry, material);
                 mesh.scale.set(1 / 16, 1 / 16, 1 / 16);
 
-                var name = path.split("/")[1];
+                name = path.split("/")[1];
 
-                var object = {object: mesh, type: type, name: name, id: id};
+                object = {object: mesh, type: type, name: name, id: id};
 
                 models.push(object);
                 objectsLoaded();
@@ -43,26 +45,30 @@ DungeonHop.ModelManager = function () {
 
     //http://stackoverflow.com/questions/14388452/how-do-i-load-a-json-object-from-a-file-with-ajax
     function fetchJSONFile(path, callback) {
-        var httpRequest = new XMLHttpRequest();
+        var httpRequest = new XMLHttpRequest(),
+            data;
         httpRequest.onreadystatechange = function () {
             if (httpRequest.readyState === 4) {
                 if (httpRequest.status === 200) {
-                    var data = JSON.parse(httpRequest.responseText);
+                    data = JSON.parse(httpRequest.responseText);
                     if (callback) {
-						callback(data);
-					}
-				}
+                        callback(data);
+                    }
+                }
             }
         };
-        httpRequest.open('GET', path);
+        httpRequest.open("GET", path);
         httpRequest.send();
     }
-	
-	function getModelAmount(data) {
-        var modelNum = 0;
-        for (var key in data) {
-            var value = data[key];
-            for(var object in value) {
+
+    function getModelAmount(data) {
+        var modelNum = 0,
+            key,
+            object,
+            value;
+        for (key in data) {
+            value = data[key];
+            for (object in value) {
                 modelNum++;
             }
         }
@@ -77,26 +83,30 @@ DungeonHop.ModelManager = function () {
     }
 
     function loadObjects(name, files) {
-        var content = files[name];
-        for (var key in content) {
-            var value = content[key];
-            var objectName = value["name"];
-            var id = value["id"];
-            var path = name+"/"+objectName;
+        var content = files[name],
+            value,
+            key,
+            objectName,
+            id,
+            path;
+        for (key in content) {
+            value = content[key];
+            objectName = value["name"];
+            id = value["id"];
+            path = name + "/" + objectName;
             console.log(path);
-            loadJSON(name+"/"+objectName,name,id);
+            loadJSON(name + "/" + objectName, name, id);
         }
     }
 
-    
-	
-	function init(app) {
+
+    function init(app) {
         mainApp = app;
-        fetchJSONFile('assets/models/json/files.json', function (data) {
+        fetchJSONFile("assets/models/json/files.json", function (data) {
             loadModels(data);
         });
     }
-	
+
     that.init = init;
     return that;
 };

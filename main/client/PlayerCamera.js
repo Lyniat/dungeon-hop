@@ -1,15 +1,16 @@
+/*
+ global THREE
+ */
 var DungeonHop = DungeonHop || {};
 DungeonHop.PlayerCamera = function () {
-	"use strict";
+    "use strict";
     /* eslint-env browser  */
     var that = {},
-		rotation = new THREE.Vector3(),
-    //var camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-		zoom = 1 / 100,
-		camera = new THREE.OrthographicCamera(-window.innerWidth * zoom, window.innerWidth * zoom, window.innerHeight * zoom, -window.innerHeight * zoom, -100, 1000),
-		player,
+        zoom = 1 / 100,
+        camera = new THREE.OrthographicCamera(-window.innerWidth * zoom, window.innerWidth * zoom, window.innerHeight * zoom, -window.innerHeight * zoom, -100, 1000),
+        player,
         serverInterface,
-		cameraSpeed = 0.3,
+        cameraSpeed = 0.3,
         gameStatus,
         oldPosition;
 
@@ -26,11 +27,6 @@ DungeonHop.PlayerCamera = function () {
         }
     }
 
-    function updateCamera() {
-        //var playerPosition = player.getPosition();
-        //camera.lookAt(playerPosition);
-    }
-
     function getPosition() {
         return camera.position;
     }
@@ -38,25 +34,27 @@ DungeonHop.PlayerCamera = function () {
     function getCamera() {
         return camera;
     }
-	function init(pl, gameStat, srv) {
+
+    function init(pl, gameStat, srv) {
+        var playerObj,
+            playerPosition;
         player = pl;
         gameStatus = gameStat;
         serverInterface = srv;
-        var playerObj = player.getObject(),
-			playerPosition = player.getPosition();
+        playerObj = player.getObject();
+        playerPosition = player.getPosition();
         camera.position.x = playerObj.position.x + 1;
         camera.position.y = playerObj.position.y + 5;
         camera.position.z = playerObj.position.z + 3;
         camera.lookAt(playerPosition);
         oldPosition = camera.position.z;
     }
-	
-	function update(delta) {
+
+    function update(delta) {
         if (!gameStatus.active) {
             return;
         }
         updatePosition(delta);
-        updateCamera();
     }
 
     that.init = init;

@@ -1,3 +1,6 @@
+/*
+ global THREE
+ */
 var DungeonHop = DungeonHop || {};
 DungeonHop.Player = function () {
     "use strict";
@@ -14,8 +17,8 @@ DungeonHop.Player = function () {
         serverInterface,
         opponents,
         enemies,
-		playerSound = "assets/sounds/jump.mp3",
-		losingSound = "assets/sounds/splash.mp3",
+        //playerSound = "assets/sounds/jump.mp3",
+        losingSound = "assets/sounds/splash.mp3",
         moving = false,
         scene,
         dead = false;
@@ -36,23 +39,24 @@ DungeonHop.Player = function () {
         }
         if (evt.keyCode == "87") {
             moveDirection.z = -1;
-			
+
         }
         if (evt.keyCode == "83") {
             moveDirection.z = 1;
-			
+
         }
         if (evt.keyCode == "65") {
             moveDirection.x = -1;
-			
-			
+
+
         }
         if (evt.keyCode == "68") {
-			moveDirection.x = 1;
-			
+            moveDirection.x = 1;
+
         }
     }
-	function setDucking(ducking) {
+
+    function setDucking(ducking) {
         if (ducking) {
             console.log(normalScale);
             object.scale.y = normalScale / 1.15;
@@ -60,6 +64,7 @@ DungeonHop.Player = function () {
             object.scale.y = normalScale * 1.15;
         }
     }
+
     function onKeyDown(evt) {
         evt.preventDefault();
         if (!gameStatus.active) {
@@ -108,6 +113,10 @@ DungeonHop.Player = function () {
     }
 
     function move(deltaTime) {
+        var field,
+            i,
+            opponent,
+            enemy;
         if (moving == true) {
             moveDirection = new THREE.Vector3(0, 0, 0);
             return;
@@ -115,7 +124,6 @@ DungeonHop.Player = function () {
         if (!gameStatus.active) {
             return;
         }
-        var field;
         time += deltaTime;
         //object.position.y = Math.abs(Math.sin(time));
         if (falling) {
@@ -140,10 +148,10 @@ DungeonHop.Player = function () {
             }
 
             //check if no other player is blocking
-            for (var i = 0; i < opponents.length; i++){
-                var opponent = opponents[i];
-                if (opponent != undefined && opponent != null){
-                    if (opponent.getPosition().x == object.position.x + moveDirection.x && opponent.getPosition().z == object.position.z + moveDirection.z ){
+            for (i = 0; i < opponents.length; i++) {
+                opponent = opponents[i];
+                if (opponent != undefined && opponent != null) {
+                    if (opponent.getPosition().x == object.position.x + moveDirection.x && opponent.getPosition().z == object.position.z + moveDirection.z) {
                         moveDirection = new THREE.Vector3(0, 0, 0);
                         return;
                     }
@@ -151,10 +159,10 @@ DungeonHop.Player = function () {
             }
 
             //check if enemy is colliding
-            for (var i = 0; i < enemies.length; i++){
-                var enemy = enemies[i];
-                if (enemy != undefined && enemy != null){
-                    if (enemy.getPosition().x == object.position.x + moveDirection.x && enemy.getPosition().z == object.position.z + moveDirection.z ){
+            for (i = 0; i < enemies.length; i++) {
+                enemy = enemies[i];
+                if (enemy != undefined && enemy != null) {
+                    if (enemy.getPosition().x == object.position.x + moveDirection.x && enemy.getPosition().z == object.position.z + moveDirection.z) {
                         console.log("enemy collision!");
                         informEnemyCollision();
                     }
@@ -166,7 +174,7 @@ DungeonHop.Player = function () {
             //var audio = new Audio(playerSound);
             //audio.play();
             updateServer();
-            movePosition(2.5,moveDirection.x,moveDirection.z);
+            movePosition(2.5, moveDirection.x, moveDirection.z);
             moveDirection = new THREE.Vector3(0, 0, 0);
             if (field == -2) {
                 informEnemyCollision();
@@ -175,16 +183,16 @@ DungeonHop.Player = function () {
 
     }
 
-    function movePosition(t,x,z){
-        setTimeout(function() {
+    function movePosition(t, x, z) {
+        setTimeout(function () {
             t--;
-            object.position.x += x/2.5;
-            object.position.z += z/2.5;
-            object.position.y = t/2.5;
-            if(t > 0) {
-                movePosition(t,x,z);
+            object.position.x += x / 2.5;
+            object.position.z += z / 2.5;
+            object.position.y = t / 2.5;
+            if (t > 0) {
+                movePosition(t, x, z);
             }
-            else{
+            else {
                 object.position.x = Math.round(object.position.x);
                 object.position.z = Math.round(object.position.z);
                 moving = false;
@@ -193,31 +201,30 @@ DungeonHop.Player = function () {
         }, 10);
     }
 
-    function updateServer(){
+    function updateServer() {
         var x = object.position.x + moveDirection.x;
         var z = object.position.z + moveDirection.z;
-        serverInterface.updatePlayerPosition(x,z);
+        serverInterface.updatePlayerPosition(x, z);
     }
 
-    
 
-    function informEnemyCollision(){
-        if(!dead && !gameStatus.finished) {
+    function informEnemyCollision() {
+        if (!dead && !gameStatus.finished) {
             dead = true;
             serverInterface.setPlayerDead();
             die();
         }
     }
 
-    function die(){
+    function die() {
         falling = true;
         var audio = new Audio(losingSound);
         audio.play();
-        setTimeout(function() {
+        setTimeout(function () {
             var particles = new DungeonHop.Particles();
-            var particleSystem = particles.init(getPosition().x,1,getPosition().z,"skull");
+            var particleSystem = particles.init(getPosition().x, 1, getPosition().z, "skull");
             scene.add(particleSystem);
-            setTimeout(function() {
+            setTimeout(function () {
                 scene.remove(particleSystem);
             }, 4000);
         }, 200);
@@ -236,7 +243,7 @@ DungeonHop.Player = function () {
     }
 
 
-    function init(geometry, wrld,scn,gameStat,srv,id,opps,enms) {
+    function init(geometry, wrld, scn, gameStat, srv, id, opps, enms) {
         world = wrld;
         scene = scn;
         normalScale = geometry.scale.y;

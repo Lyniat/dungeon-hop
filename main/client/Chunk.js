@@ -1,15 +1,15 @@
-/**
- * Created by laurin on 23.02.16.
+/*
+ global THREE
  */
 var DungeonHop = DungeonHop || {};
 DungeonHop.Chunk = function () {
-	"use strict";
+    "use strict";
     /* eslint-env browser  */
     var that = {},
-		objects = [],
+        objects = [],
         matrix = [],
-		chunkSize = 24,
-		borderSize = 16,
+        chunkSize = 24,
+        borderSize = 16,
         obstacleModels,
         serverInterface,
         scene,
@@ -18,8 +18,8 @@ DungeonHop.Chunk = function () {
 
     function addGround(zPosition) {
         var geometry = new THREE.BoxGeometry(chunkSize, 0.5, 1),
-			material = new THREE.MeshLambertMaterial({ color: 0x999999}),
-			mesh = new THREE.Mesh(geometry, material);
+            material = new THREE.MeshLambertMaterial({color: 0x999999}),
+            mesh = new THREE.Mesh(geometry, material);
         mesh.position.z = zPosition;
         mesh.position.y = -0.25;
         mesh.position.x = chunkSize / 2 - 0.5;
@@ -32,7 +32,7 @@ DungeonHop.Chunk = function () {
 
     function addLava(zPosition) {
         var geometry = new THREE.BoxGeometry(chunkSize, 0.1, 1),
-            material = new THREE.MeshLambertMaterial({ color: 0xbb0000}),
+            material = new THREE.MeshLambertMaterial({color: 0xbb0000}),
             mesh = new THREE.Mesh(geometry, material);
         mesh.position.z = zPosition;
         mesh.position.y = -0.25;
@@ -41,25 +41,26 @@ DungeonHop.Chunk = function () {
     }
 
     //adds a wall on the side of the dungeon
-    function addWall(zPosition,xPosition){
+    function addWall(zPosition, xPosition) {
         var geometry = new THREE.BoxGeometry(borderSize, 3, 1),
-            material = new THREE.MeshLambertMaterial({ color: 0x444444}),
+            material = new THREE.MeshLambertMaterial({color: 0x444444}),
             mesh = new THREE.Mesh(geometry, material);
         mesh.position.z = zPosition;
         mesh.position.y = 0;
-        mesh.position.x = -borderSize/2 -0.5 + xPosition;
+        mesh.position.x = -borderSize / 2 - 0.5 + xPosition;
         objects.push(mesh);
     }
 
     //requests the wanted chunk from the server
     //creates a new matrix for collision and adds the object the array
-    function addObstacles(zPosition,chunk) {
-        var obstacles = chunk;
-        var i;
-        var obstacle;
-        for(i = 0; i < chunkSize; i++){
+    function addObstacles(zPosition, chunk) {
+        var obstacles = chunk,
+            i,
+            obstacle,
+            obstacleId;
+        for (i = 0; i < chunkSize; i++) {
             matrix[i] = obstacles[i];
-            if(obstacles[i] >= 0) {
+            if (obstacles[i] >= 0) {
                 obstacle = obstacleModels[obstacles[i]].clone();
                 obstacle.position.z = zPosition;
                 obstacle.position.x = i;
@@ -69,9 +70,9 @@ DungeonHop.Chunk = function () {
 
                 objects.push(obstacle);
             }
-            if(obstacles[i] <= -3) {
-                var obstacleId = (obstacles[i] +3)*(-1);
-                console.log("obstacle id: "+obstacleId);
+            if (obstacles[i] <= -3) {
+                obstacleId = (obstacles[i] + 3) * (-1);
+                console.log("obstacle id: " + obstacleId);
                 obstacle = obstacleModels[obstacleId].clone();
                 obstacle.position.z = zPosition;
                 obstacle.position.x = i;
@@ -92,44 +93,43 @@ DungeonHop.Chunk = function () {
             scene.add(objects[i]);
         }
     }
-	
-	function init(sc, zPos, obstacleMdls,srv,func) {
+
+    function init(sc, zPos, obstacleMdls, srv, func) {
         serverInterface = srv;
         obstacleModels = obstacleMdls;
         scene = sc;
         zPosition = zPos;
         worldCallbackFunction = func;
         //var chunk = server.getChunkAt(zPosition);
-        serverInterface.getChunkAt(zPosition,onCallback);
+        serverInterface.getChunkAt(zPosition, onCallback);
     }
 
     function onCallback(result) {
         initChunk(result);
-        worldCallbackFunction(matrix,zPosition,that);
+        worldCallbackFunction(matrix, zPosition, that);
     }
 
 
-    function initChunk(chunk){
+    function initChunk(chunk) {
         var groundType = chunk[chunkSize];
-        if(groundType == 0) {
+        if (groundType == 0) {
             addGround(zPosition);
-        }else{
+        } else {
             addLava(zPosition);
         }
-        addWall(zPosition,0);
-        addWall(zPosition,chunkSize+borderSize);
-        addObstacles(zPosition,chunk);
+        addWall(zPosition, 0);
+        addWall(zPosition, chunkSize + borderSize);
+        addObstacles(zPosition, chunk);
         addToScene(scene);
     }
 
-    function destroyChunk(scene){
-        console.log("destroying");
+    function destroyChunk(scene) {
         var i;
+        console.log("destroying");
         for (i = 0; i < objects.length; i++) {
             scene.remove(objects[i]);
         }
     }
-
 
 
     that.init = init;

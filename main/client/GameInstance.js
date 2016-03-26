@@ -8,7 +8,6 @@ DungeonHop.GameInstance = function () {
     /* eslint-env browser  */
     var that = {},
         scene = new THREE.Scene(),
-        canvas = document.getElementById("canvas"),
         infoText = document.getElementById("info-text"),
         renderer,
         cameraObj,
@@ -21,14 +20,15 @@ DungeonHop.GameInstance = function () {
         models,
         opponentPlayers = [],
         enemies = [],
-        ip,
         startButton,
         serverInterface,
-        playerName = " ";
-
+        render,
+        ip,
+        playerName;
 
     //creates a new scene with light and shadow
     function setScene() {
+        var light;
 
         //directional light
         directionalLight = new THREE.DirectionalLight(0xffaaaa, 1);
@@ -44,7 +44,7 @@ DungeonHop.GameInstance = function () {
 
         scene.add(directionalLight);
 
-        var light = new THREE.AmbientLight(0x999999); // soft white light
+        light = new THREE.AmbientLight(0x999999); // soft white light
         scene.add(light);
     }
 
@@ -58,7 +58,7 @@ DungeonHop.GameInstance = function () {
     }
 
     //renders the scene every frame
-    var render = function () {
+    render = function () {
         //waitForStart();
         var delta = getDeltaTime();
         player.update(delta);
@@ -71,8 +71,9 @@ DungeonHop.GameInstance = function () {
     };
 
     function createWorld(id) {
+        var playerModel;
         playerId = id;
-        var playerModel = getPlayerModel(id);
+        playerModel = getPlayerModel(id);
         player = new DungeonHop.Player();
 
         world = new DungeonHop.World();
@@ -91,60 +92,50 @@ DungeonHop.GameInstance = function () {
     }
 
     function getPlayerModel(id) {
+        var model,
+            modelId,
+            modelObject,
+            r,
+            playerModel;
         var i, players = [];
         //get all player models
         for (i = 0; i < models.length; i++) {
-            var model = models[i];
+            model = models[i];
             if (model["type"] == "players") {
-                var modelId = model["id"];
-                var modelObject = model["object"];
+                modelId = model["id"];
+                modelObject = model["object"];
                 players[modelId] = modelObject;
             }
         }
 
         if(id < 0) {
             //get random player model
-            var r = Math.random() * players.length;
+            r = Math.random() * players.length;
             r = parseInt(Math.floor(r));
-            var playerModel = players[r];
+            playerModel = players[r];
             return playerModel.clone();
         }
         else {
-            var playerModel = players[id];
+            playerModel = players[id];
             return playerModel.clone();
         }
     }
 
     function getEnemyModel() {
-        var i, players = [];
+        var i,
+            model,
+            enemyModel;
         //get all player models
         for (i = 0; i < models.length; i++) {
-            var model = models[i];
+            model = models[i];
             if (model["type"] == "enemies") {
                 if(model["name"] == "bad_gecko"){
-                    var enemyModel = model["object"];
+                    enemyModel = model["object"];
                     return enemyModel.clone();
                 }
             }
         }
-
-        //get random player model
-        var r = Math.random() * players.length;
-        r = parseInt(Math.floor(r));
-        var playerModel = players[r];
-        return playerModel.clone();
-
     }
-
-    /*
-    function loaded(mdls) {
-        models = mdls;
-        //connectToServer();
-        serverInterface = new DungeonHop.ServerInterface();
-        serverInterface.init(that, ip,playerName);
-        infoText.innerHTML = "CONNECTING TO SERVER";
-    }
-    */
 
     function init(i,name,mdls,srv,rend){
         renderer = rend;
@@ -157,19 +148,6 @@ DungeonHop.GameInstance = function () {
         startButton.addEventListener("click", startClicked);
     }
 
-    /*
-    function init(i,name) {
-        infoText.innerHTML = "LOADING...";
-        startButton = document.getElementById("start");
-        startButton.addEventListener("click", startClicked);
-        ip = i;
-        playerName = name;
-        gameStatus.active = false;
-        modelManager = new DungeonHop.ModelManager();
-        modelManager.init(this);
-    }
-    */
-
     function startClicked() {
         serverInterface.setReady();
         infoText.innerHTML = "Waiting for other Players";
@@ -180,10 +158,12 @@ DungeonHop.GameInstance = function () {
     }
 
     function setPlayers(id,name, xPos, zPos) {
+        var opponent,
+            model;
         if (opponentPlayers[id] == undefined && id != playerId) {
             console.log("added new player");
-            var opponent = new DungeonHop.Opponent();
-            var model = getPlayerModel(id);
+            opponent = new DungeonHop.Opponent();
+            model = getPlayerModel(id);
             opponent.init(model,scene, xPos, zPos,name);
             scene.add(opponent.getObject());
             opponentPlayers[id] = opponent;
@@ -200,14 +180,16 @@ DungeonHop.GameInstance = function () {
     }
 
     function removeChunk(pos) {
+        var i,
+            enemy;
         //check if player is outside
         if(player.getPosition().z >= pos){
             //not the right one but with this event, he also dies
             player.informEnemyCollision();
         }
         //check if enemies are outside
-        for(var i = 0; i < enemies.length; i++){
-            var enemy = enemies[i];
+        for(i = 0; i < enemies.length; i++){
+            enemy = enemies[i];
             if (enemy.getPosition().z >= pos){
                 scene.remove(enemy.getObject());
             }
@@ -239,11 +221,13 @@ DungeonHop.GameInstance = function () {
     }
 
     function createNewEnemy(id, xPos, zPos) {
+        var enemy,
+            model;
         if (enemies[id] != undefined) {
             return;
         }
-        var enemy = new DungeonHop.Enemy();
-        var model = getEnemyModel();
+        enemy = new DungeonHop.Enemy();
+        model = getEnemyModel();
         enemy.init(model, xPos, zPos, player);
         enemies[id] = enemy;
         scene.add(enemy.getObject());
@@ -287,16 +271,21 @@ DungeonHop.GameInstance = function () {
     }
 
     function showOpponentLabels(){
-        for(var i = 0; i < opponentPlayers.length; i++) {
-            var opponent = opponentPlayers[i];
+        var i,
+            opponent,
+            proj,
+            label,
+            t;
+        for(i = 0; i < opponentPlayers.length; i++) {
+            opponent = opponentPlayers[i];
             if(opponent == undefined){
                 continue;
             }
-            var proj = toScreenPosition(opponent.getObject() ,cameraObj.getCamera());
-            var label = document.getElementById("opponent-"+i+"-label");
+            proj = toScreenPosition(opponent.getObject() ,cameraObj.getCamera());
+            label = document.getElementById("opponent-"+i+"-label");
             if(label == null){
                 label = document.createElement("p");
-                var t = document.createTextNode(opponent.getName());
+                t = document.createTextNode(opponent.getName());
                 label.appendChild(t);
                 label.className = "opponent-label";
                 label.id = "opponent-"+i+"-label";
@@ -310,8 +299,10 @@ DungeonHop.GameInstance = function () {
     }
 
     function destroy(){
-        for( var i = scene.children.length - 1; i >= 0; i--) {
-            var obj = scene.children[i];
+        var i,
+            obj;
+        for(i = scene.children.length - 1; i >= 0; i--) {
+            obj = scene.children[i];
             //renderer.deallocateObject(obj);
             scene.remove(obj);
         }

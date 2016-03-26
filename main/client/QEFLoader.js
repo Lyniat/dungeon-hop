@@ -1,16 +1,13 @@
-/**
- * Created by laurin on 22.02.16.
- */
 var DungeonHop = DungeonHop || {};
 DungeonHop.QEFLoader = function () {
-	"use strict";
+    "use strict";
     /* eslint-env browser  */
     var that = {},
-		path = "assets/models/qef/";
+        path = "assets/models/qef/";
 
     function getMatrix(fl) {
         var file = loadFile(fl),
-			matrix = parseFile(file);
+            matrix = parseFile(file);
         console.log(matrix);
         return matrix;
     }
@@ -34,13 +31,24 @@ DungeonHop.QEFLoader = function () {
 
     //parse file and return 3-dimensional matrix with information about color and visibility for each voxel
     function parseFile(fl) {
-        var i, x, y, z;
-        var matrixIndex = 3;
-        var colorSizeIndex = 4;
-        var colorListIndex = 5;
-        var matrixSize, sizeX, sizeY, sizeZ, colorSize;
-        var colorList = [];
-        var lines = fl.split("\n");
+        var i,
+            x,
+            y,
+            z,
+            matrixIndex = 3,
+            colorSizeIndex = 4,
+            colorListIndex = 5,
+            matrixSize, sizeX, sizeY, sizeZ, colorSize,
+            colorList = [],
+            lines = fl.split("\n"),
+            colors,
+            colorTriplet,
+            matrix,
+            voxelIndex,
+            colorIndex,
+            values,
+            visibilityMask,
+            color;
         matrixSize = lines[matrixIndex].split(" ");
         sizeX = parseInt(matrixSize[0]);
         sizeY = parseInt(matrixSize[1]);
@@ -49,13 +57,13 @@ DungeonHop.QEFLoader = function () {
         //Read colors
         colorSize = parseInt(lines[colorSizeIndex]);
         for (i = 0; i < colorSize; i++) {
-            var colors = lines[colorListIndex + i].split(" ");
-            var colorTriplet = {r: colors[0], g: colors[1], b: colors[2]};
+            colors = lines[colorListIndex + i].split(" ");
+            colorTriplet = {r: colors[0], g: colors[1], b: colors[2]};
             colorList.push(colorTriplet);
         }
 
         //Read voxel matrix
-        var matrix = [];
+        matrix = [];
 
         for (x = 0; x < sizeX; x++) {
             matrix[x] = [];
@@ -69,15 +77,15 @@ DungeonHop.QEFLoader = function () {
             }
         }
 
-        var voxelIndex = colorSizeIndex + colorSize + 1;
-        for (i = voxelIndex; i < lines.length - 1; i++){ //last line in file is always empty
-            var values = lines[i].split(" ");
+        voxelIndex = colorSizeIndex + colorSize + 1;
+        for (i = voxelIndex; i < lines.length - 1; i++) { //last line in file is always empty
+            values = lines[i].split(" ");
             x = parseInt(values[0]);
             y = parseInt(values[1]);
             z = parseInt(values[2]);
-            var colorIndex = values[3],
-				visibilityMask = values[4],
-				color = colorList[colorIndex];
+            colorIndex = values[3];
+            visibilityMask = values[4];
+            color = colorList[colorIndex];
             matrix[x][y][z] = {color: color, mask: visibilityMask};
         }
         return matrix;

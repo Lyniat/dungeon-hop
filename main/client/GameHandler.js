@@ -1,3 +1,8 @@
+/*
+ global THREE
+ */
+var GameHandler = GameHandler || {};
+var DungeonHop = DungeonHop || {};
 GameHandler = (function () {
     var that = {},
         infoText = document.getElementById("info-text"),
@@ -35,12 +40,14 @@ GameHandler = (function () {
     }
 
     function createNewGame() {
+        var labels,
+            i;
         if(activeGame != undefined) {
             activeGame.destroy();
         }
 
-        var labels = document.getElementsByClassName("opponent-label");
-        for(var i = 0; i < labels.length; i++){
+        labels = document.getElementsByClassName("opponent-label");
+        for(i = 0; i < labels.length; i++){
             labels[i].remove();
         }
 
