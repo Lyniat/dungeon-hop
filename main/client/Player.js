@@ -89,6 +89,9 @@ DungeonHop.Player = function () {
         window.addEventListener("keyup", onKeyUp, false);
     }
 
+    /*
+    rotates the player to the direction hes moving
+     */
     function rotate() {
         if (moveDirection.x == -1) {
             //left
@@ -108,10 +111,24 @@ DungeonHop.Player = function () {
         }
     }
 
+    /*
+    fall through ground if dead
+     */
     function fallDown(deltaTime) {
         object.position.y -= deltaTime * 3;
     }
 
+    /*
+    move to the nex position if
+        moving is allowed
+        the game is active
+        the doesnt want to move to positive z position
+        hes blocked by obstacles
+        hes blocked by other players
+
+     after that the game checks if the player fell into lava or had contact with an enmy.
+     in this cases he will die
+     */
     function move(deltaTime) {
         var field,
             i,
@@ -183,6 +200,9 @@ DungeonHop.Player = function () {
 
     }
 
+    /*
+    move to position over a given time to animate
+     */
     function movePosition(t, x, z) {
         setTimeout(function () {
             t--;
@@ -216,6 +236,9 @@ DungeonHop.Player = function () {
         }
     }
 
+    /*
+    fall through ground and play a sound if dead
+     */
     function die() {
         falling = true;
         var audio = new Audio(losingSound);

@@ -14,6 +14,10 @@ DungeonHop.PlayerCamera = function () {
         gameStatus,
         oldPosition;
 
+    /*
+     updates the camera position by moving on its own or by the players position.
+     after that the new position will be sent to the server
+     */
     function updatePosition(delta) {
         var playerObj = player.getObject();
         camera.position.z -= delta * cameraSpeed;

@@ -1,6 +1,3 @@
-/**
- * Created by laurin on 23.02.16.
- */
 var DungeonHop = DungeonHop || {};
 DungeonHop.World = function () {
     "use strict";
@@ -17,14 +14,18 @@ DungeonHop.World = function () {
         loadDistance = 30,
         chunks = [];
 
-    //creates the new chunk and adds the collision information the matrix
+    /*
+    creates the new chunk and adds the collision information the matrix
+    */
     function createChunk() {
         var chunk = new DungeonHop.Chunk();
         chunk.init(scene, actualChunk_Z_Position, obstacleModels, serverInterface, addToWorld);
         actualChunk_Z_Position--;
     }
 
-    //tests if the player has moved forward, so that a new chunk must be loaded
+    /*
+    tests if the player has moved forward, so that a new chunk must be loaded
+    */
     function update() {
         var playerZPosition = player.getPosition().z;
         if (playerZPosition < actualChunk_Z_Position + loadDistance) {
@@ -37,7 +38,9 @@ DungeonHop.World = function () {
         chunks[zPosition] = chunk;
     }
 
-    //returns the status of the requested fiel in the matrix to check if the player can move
+    /*
+    returns the status of the requested fiel in the matrix to check if the player can move
+    */
     function getEntryInMatrix(x, z) {
         console.log(worldMatrix[z][x]);
         return worldMatrix[z][x];
