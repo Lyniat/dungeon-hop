@@ -75,16 +75,19 @@ nav.navbar.navbar-inverse.navbar-fixed-top {
 }
 
 .player-label{
+    color: #044D6A;
+    font-size: 14px;
     position: fixed;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    color:#00aa00;
+    
     background-color: transparent;
     z-index: 9;
 }
 
 .opponent-label{
+    color:#6A2504;
     position: fixed;
     top: 50%;
     left: 50%;
