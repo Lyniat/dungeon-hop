@@ -58,9 +58,9 @@ DungeonHop.ServerInterface = function () {
     }
 	
 	function waitForDeadPlayer() {
-        server.on("setPlayerDead", function (id) {
+        server.on("setPlayerDead", function (id,name) {
             console.log("player " + id + " dead");
-            mainClass.setPlayerDead(id);
+            mainClass.setPlayerDead(id,name);
         });
     }
 	
@@ -115,6 +115,14 @@ DungeonHop.ServerInterface = function () {
             }, 5000);
         });
     }
+
+    function waitForGameFinished(){
+        server.on("gameFinished", function () {
+            mainClass.setGameFinished();
+        });
+    }
+
+
 	function init(hndlr,main, ip,name,gameId) {
         console.log("connecting to server");
         handler = hndlr;

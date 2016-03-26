@@ -6,7 +6,7 @@ ServerInstance = function () {
         clients = [],
         readyPlayers = 0,
         deadPlayers = 0,
-        status = 0, // 0 waiting for players, 1 active --> new players cant connect, 2 full, waiting for start, 3 private game
+        status = 0, // 0 waiting for players, 1 active --> new players cant connect, 2 full, waiting for start, 3 private game, 4 finished game
         maxPlayers = 3,
         gameId;
 
@@ -102,19 +102,43 @@ ServerInstance = function () {
     }
 
     function setPlayerDead(id) {
+        if (status == 4) {
+            return;
+        }
         console.log("player " + id + " dead");
         for (var i = 0; i < clients.length; i++) {
             var client = clients[i];
-            if (client.getId() != id) {
-                client.getSocket().emit("setPlayerDead", id);
+            var playerStatus = client.getPlayerStatus();
+            var name = client.getPlayerName();
+            if (playerStatus == 0) {
+                deadPlayers++;
             }
-            deadPlayers++;
-            if (deadPlayers >= clients.length) {
-                setTimeout(function () {
-                    mainServer.destroyServer(that);
-                }, 3000);
+            if (client.getId() != id) {
+                client.getSocket().emit("setPlayerDead", id,name);
             }
         }
+        console.log(deadPlayers + " players are dead");
+        if (deadPlayers >= clients.length - 1) {
+            status = 4; //game finished
+            setGameOverText();
+            setTimeout(function () {
+                mainServer.destroyServer(that);
+            }, 5000);
+        }
+        deadPlayers = 0;
+    }
+
+    function setGameOverText() {
+        var winnerName;
+        for (var i = 0; i < clients.length; i++) {
+            var client = clients[i];
+            var playerStatus = client.getPlayerStatus();
+            if (playerStatus == 1) {
+                winnerName = client.getPlayerName();
+            }
+        }
+        setInfoTextForClients(winnerName + "won the game!");
+        setGameFinished();
     }
 
     function startGame() {
@@ -147,6 +171,13 @@ ServerInstance = function () {
             var client = clients[i];
             console.log("info text for " + i);
             client.getSocket().emit("setInfoText", text);
+        }
+    }
+
+    function setGameFinished() {
+        for (var i = 0; i < clients.length; i++) {
+            var client = clients[i];
+            client.getSocket().emit("gameFinished");
         }
     }
 
@@ -197,7 +228,7 @@ ServerInstance = function () {
         if (status == 0) {
             return true;
         }
-        else if(status == 3 && gameId == gId){
+        else if (status == 3 && gameId == gId) {
             return true;
         }
         return false;
