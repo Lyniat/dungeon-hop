@@ -6,7 +6,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <link rel="stylesheet" media="all" href="style/bootstrap.min.css">
-
     <link rel="stylesheet" media="all" href="style/style.css">
 
 
@@ -44,7 +43,9 @@
 </nav>
 <h1 class="centered-info textshadow" id="info-text"></h1>
 <h1 id="player-label" class="player-label" style="visibility: hidden;">YOU</h1>
-
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="js/bootbox.min.js"></script>
 <script src="js/three.min.js"></script>
 <script src="client/GameHandler.js"></script>
 <script src="client/GameInstance.js"></script>
@@ -62,6 +63,22 @@
 
 
 <script src="js/socket.io.js"></script>
+
+<script>
+bootbox.prompt({
+  title: "What is your real name?",
+  value: "makeusabrew",
+  callback: function(result) {
+    if (result === null) {
+      Example.show("Prompt dismissed");
+    } else {
+      Example.show("Hi <b>"+result+"</b>");
+    }
+  }
+});
+</script>
+
+
 
 <script>
     var cookie = document.cookie;
