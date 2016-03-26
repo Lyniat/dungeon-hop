@@ -58,7 +58,7 @@ ServerInstance = function () {
         return mainLogic.getChunkAt(zPosition);
     }
 
-    function refreshAllClients() {
+    function refreshAllClients(id) {
         for (var i = 0; i < clients.length; i++) {
             var client = clients[i];
             for (var j = 0; j < clients.length; j++) {
@@ -66,6 +66,10 @@ ServerInstance = function () {
                 var wantedPosition = wantedClient.getPosition();
                 var wantedId = wantedClient.getId();
                 var wantedName = wantedClient.getPlayerName();
+                var wantedStatus = wantedClient.getPlayerStatus();
+                if (wantedStatus != 1){
+                    continue;
+                }
                 if (client.getId() != wantedId) {
                     client.getSocket().emit("newPlayer", wantedId, wantedName, wantedPosition.x, wantedPosition.z);
                 }
@@ -137,7 +141,7 @@ ServerInstance = function () {
                 winnerName = client.getPlayerName();
             }
         }
-        setInfoTextForClients(winnerName + "won the game!");
+        setInfoTextForClients(winnerName + " won the game!");
         setGameFinished();
     }
 
@@ -273,7 +277,7 @@ Client = function () {
         cameraPos,
         socket,
         server,
-        playerStatus = 1,
+        playerStatus = 2,// 0 dead, 1 playing, 2 loading
         playerName;
 
     function init(s, i, srv) {
@@ -290,7 +294,8 @@ Client = function () {
             playerName = name;
             xPos = x;
             zPos = z;
-            server.refreshAllClients();
+            playerStatus = 1;
+            server.refreshAllClients(id);
             server.updateEnemiesForClient(id);
         });
 

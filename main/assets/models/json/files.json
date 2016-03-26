@@ -1,0 +1,1 @@
+{"obstacles": [{"id": 0, "name": "stonething"}, {"id": 1, "name": "firebowl_small"}, {"id": 2, "name": "barell"}, {"id": 3, "name": "firebowl"}], "enemies": [{"id": 0, "name": "ghost_left"}, {"id": 1, "name": "bad_gecko"}, {"id": 2, "name": "ghost_right"}], "players": [{"id": 0, "name": "cubegoat"}, {"id": 1, "name": "piggycube"}, {"id": 2, "name": "geckocube"}]}
