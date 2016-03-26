@@ -121,7 +121,7 @@ DungeonHop.GameInstance = function () {
         for (i = 0; i < models.length; i++) {
             var model = models[i];
             if (model["type"] == "enemies") {
-                if(model["name"] == "geckocube"){
+                if(model["name"] == "bad_gecko"){
                     var enemyModel = model["object"];
                     return enemyModel.clone();
                 }
