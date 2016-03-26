@@ -19,10 +19,12 @@ ServerInstance = function () {
     }
 
     function setGameId() {
-        var char;
-        var string = "";
-        for (var i = 0; i < 8; i++) {
-            var r = Math.random();
+        var char,
+            string = "",
+            i,
+            r;
+        for (i = 0; i < 8; i++) {
+            r = Math.random();
             if (r > 0.5) {
                 char = Math.floor(Math.random() * 10);
             } else {
@@ -43,8 +45,10 @@ ServerInstance = function () {
     }
 
     function destroyClient(id) {
-        for (var i = 0; i < clients.length; i++) {
-            var client = clients[i];
+        var client,
+            i;
+        for (i = 0; i < clients.length; i++) {
+            client = clients[i];
             if (client.getId() == id) {
                 clients.splice(i, 1);
             }
@@ -59,14 +63,22 @@ ServerInstance = function () {
     }
 
     function refreshAllClients(id) {
-        for (var i = 0; i < clients.length; i++) {
-            var client = clients[i];
-            for (var j = 0; j < clients.length; j++) {
-                var wantedClient = clients[j];
-                var wantedPosition = wantedClient.getPosition();
-                var wantedId = wantedClient.getId();
-                var wantedName = wantedClient.getPlayerName();
-                var wantedStatus = wantedClient.getPlayerStatus();
+        var client,
+            i,
+            j,
+            wantedClient,
+            wantedPosition,
+            wantedId,
+            wantedName,
+            wantedStatus;
+        for (i = 0; i < clients.length; i++) {
+            client = clients[i];
+            for (j = 0; j < clients.length; j++) {
+                wantedClient = clients[j];
+                wantedPosition = wantedClient.getPosition();
+                wantedId = wantedClient.getId();
+                wantedName = wantedClient.getPlayerName();
+                wantedStatus = wantedClient.getPlayerStatus();
                 if (wantedStatus != 1){
                     continue;
                 }
@@ -78,8 +90,10 @@ ServerInstance = function () {
     }
 
     function updatePlayerPosition(id, xPos, zPos) {
-        for (var i = 0; i < clients.length; i++) {
-            var client = clients[i];
+        var client,
+            i;
+        for (i = 0; i < clients.length; i++) {
+            client = clients[i];
             if (client.getId() != id) {
                 client.getSocket().emit("updatePlayer", id, xPos, zPos);
             }
@@ -87,8 +101,10 @@ ServerInstance = function () {
     }
 
     function removeChunk(pos) {
-        for (var i = 0; i < clients.length; i++) {
-            var client = clients[i];
+        var client,
+            i;
+        for (i = 0; i < clients.length; i++) {
+            client = clients[i];
             client.getSocket().emit("removeChunk", pos);
         }
     }
@@ -106,14 +122,18 @@ ServerInstance = function () {
     }
 
     function setPlayerDead(id) {
+        var i,
+            client,
+            playerStatus,
+            name;
         if (status == 4) {
             return;
         }
         console.log("player " + id + " dead");
-        for (var i = 0; i < clients.length; i++) {
-            var client = clients[i];
-            var playerStatus = client.getPlayerStatus();
-            var name = client.getPlayerName();
+        for (i = 0; i < clients.length; i++) {
+            client = clients[i];
+            playerStatus = client.getPlayerStatus();
+            name = client.getPlayerName();
             if (playerStatus == 0) {
                 deadPlayers++;
             }
@@ -133,10 +153,13 @@ ServerInstance = function () {
     }
 
     function setGameOverText() {
-        var winnerName;
-        for (var i = 0; i < clients.length; i++) {
-            var client = clients[i];
-            var playerStatus = client.getPlayerStatus();
+        var winnerName,
+            client,
+            playerStatus,
+            i;
+        for (i = 0; i < clients.length; i++) {
+            client = clients[i];
+            playerStatus = client.getPlayerStatus();
             if (playerStatus == 1) {
                 winnerName = client.getPlayerName();
             }
@@ -146,6 +169,8 @@ ServerInstance = function () {
     }
 
     function startGame() {
+        var i,
+            client;
         console.log("starting countdown");
         setInfoTextForClients("GAME STARTS IN 3");
         setTimeout(function () {
@@ -157,8 +182,8 @@ ServerInstance = function () {
 
 
                     console.log("game starts now");
-                    for (var i = 0; i < clients.length; i++) {
-                        var client = clients[i];
+                    for (i = 0; i < clients.length; i++) {
+                        client = clients[i];
                         client.getSocket().emit("startGame");
                     }
 
@@ -171,44 +196,60 @@ ServerInstance = function () {
     }
 
     function setInfoTextForClients(text) {
-        for (var i = 0; i < clients.length; i++) {
-            var client = clients[i];
+        var i,
+            client;
+        for (i = 0; i < clients.length; i++) {
+            client = clients[i];
             console.log("info text for " + i);
             client.getSocket().emit("setInfoText", text);
         }
     }
 
     function setGameFinished() {
-        for (var i = 0; i < clients.length; i++) {
-            var client = clients[i];
+        var i,
+            client;
+        for (i = 0; i < clients.length; i++) {
+            client = clients[i];
             client.getSocket().emit("gameFinished");
         }
     }
 
     function updateEnemyPosition(id, xPos) {
-        for (var i = 0; i < clients.length; i++) {
-            var client = clients[i];
+        var i,
+            client;
+        for (i = 0; i < clients.length; i++) {
+            client = clients[i];
             client.getSocket().emit("updateEnemyPosition", id, xPos);
         }
     }
 
     function createNewEnemy(id, xPos, zPos) {
-        for (var i = 0; i < clients.length; i++) {
-            var client = clients[i];
+        var i,
+            client;
+        for (i = 0; i < clients.length; i++) {
+            client = clients[i];
             client.getSocket().emit("createNewEnemy", id, xPos, zPos);
         }
     }
 
     function updateEnemiesForClient(id) {
-        for (var i = 0; i < clients.length; i++) {
-            var client = clients[i];
+        var i,
+            client,
+            enemies,
+            j,
+            enemy,
+            enemyId,
+            xPos,
+            zPos;
+        for (i = 0; i < clients.length; i++) {
+            client = clients[i];
             if (client.getId() == id) {
-                var enemies = mainLogic.getAllEnemies();
-                for (var j = 0; j < enemies.length; j++) {
-                    var enemy = enemies[j];
-                    var enemyId = enemy.getId();
-                    var xPos = enemy.getPosition().x;
-                    var zPos = enemy.getPosition().z;
+                enemies = mainLogic.getAllEnemies();
+                for (j = 0; j < enemies.length; j++) {
+                    enemy = enemies[j];
+                    enemyId = enemy.getId();
+                    xPos = enemy.getPosition().x;
+                    zPos = enemy.getPosition().z;
                     client.getSocket().emit("createNewEnemy", enemyId, xPos, zPos);
                 }
             }
@@ -236,12 +277,6 @@ ServerInstance = function () {
             return true;
         }
         return false;
-    }
-
-    function moveAllClientsToLobby() {
-        for (var i = 0; i < clients.length; i++) {
-            var client = clients[i];
-        }
     }
 
     function destroy() {
@@ -299,12 +334,12 @@ Client = function () {
             server.updateEnemiesForClient(id);
         });
 
-        socket.on('disconnect', function () {
+        socket.on("disconnect", function () {
             console.log("player " + id + " disconnected");
             server.destroyClient(id);
         });
 
-        socket.on('getChunkAt', function (zPosition) {
+        socket.on("getChunkAt", function (zPosition) {
             var chunk = server.getChunkAt(zPosition);
             socket.emit("getChunkAtResp" + zPosition, chunk);
         });
@@ -355,7 +390,7 @@ Client = function () {
 
     function destroy() {
         socket = null;
-        delete socket;
+        //delete socket;
     }
 
     that.init = init;

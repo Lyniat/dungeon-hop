@@ -46,8 +46,15 @@ MainLogic = function () {
 
 //generates a new chunk with random obstacles
     function createNewChunk(zPos) {
-        var i, r, obstacleId;
-        var chunk = [];
+        var i,
+            r,
+            obstacleId,
+            j,
+            enemy = new enemyClass.Enemy(),
+            newId = enemies.length,
+            xPos = Math.round((chunkSize / 6) * j),
+            chunk = [];
+
         //decide if lava or normal ground
         r = Math.random();
         //lava
@@ -86,10 +93,10 @@ MainLogic = function () {
             chunk[chunkSize] = 0;
 
             //create enemies
-            for (var j = 0; j < 5; j++) {
-                var enemy = new Enemy();
-                var newId = enemies.length;
-                var xPos = Math.round((chunkSize / 6) * j);
+            for (j = 0; j < 5; j++) {
+                enemy = new enemyClass.Enemy();
+                newId = enemies.length;
+                xPos = Math.round((chunkSize / 6) * j);
                 enemy.init(newId, chunkSize, server, that, xPos, zPos);
                 enemies.push(enemy);
             }
@@ -106,10 +113,11 @@ MainLogic = function () {
     }
 
     function createPath(chunk, wantedId) {
-        var newPosition = lastPathPos;
-        var pathLength = Math.round(Math.random() * 5);
-        var direction = Math.random() - 0.5;
-        for (var i = 0; i <= pathLength; i++) {
+        var i,
+            newPosition = lastPathPos,
+            pathLength = Math.round(Math.random() * 5),
+            direction = Math.random() - 0.5;
+        for (i = 0; i <= pathLength; i++) {
             if (direction < 0) {
                 direction = -1;
             }
@@ -138,13 +146,13 @@ MainLogic = function () {
             console.log("removing chunk" + removingChunk);
             return removingChunk;
         }
+        return null;
     }
 
     function removeEnemiesOnChunk(zPos) {
-        for (var enemy of enemies) {
+        var enemy;
+        for (enemy of enemies) {
             if (enemy.getPosition().z == zPos) {
-                var index = enemies.indexOf(enemy);
-                //enemies.splice(index, 1);
                 enemy = null;
             }
         }

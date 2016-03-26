@@ -139,6 +139,7 @@ DungeonHop.ServerInterface = function () {
         waitForEnemy();
         waitForDisconnect();
         waitForNewGame();
+        waitForGameFinished();
     }
 
     function waitForPrivateId(){
