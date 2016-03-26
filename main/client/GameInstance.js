@@ -31,9 +31,10 @@ DungeonHop.GameInstance = function () {
         var light;
 
         //directional light
-        directionalLight = new THREE.DirectionalLight(0xffaaaa, 1);
-        directionalLight.position.set(-1, 1.75, 1.5);
+        directionalLight = new THREE.DirectionalLight(0xEFDDDD, 1.3);
+        directionalLight.position.set(-1, 2.75, 1.5);
         directionalLight.castShadow = true;
+        directionalLight.receiveShadow = true;
         directionalLight.shadow.camera.near = -5;
         directionalLight.shadow.camera.far = 5;
 
@@ -46,6 +47,11 @@ DungeonHop.GameInstance = function () {
 
         light = new THREE.AmbientLight(0x999999); // soft white light
         scene.add(light);
+
+
+
+
+
     }
 
     //calculates the time between the frames
@@ -222,10 +228,11 @@ DungeonHop.GameInstance = function () {
         
         if(document.getElementById("info-text").innerHTML!= " "){
             document.getElementById("info-text").style["background-color"] =["rgba(69,40,14, 0.9)"];
-            document.getElementById("info-text").style["border"] =["0px solid #45280E"];
+            document.getElementById("info-text").style["border"] =["4px solid #2D1D0E"];
             
         }else{
             document.getElementById("info-text").style["background-color"] =["transparent"];
+            document.getElementById("info-text").style["border"] =["0px solid #45280E"];
         }
     }
 

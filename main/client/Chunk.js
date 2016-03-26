@@ -18,7 +18,7 @@ DungeonHop.Chunk = function () {
 
     function addGround(zPosition) {
         var geometry = new THREE.BoxGeometry(chunkSize, 0.5, 1),
-            material = new THREE.MeshLambertMaterial({color: 0x999999}),
+            material = new THREE.MeshLambertMaterial({color: 0x897869}),
             mesh = new THREE.Mesh(geometry, material);
         mesh.position.z = zPosition;
         mesh.position.y = -0.25;
@@ -32,7 +32,7 @@ DungeonHop.Chunk = function () {
 
     function addLava(zPosition) {
         var geometry = new THREE.BoxGeometry(chunkSize, 0.1, 1),
-            material = new THREE.MeshLambertMaterial({color: 0xbb0000}),
+            material = new THREE.MeshLambertMaterial({color: 0x8E0315}),
             mesh = new THREE.Mesh(geometry, material);
         mesh.position.z = zPosition;
         mesh.position.y = -0.25;
@@ -43,7 +43,7 @@ DungeonHop.Chunk = function () {
     //adds a wall on the side of the dungeon
     function addWall(zPosition, xPosition) {
         var geometry = new THREE.BoxGeometry(borderSize, 3, 1),
-            material = new THREE.MeshLambertMaterial({color: 0x444444}),
+            material = new THREE.MeshLambertMaterial({color: 0x43260D}),
             mesh = new THREE.Mesh(geometry, material);
         mesh.position.z = zPosition;
         mesh.position.y = 0;

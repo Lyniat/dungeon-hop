@@ -21,7 +21,7 @@ GameHandler = (function () {
         document.body.appendChild(canvas);
         renderer = new THREE.WebGLRenderer({canvas: canvas});
         renderer.setSize(window.innerWidth, window.innerHeight);
-        renderer.setClearColor(0xbb0000, 1); //lava red sky
+        renderer.setClearColor(0x4A4A4A, 1); //lava red sky
         document.body.appendChild(renderer.domElement);
 
         renderer.shadowMap.enabled = true;
