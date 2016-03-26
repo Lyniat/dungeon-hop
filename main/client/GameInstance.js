@@ -207,6 +207,7 @@ DungeonHop.GameInstance = function () {
             showInfoForTime(name+" died!",3);
             opponentPlayers[id].die();
         }
+
     }
 
     function updatePlayers(id, xPos, zPos) {
@@ -218,6 +219,14 @@ DungeonHop.GameInstance = function () {
     function setInfoText(text) {
         console.log("info text: " + text);
         infoText.innerHTML = text;
+        
+        if(document.getElementById("info-text").innerHTML!= " "){
+            document.getElementById("info-text").style["background-color"] =["rgba(69,40,14, 0.9)"];
+            document.getElementById("info-text").style["border"] =["0px solid #45280E"];
+            
+        }else{
+            document.getElementById("info-text").style["background-color"] =["transparent"];
+        }
     }
 
     function createNewEnemy(id, xPos, zPos) {
