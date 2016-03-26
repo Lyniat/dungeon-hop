@@ -215,13 +215,14 @@ DungeonHop.GameInstance = function () {
         world.removeChunk(pos);
     }
 
-    function setPlayerDead(id) {
+    function setPlayerDead(id,name) {
         console.log("player dead");
         if (id == playerId) {
             player.die();
         }
         else if (opponentPlayers[id] != undefined) {
-            showInfoForTime("Player "+id+" died!",3);
+            //showInfoForTime("Player "+id+" died!",3);
+            showInfoForTime(name+" died!",3);
             opponentPlayers[id].die();
         }
     }
@@ -316,12 +317,18 @@ DungeonHop.GameInstance = function () {
         }
     }
 
+    function setGameFinished(){
+        gameStatus.active = false;
+        gameStatus.finished = true;
+    }
+
     that.startGame = startGame;
     that.setPlayers = setPlayers;
     that.createWorld = createWorld;
     that.updatePlayers = updatePlayers;
     that.removeChunk = removeChunk;
     that.setPlayerDead = setPlayerDead;
+    that.setGameFinished = setGameFinished;
     that.setInfoText = setInfoText;
     that.createNewEnemy = createNewEnemy;
     that.updateEnemyPosition = updateEnemyPosition;

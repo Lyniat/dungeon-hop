@@ -202,7 +202,7 @@ DungeonHop.Player = function () {
     
 
     function informEnemyCollision(){
-        if(!dead) {
+        if(!dead && !gameStatus.finished) {
             dead = true;
             serverInterface.setPlayerDead();
             die();
