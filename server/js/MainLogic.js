@@ -50,7 +50,7 @@ MainLogic = function () {
             r,
             obstacleId,
             j,
-            enemy = new enemyClass.Enemy(),
+            enemy = new enemyClass(),
             newId = enemies.length,
             xPos = Math.round((chunkSize / 6) * j),
             chunk = [];
@@ -94,7 +94,7 @@ MainLogic = function () {
 
             //create enemies
             for (j = 0; j < 5; j++) {
-                enemy = new enemyClass.Enemy();
+                enemy = new enemyClass();
                 newId = enemies.length;
                 xPos = Math.round((chunkSize / 6) * j);
                 enemy.init(newId, chunkSize, server, that, xPos, zPos);
