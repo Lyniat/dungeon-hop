@@ -7,23 +7,16 @@
         app = express(),
         server = require("http").Server(app),
         io = require("socket.io")(server),
-        pg = require("pg"),
-        main = require("./js/MainLogic.js").MainLogic,
         serverInst = require("./js/ServerInstance.js").ServerInstance,
-        serverInstances = [],
-        clients = [];
-
-    var mainLogic = new main();
+        serverInstances = [];
 
 
     app.use(express.static(__dirname + "/../main"));
 
-    io.sockets.on('connection', function (socket) {
+    io.sockets.on("connection", function (socket) {
         socket.on("joinGame", function(id){
             if(id == "private"){
-                createNewServer(socket,true)
-            }else{
-
+                createNewServer(socket,true);
             }
             connectClientToServer(socket,id);
         });
@@ -41,7 +34,8 @@
     }
 
     function connectClientToServer(socket,id) {
-        for (var serverInstance of serverInstances) {
+        var serverInstance;
+        for (serverInstance of serverInstances) {
             if (serverInstance.canJoin(id)) {
                 serverInstance.addClient(socket);
                 return;
@@ -51,15 +45,18 @@
     }
 
     function destroyServer(that) {
-        var clients = that.getAllClients();
-        for (var client of clients) {
-            var socket = client.getSocket();
+        var client,
+            socket,
+            i,
+            serverInst,
+            clients = that.getAllClients();
+        for (client of clients) {
+            socket = client.getSocket();
             client.destroy();
             socket.emit("newGame");
         }
-        var i;
         for (i = 0; i < serverInstances.length; i++) {
-            var serverInst = serverInstances[i];
+            serverInst = serverInstances[i];
             if (serverInst == that) {
                 console.log("destroyed server " + i);
                 break;

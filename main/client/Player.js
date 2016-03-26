@@ -31,7 +31,7 @@ DungeonHop.Player = function () {
 
     function onKeyUp(evt) {
         evt.preventDefault();
-        if (!gameStatus.active) {
+        if (!gameStatus.active && !gameStatus.finished) {
             return;
         }
         if (evt.keyCode == "87") {

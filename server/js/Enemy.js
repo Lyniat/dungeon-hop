@@ -38,10 +38,12 @@ Enemy = function () {
     }
 
     function nextFieldEmpty(direction){
-        var nextX = xPos+direction;
-        var enemies = logic.getAllEnemies();
-        for(var i = 0; i < enemies.length; i++){
-            var enemy = enemies[i];
+        var nextX = xPos+direction,
+        enemies = logic.getAllEnemies(),
+            i,
+            enemy;
+        for(i = 0; i < enemies.length; i++){
+            enemy = enemies[i];
             if(enemy.getPosition().z != zPos){
                 continue;
             }
