@@ -21,6 +21,10 @@ Enemy = function () {
         move();
     }
 
+    /*
+    checks if the next field is empty. If so, it will move there and wait for the waitTime before
+    moving again
+     */
     function move(){
         if(!nextFieldEmpty(direction)){
             direction *= -1;

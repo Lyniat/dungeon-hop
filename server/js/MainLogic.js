@@ -15,8 +15,10 @@ MainLogic = function () {
         server = srv;
     }
 
-//returns the chunk at the zPosition
-//if the wanted chunk has not been created it will generate a new one in createNewChunk
+    /*
+     returns the chunk at the zPosition
+     if the wanted chunk has not been created it will generate a new one in createNewChunk
+     */
     function getChunkAt(zPosition) {
         var chunk;
         //special case at beginning
@@ -35,6 +37,9 @@ MainLogic = function () {
         }
     }
 
+    /*
+     this will be created at the beginning of the levels
+     */
     function createEmptyChunk() {
         var chunk = [], i;
         for (i = 0; i < chunkSize; i++) {
@@ -44,7 +49,15 @@ MainLogic = function () {
         return chunk;
     }
 
-//generates a new chunk with random obstacles
+    /*
+     generates a new chunk with random obstacles
+     there are three different types:
+        1. lava which is filled with objects you can jump on
+        2. normal ground which has different obstacles
+        3. empty ground with enemies on it
+
+     createPath is used to be sure tht theres always at least one path, the player can walk
+     */
     function createNewChunk(zPos) {
         var i,
             r,
@@ -112,6 +125,17 @@ MainLogic = function () {
         return r;
     }
 
+    /*
+    this function is used to be sure that there is always at least one path the player can walk on
+    without the need to jump into the lava or passing an obstacle
+
+    for this algorithm, every chunk, the position (on the x axis)
+    where the path from the last chunk ended, is taken and added to a random value which can be between
+    -5 and 5. All the positions between the oldPosition and the new one are now empty to be sure,
+    the player can pass.
+    After that the new position will be the old for the next ons
+
+     */
     function createPath(chunk, wantedId) {
         var i,
             newPosition = lastPathPos,
@@ -138,6 +162,10 @@ MainLogic = function () {
         return chunk;
     }
 
+
+    /*
+    remove chunks and enemies if they are too far away
+     */
     function checkRemovingChunks() {
         var removingChunk;
         removingChunk = cameraPosition + 10;
@@ -158,6 +186,10 @@ MainLogic = function () {
         }
     }
 
+    /*
+    checks if the camera position given by a player has a lower z value than the actual one.
+    If so the actual one will be updated
+     */
     function updateCameraPosition(zPos) {
         if (zPos < cameraPosition) {
             cameraPosition = zPos;

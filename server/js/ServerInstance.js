@@ -10,6 +10,10 @@ ServerInstance = function () {
         maxPlayers = 3,
         gameId;
 
+
+    /*
+     called on initialization
+     */
     function init(main) {
         mainServer = main;
         mainLogic = new mainLogicClass();
@@ -18,6 +22,10 @@ ServerInstance = function () {
         return gameId;
     }
 
+    /*
+     every game gets a random id, so that new players can connect tp this game as a private one
+     (not completely implemented at this moment)
+     */
     function setGameId() {
         var char,
             string = "",
@@ -35,6 +43,9 @@ ServerInstance = function () {
         gameId = string;
     }
 
+    /*
+    adds a socket to the server instance and creates a new Client object for it
+     */
     function addClient(clientSocket) {
         var client = new Client();
         client.init(clientSocket, clients.length, that);
@@ -44,6 +55,10 @@ ServerInstance = function () {
         }
     }
 
+    /*
+    destroys the client and removes it from the clients list
+    if every client is destroyed, the server will be destroyed
+     */
     function destroyClient(id) {
         var client,
             i;
@@ -62,7 +77,10 @@ ServerInstance = function () {
         return mainLogic.getChunkAt(zPosition);
     }
 
-    function refreshAllClients(id) {
+    /*
+    if a new player connected, the information about him an the other players will be updated for every one
+     */
+    function refreshAllClients() {
         var client,
             i,
             j,
@@ -79,7 +97,7 @@ ServerInstance = function () {
                 wantedId = wantedClient.getId();
                 wantedName = wantedClient.getPlayerName();
                 wantedStatus = wantedClient.getPlayerStatus();
-                if (wantedStatus != 1){
+                if (wantedStatus != 1) {
                     continue;
                 }
                 if (client.getId() != wantedId) {
@@ -121,6 +139,11 @@ ServerInstance = function () {
         }
     }
 
+    /*
+    if a player died, all players get this information
+    the server will also check if only one player is alive. If so the games status will be set
+    as finished and the server will restart
+     */
     function setPlayerDead(id) {
         var i,
             client,
@@ -138,7 +161,7 @@ ServerInstance = function () {
                 deadPlayers++;
             }
             if (client.getId() != id) {
-                client.getSocket().emit("setPlayerDead", id,name);
+                client.getSocket().emit("setPlayerDead", id, name);
             }
         }
         console.log(deadPlayers + " players are dead");
@@ -152,6 +175,9 @@ ServerInstance = function () {
         deadPlayers = 0;
     }
 
+    /*
+    send to every client the information the a certain player has won the game
+     */
     function setGameOverText() {
         var winnerName,
             client,
@@ -168,6 +194,9 @@ ServerInstance = function () {
         setGameFinished();
     }
 
+    /*
+    starts the game by counting down and sending a start message to all clients
+     */
     function startGame() {
         var i,
             client;
@@ -195,6 +224,9 @@ ServerInstance = function () {
         }, 1000);
     }
 
+    /*
+    set given text for all clients
+     */
     function setInfoTextForClients(text) {
         var i,
             client;
@@ -205,6 +237,9 @@ ServerInstance = function () {
         }
     }
 
+    /*
+     set game finished for all clients
+     */
     function setGameFinished() {
         var i,
             client;
@@ -214,6 +249,9 @@ ServerInstance = function () {
         }
     }
 
+    /*
+     update an enemies position for all clients
+     */
     function updateEnemyPosition(id, xPos) {
         var i,
             client;
@@ -232,6 +270,10 @@ ServerInstance = function () {
         }
     }
 
+    /*
+    update all enemies for a client
+    this is called if a client (re)connects to the server
+     */
     function updateEnemiesForClient(id) {
         var i,
             client,
@@ -256,8 +298,10 @@ ServerInstance = function () {
         }
     }
 
-    function updateCameraPosition(id, zPos) {
-        //id not neede for this
+    /*
+    update camera position and check if chunks are out of distnace, so that they can get deleted
+     */
+    function updateCameraPosition(zPos) {
         var removingChunk = mainLogic.updateCameraPosition(zPos);
         if (removingChunk != null && removingChunk != undefined) {
             console.log("removing chunk " + removingChunk);
@@ -269,6 +313,9 @@ ServerInstance = function () {
         return status;
     }
 
+    /*
+    returns if a player can join or if the game is full or private
+     */
     function canJoin(gId) {
         if (status == 0) {
             return true;
