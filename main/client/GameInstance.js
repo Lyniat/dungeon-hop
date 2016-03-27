@@ -7,6 +7,7 @@ DungeonHop.GameInstance = function () {
     "use strict";
     /* eslint-env browser  */
     var that = {},
+        GAME_VERSION = "", //this will be automaticly updated ba the python script
         scene = new THREE.Scene(),
         infoText = document.getElementById("info-text"),
 		timer = document.getElementById("timer"),

@@ -3,6 +3,7 @@
     /* eslint-env node */
 
     var that = {},
+        GAME_VERSION = "", //this will be automaticly updated ba the python script
         express = require("express"),
         app = express(),
         server = require("http").Server(app),
