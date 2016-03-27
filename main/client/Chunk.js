@@ -16,6 +16,9 @@ DungeonHop.Chunk = function () {
         zPosition,
         worldCallbackFunction;
 
+    /*
+     adds an empty ground to the scene which can be filled with obstacles or enemies
+     */
     function addGround(zPosition) {
         var geometry = new THREE.BoxGeometry(chunkSize, 0.5, 1),
             material = new THREE.MeshLambertMaterial({color: 0x897869}),
@@ -30,6 +33,9 @@ DungeonHop.Chunk = function () {
         objects.push(mesh);
     }
 
+    /*
+     adds lava which can be filles with barrels or stones
+     */
     function addLava(zPosition) {
         var geometry = new THREE.BoxGeometry(chunkSize, 0.1, 1),
             material = new THREE.MeshLambertMaterial({color: 0x8E0315}),
@@ -40,7 +46,9 @@ DungeonHop.Chunk = function () {
         objects.push(mesh);
     }
 
-    //adds a wall on the side of the dungeon
+    /*
+     adds a wall on the side of the dungeon
+     */
     function addWall(zPosition, xPosition) {
         var geometry = new THREE.BoxGeometry(borderSize, 3, 1),
             material = new THREE.MeshLambertMaterial({color: 0x43260D}),
@@ -51,8 +59,10 @@ DungeonHop.Chunk = function () {
         objects.push(mesh);
     }
 
-    //requests the wanted chunk from the server
-    //creates a new matrix for collision and adds the object the array
+    /*
+     requests the wanted chunk from the server
+     creates a new matrix for collision and adds the object the array
+     */
     function addObstacles(zPosition, chunk) {
         var obstacles = chunk,
             i,
@@ -86,7 +96,9 @@ DungeonHop.Chunk = function () {
         }
     }
 
-    //adds the models to the visual scene
+    /*
+     adds the models to the visual scene
+     */
     function addToScene(scene) {
         var i;
         for (i = 0; i < objects.length; i++) {
@@ -110,6 +122,9 @@ DungeonHop.Chunk = function () {
     }
 
 
+    /*
+     inits a chunk and adds it to the scene
+     */
     function initChunk(chunk) {
         var groundType = chunk[chunkSize];
         if (groundType == 0) {
@@ -123,6 +138,9 @@ DungeonHop.Chunk = function () {
         addToScene(scene);
     }
 
+    /*
+     removes the chunk from the scene
+     */
     function destroyChunk(scene) {
         var i;
         console.log("destroying");

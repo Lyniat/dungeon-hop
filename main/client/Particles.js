@@ -1,6 +1,11 @@
 /*
  global THREE
  */
+
+/*
+creates a particle system with the given texture
+ */
+
 var DungeonHop = DungeonHop || {};
 DungeonHop.Particles = function () {
     "use strict";

@@ -11,7 +11,9 @@ DungeonHop.Enemy = function () {
         animationNum = 0;
 
 
-    //load the player model (a cube for testing)
+    /*
+    load Player (in this case Enemy) model
+     */
     function loadPlayer(geometry,x,z) {
         object = geometry;
         object.castShadow = true;
@@ -21,6 +23,9 @@ DungeonHop.Enemy = function () {
         object.position.z = z;
     }
 
+    /*
+    returns the actual position
+     */
     function getPosition() {
         var x = Math.round(object.position.x);
         var z = Math.round(object.position.z);
@@ -37,6 +42,10 @@ DungeonHop.Enemy = function () {
         oldPosition = new THREE.Vector3(x,0,z);
     }
 
+
+    /*
+    moves to the wanted position over time to animate the enemy
+     */
     function movePosition(t,x,z,anNum){
         setTimeout(function() {
             if(anNum != animationNum){
@@ -57,6 +66,9 @@ DungeonHop.Enemy = function () {
         }, 10);
     }
 
+    /*
+    check if the player collided with the enemy
+     */
     function checkPlayerCollision(x,z){
         var nextX = x + Math.round(object.position.x);
         var nextZ = z + Math.round(object.position.z);
@@ -84,6 +96,9 @@ DungeonHop.Enemy = function () {
         }
     }
 
+    /*
+    updates the position and rotates the enemy
+     */
     function updatePosition(x,z){
         var newX,
             newZ;

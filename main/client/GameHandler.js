@@ -15,6 +15,9 @@ GameHandler = (function () {
         renderer;
 
 
+    /*
+    inits the game by setting the important values
+     */
     function init(i, name) {
         var canvas = document.createElement("canvas");
         canvas.id = "canvas";
@@ -34,11 +37,17 @@ GameHandler = (function () {
         modelManager.init(this);
     }
 
+    /*
+    this will be called after the modelmanager loaded all models
+     */
     function loaded(mdls) {
         models = mdls;
         createNewGame();
     }
 
+    /*
+    creates a new game by destroying the old one and creating a new serverInterface and a new game instance
+     */
     function createNewGame() {
         var labels,
             i;
