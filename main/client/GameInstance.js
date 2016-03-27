@@ -7,11 +7,11 @@ DungeonHop.GameInstance = function () {
     "use strict";
     /* eslint-env browser  */
     var that = {},
-        GAME_VERSION = "", //this will be automaticly updated ba the python script
+        GAME_VERSION = 1459098998.47, //this will be automaticly updated ba the python script
         scene = new THREE.Scene(),
         infoText = document.getElementById("info-text"),
-        timer = document.getElementById("timer"),
-        seconds = 0,
+		timer = document.getElementById("timer"),
+		seconds = 0,
         renderer,
         cameraObj,
         lastTime = Date.now(),
@@ -63,72 +63,11 @@ DungeonHop.GameInstance = function () {
      */
     function getDeltaTime() {
         var actualTime = Date.now(),
-            delta = actualTime - lastTime;
+			delta = actualTime - lastTime;
         lastTime = actualTime;
         delta /= 1000;
         return delta;
     }
-<<<<<<< HEAD
-
-    /*
-     calculates the coordinates from the game to coordinates in the browser
-     */
-    function toScreenPosition(obj, camera) {
-        var vector = new THREE.Vector3(),
-            widthHalf = 0.5 * renderer.context.canvas.width,
-            heightHalf = 0.5 * renderer.context.canvas.height;
-
-        obj.updateMatrixWorld();
-        vector.setFromMatrixPosition(obj.matrixWorld);
-        vector.project(camera);
-
-        vector.x = (vector.x * widthHalf) + widthHalf;
-        vector.y = -(vector.y * heightHalf) + heightHalf;
-
-        return {
-            x: vector.x,
-            y: vector.y
-        };
-
-    }
-
-    function showPlayerLabels() {
-        var proj = toScreenPosition(player.getObject(), cameraObj.getCamera()),
-            label = document.getElementById("player-label");
-        label.style.left = proj.x + "px";
-        label.style.top = proj.y + "px";
-        label.style.visibility = "visible";
-    }
-
-    function showOpponentLabels() {
-        var i,
-            opponent,
-            proj,
-            label,
-            t;
-        for (i = 0; i < opponentPlayers.length; i++) {
-            opponent = opponentPlayers[i];
-            if (opponent == undefined) {
-                continue;
-            }
-            proj = toScreenPosition(opponent.getObject(), cameraObj.getCamera());
-            label = document.getElementById("opponent-" + i + "-label");
-            if (label == null) {
-                label = document.createElement("p");
-                t = document.createTextNode(opponent.getName());
-                label.appendChild(t);
-                label.className = "opponent-label";
-                label.id = "opponent-" + i + "-label";
-                document.body.appendChild(label);
-            } else {
-                label.style.left = proj.x + 'px';
-                label.style.top = proj.y + 'px';
-                label.style.visibility = "visible";
-            }
-        }
-    }
-=======
->>>>>>> 7ee1201680bfb51e66458b0ed844e18b5be226fe
 
     /*
      renders the scene every frame
@@ -143,10 +82,6 @@ DungeonHop.GameInstance = function () {
         showOpponentLabels();
         showPlayerLabels();
     };
-<<<<<<< HEAD
-
-=======
->>>>>>> 7ee1201680bfb51e66458b0ed844e18b5be226fe
 
     /*
      creates the world by creating the player, the camera and the chunks
@@ -180,14 +115,8 @@ DungeonHop.GameInstance = function () {
             modelId,
             modelObject,
             r,
-<<<<<<< HEAD
-            playerModel,
-            i,
-            players = [];
-=======
             playerModel;
         var i, players = [];
->>>>>>> 7ee1201680bfb51e66458b0ed844e18b5be226fe
         //get all player models
         for (i = 0; i < models.length; i++) {
             model = models[i];
@@ -246,14 +175,8 @@ DungeonHop.GameInstance = function () {
         serverInterface.setReady();
         infoText.innerHTML = "Waiting for other Players";
     }
-<<<<<<< HEAD
-
-    function setTimer() {
-        var min, sec, view;
-=======
 	function setTimer() {
 		var min, sec, view;
->>>>>>> 7ee1201680bfb51e66458b0ed844e18b5be226fe
         seconds++;
         min = Math.floor(seconds / 60);
         sec = Math.floor(seconds % 60);
@@ -265,11 +188,11 @@ DungeonHop.GameInstance = function () {
             sec = "0" + sec;
         }
         timer.innerHTML = min + ":" + sec;
-    }
-
+	}
+	
     function startGame() {
         gameStatus.active = true;
-        setInterval(setTimer, 1000);
+		setInterval(setTimer, 1000);
     }
 	
 	
@@ -452,23 +375,6 @@ DungeonHop.GameInstance = function () {
         gameStatus.finished = true;
     }
 
-<<<<<<< HEAD
-    /*
-     inits the game instance by passing the values from the game handler
-     */
-    function init(i, name, mdls, srv, rend) {
-        renderer = rend;
-        ip = i;
-        playerName = name;
-        models = mdls;
-        serverInterface = srv;
-        gameStatus.active = false;
-        startButton = document.getElementById("start");
-        startButton.addEventListener("click", startClicked);
-    }
-
-=======
->>>>>>> 7ee1201680bfb51e66458b0ed844e18b5be226fe
     that.startGame = startGame;
     that.setPlayers = setPlayers;
     that.createWorld = createWorld;
