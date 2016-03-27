@@ -10,8 +10,8 @@ DungeonHop.GameInstance = function () {
         GAME_VERSION = "", //this will be automaticly updated ba the python script
         scene = new THREE.Scene(),
         infoText = document.getElementById("info-text"),
-		timer = document.getElementById("timer"),
-		seconds = 0,
+        timer = document.getElementById("timer"),
+        seconds = 0,
         renderer,
         cameraObj,
         lastTime = Date.now(),
@@ -63,19 +63,19 @@ DungeonHop.GameInstance = function () {
      */
     function getDeltaTime() {
         var actualTime = Date.now(),
-			delta = actualTime - lastTime;
+            delta = actualTime - lastTime;
         lastTime = actualTime;
         delta /= 1000;
         return delta;
     }
-	
-	/*
+
+    /*
      calculates the coordinates from the game to coordinates in the browser
      */
     function toScreenPosition(obj, camera) {
         var vector = new THREE.Vector3(),
-			widthHalf = 0.5 * renderer.context.canvas.width,
-			heightHalf = 0.5 * renderer.context.canvas.height;
+            widthHalf = 0.5 * renderer.context.canvas.width,
+            heightHalf = 0.5 * renderer.context.canvas.height;
 
         obj.updateMatrixWorld();
         vector.setFromMatrixPosition(obj.matrixWorld);
@@ -90,8 +90,16 @@ DungeonHop.GameInstance = function () {
         };
 
     }
-	
-	function showOpponentLabels() {
+
+    function showPlayerLabels() {
+        var proj = toScreenPosition(player.getObject(), cameraObj.getCamera()),
+            label = document.getElementById("player-label");
+        label.style.left = proj.x + "px";
+        label.style.top = proj.y + "px";
+        label.style.visibility = "visible";
+    }
+
+    function showOpponentLabels() {
         var i,
             opponent,
             proj,
@@ -132,7 +140,7 @@ DungeonHop.GameInstance = function () {
         showOpponentLabels();
         showPlayerLabels();
     };
-	
+
 
     /*
      creates the world by creating the player, the camera and the chunks
@@ -167,8 +175,8 @@ DungeonHop.GameInstance = function () {
             modelObject,
             r,
             playerModel,
-			i, 
-			players = [];
+            i,
+            players = [];
         //get all player models
         for (i = 0; i < models.length; i++) {
             model = models[i];
@@ -213,9 +221,9 @@ DungeonHop.GameInstance = function () {
         serverInterface.setReady();
         infoText.innerHTML = "Waiting for other Players";
     }
-	
-	function setTimer() {
-		var min, sec, view;
+
+    function setTimer() {
+        var min, sec, view;
         seconds++;
         min = Math.floor(seconds / 60);
         sec = Math.floor(seconds % 60);
@@ -227,11 +235,11 @@ DungeonHop.GameInstance = function () {
             sec = "0" + sec;
         }
         timer.innerHTML = min + ":" + sec;
-	}
-	
+    }
+
     function startGame() {
         gameStatus.active = true;
-		setInterval(setTimer, 1000);
+        setInterval(setTimer, 1000);
     }
 
     /*
@@ -352,7 +360,7 @@ DungeonHop.GameInstance = function () {
         gameStatus.finished = true;
     }
 
-	    /*
+    /*
      inits the game instance by passing the values from the game handler
      */
     function init(i, name, mdls, srv, rend) {
