@@ -37,7 +37,6 @@ DungeonHop.ServerInterface = function () {
     }
 
     function updateCamera(zPos) {
-        console.log("updating camera");
         server.emit("updateCamera", zPos);
     }
 
