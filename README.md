@@ -1,5 +1,6 @@
-## ANLEITUNG ## 
-Anleitung start der app:
+### ANLEITUNG ###
+
+Anleitung zum Starten der App:
 
 server.js im ordner server starten
 main.html local hosten und im browser öffnen
@@ -14,15 +15,10 @@ _________________________________________________
 ### Projektbeschreibung ###
 
 Dungeon Hop ist ein interaktives Multiplayer Game, dass dem Apple Design Award
-gewinner “Crossy Roads” von Hipster Whale Pty ltd. nachempfunden werden soll. Das
-Spiel soll als Endloses Arcade Spiel einen oder mehrere Nutzer durch spannende Welten
-wie Verliese und Kerker geleiten. Die Figuren der Spieler müssen Tunnel und Wege der
-Gemäuer durchqueren, und dürfen dabei nicht mit den Hindernissen die sich horizontal
-über den Bildschirmverlauf bewegen kollidieren. Im Multiplayer Mode gilt es nicht nur,
-die Hürden ohne Kollision zu passieren, sondern das auch schneller und effektiver als der
-Gegner zu tun. Die Gamification wird außerdem erweitert durch das einsammeln von
-Gems die den Spielstand vorantreiben oder aber auch Fallen, die den Spieler
-zurückwerfen.
+gewinner “Crossy Roads” von Hipster Whale Pty ltd. nachempfunden werden soll.
+Die Spieler müssen sich mit ihrer Figur einen Weg durch den Kerker bahnen und versuchen, dabei weder in die Lava zu fallen noch mit einem der "Feinde" zu kollidieren. 
+Da sich die Feinde außerdem ebenfalls bewegen und zusätzliche Hindernisse wie Fässer und Fackeln den Weg durch den Kerker teilweise versperren, wird der Spannungsfaktor für den Spieler erhöht. 
+Im Multiplayer Mode gilt es nicht nur, die Hürden ohne Kollision zu passieren, sondern das auch schneller als der oder die Gegner zu tun, um nicht aus der Map zu verschwinden.
 
 ### Anforderungen ###
 Das Spiel soll für die Nutzer einen klaren Mehrwert gegenüber anderen Arcade Hopper
@@ -35,32 +31,30 @@ Durch einen mit node.js gehostetenServer verbinden sich die Spieler dann über d
 Adresse.
 
 
-### Spielmodus ### 
+# Spielverlauf #
 
-**Das Spiel ist für 1 bis 4 Spieler spielbar.**
+**Das Spiel ist für 1 - 4 Spieler spielbar.**
 
-1. Nutzer landen in der lobby
+1. Nutzer landen in der Lobby
 
-2. funktion 1: spielernamen angeben (Anzahl der spielernamen die angegeben werden können ergeben sich automatisch mit den Rückmeldungen, wie viele clients geloggt sind)
+2. Der Spieler gibt seinen Namen ein und verbindet sich auf den Server
 
-3. funktion 2: spiel beginnen
+3. Der Spieler drückt auf den "Start" - Button und wartet auf eventuelle Mitspieler
 
-**Im Spiel**
+4. Ein Countdown wird heruntergezählt und das Spiel startet
 
-haben alle Spieler den "start" button geklickt zählt der counter von 3 nach unten
-anschließend beginnt das spiel
+# Spielende #
 
 **Gewinner**
-1. wer ohne Kollision am längsten durchhält
+
+--> Wer ohne Kollision am längsten durchhält
 
 **Verlierer**
-
-1. wer mit feind kollidiert oder in lava springt.
-
-2. wer zu langsam ist und nicht mehr im canvas ist
+ 
+*  Wer in die Lava fällt und stirbt
+*  Wer mit einem Feind kollidiert
+*  Wer zu langsam vorwärts kommt und dadurch aus der Map verschwindet
 
 **Erweiterungen**
 
-1. nachdem ein spieler verloren hat erscheint den Spielern der button "erneut spielen", damit ohne Rückkehr in die lobby gleich ein neues spiel gestartet werden kann
-
-2. es wäre vielleicht gut, jedem spieler 3 leben zu geben, da das spiel sonst sehr schnell vorbei ist.
+Nachdem ein Spieler verloren hat, erscheint der Button "Erneut spielen", damit ohne Rückkehr in die Lobby gleich ein neues Spiel gestartet werden kann.

@@ -405,7 +405,7 @@ Client = function () {
 
         socket.on("updateCamera", function (zPos) {
             cameraPos = zPos;
-            server.updateCameraPosition(id, cameraPos);
+            server.updateCameraPosition(cameraPos);
         });
 
         socket.on("playerDead", function () {

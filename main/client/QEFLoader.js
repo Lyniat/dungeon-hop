@@ -1,7 +1,11 @@
+/*
+ this code can load models in the qef format to a matrix but is not used at this time. maybe w need it later so we dont delete this code but it can be ignored
+ /*
+
+/*
 var DungeonHop = DungeonHop || {};
 DungeonHop.QEFLoader = function () {
     "use strict";
-    /* eslint-env browser  */
     var that = {},
         path = "assets/models/qef/";
 
@@ -94,3 +98,4 @@ DungeonHop.QEFLoader = function () {
     that.getMatrix = getMatrix;
     return that;
 };
+*/

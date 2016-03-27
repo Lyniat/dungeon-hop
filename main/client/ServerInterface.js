@@ -37,7 +37,6 @@ DungeonHop.ServerInterface = function () {
     }
 
     function updateCamera(zPos) {
-        console.log("updating camera");
         server.emit("updateCamera", zPos);
     }
 
@@ -120,8 +119,23 @@ DungeonHop.ServerInterface = function () {
         });
     }
 
+    function waitForPrivateId() {
+        server.on("privateId", function (id) {
+            console.warn("your private game id is " + id);
+        });
+    }
 
-    function init(hndlr, main, ip, name, gameId) {
+    function setMain(main) {
+        mainClass = main;
+    }
+
+    function waitForNewGame() {
+        server.on("newGame", function () {
+            handler.createNewGame();
+        });
+    }
+	
+	function init(hndlr, main, ip, name, gameId) {
         console.log("connecting to server");
         handler = hndlr;
         mainClass = main;
@@ -138,22 +152,6 @@ DungeonHop.ServerInterface = function () {
         waitForDisconnect();
         waitForNewGame();
         waitForGameFinished();
-    }
-
-    function waitForPrivateId() {
-        server.on("privateId", function (id) {
-            console.warn("your private game id is " + id);
-        });
-    }
-
-    function setMain(main) {
-        mainClass = main;
-    }
-
-    function waitForNewGame() {
-        server.on("newGame", function () {
-            handler.createNewGame();
-        });
     }
 
     that.getChunkAt = getChunkAt;

@@ -17,7 +17,9 @@ DungeonHop.ModelManager = function () {
             mainApp.loaded(models);
         }
     }
-
+/*
+loads a 3d model from a json file
+ */
     function loadJSON(path, type, id) {
         var loader = new THREE.JSONLoader(),
             name,
@@ -42,7 +44,9 @@ DungeonHop.ModelManager = function () {
             }
         );
     }
-
+    /*
+    loads a json file with ajax
+     */
     //http://stackoverflow.com/questions/14388452/how-do-i-load-a-json-object-from-a-file-with-ajax
     function fetchJSONFile(path, callback) {
         var httpRequest = new XMLHttpRequest(),
@@ -61,6 +65,9 @@ DungeonHop.ModelManager = function () {
         httpRequest.send();
     }
 
+    /*
+    returns the number of models
+     */
     function getModelAmount(data) {
         var modelNum = 0,
             key,
@@ -75,6 +82,9 @@ DungeonHop.ModelManager = function () {
         return modelNum;
     }
 
+    /*
+    load models in three different categories
+     */
     function loadModels(data) {
         modelAmount = getModelAmount(data);
         loadObjects("players", data);

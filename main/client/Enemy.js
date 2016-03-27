@@ -3,6 +3,8 @@
  */
 var DungeonHop = DungeonHop || {};
 DungeonHop.Enemy = function () {
+	"use strict";
+    /* eslint-env browser  */
     var that = {},
         object,
         player,
@@ -11,8 +13,10 @@ DungeonHop.Enemy = function () {
         animationNum = 0;
 
 
-    //load the player model (a cube for testing)
-    function loadPlayer(geometry,x,z) {
+    /*
+    load Player (in this case Enemy) model
+     */
+    function loadPlayer(geometry, x, z) {
         object = geometry;
         object.castShadow = true;
         object.receiveShadow = false;
@@ -21,35 +25,41 @@ DungeonHop.Enemy = function () {
         object.position.z = z;
     }
 
+    /*
+    returns the actual position
+     */
     function getPosition() {
-        var x = Math.round(object.position.x);
-        var z = Math.round(object.position.z);
-        return {x:x,z:z};
+        var x = Math.round(object.position.x),
+			z = Math.round(object.position.z);
+        return {x: x, z: z};
     }
 
     function getObject() {
         return object;
     }
 
-    function init(geometry,x,z,pl) {
-        loadPlayer(geometry,x,z);
+    function init(geometry, x, z, pl) {
+        loadPlayer(geometry, x, z);
         player = pl;
-        oldPosition = new THREE.Vector3(x,0,z);
+        oldPosition = new THREE.Vector3(x, 0, z);
     }
 
-    function movePosition(t,x,z,anNum){
-        setTimeout(function() {
-            if(anNum != animationNum){
+
+    /*
+    moves to the wanted position over time to animate the enemy
+     */
+    function movePosition(t, x, z, anNum) {
+        setTimeout(function () {
+            if (anNum != animationNum) {
                 return;
             }
             t--;
-            object.position.x += x/10;
-            object.position.z += z/10;
-            object.position.y = 0.5-Math.abs(0.5-t/10);
-            if(t > 0) {
-                movePosition(t,x,z,anNum);
-            }
-            else{
+            object.position.x += x / 10;
+            object.position.z += z / 10;
+            object.position.y = 0.5 - Math.abs(0.5 - t / 10);
+            if (t > 0) {
+                movePosition(t, x, z, anNum);
+            } else {
                 object.position.x = Math.round(object.position.x);
                 object.position.z = Math.round(object.position.z);
             }
@@ -57,10 +67,13 @@ DungeonHop.Enemy = function () {
         }, 10);
     }
 
-    function checkPlayerCollision(x,z){
-        var nextX = x + Math.round(object.position.x);
-        var nextZ = z + Math.round(object.position.z);
-        if(player.getPosition().x == nextX && player.getPosition().z == nextZ){
+    /*
+    check if the player collided with the enemy
+     */
+    function checkPlayerCollision(x, z) {
+        var nextX = x + Math.round(object.position.x),
+			nextZ = z + Math.round(object.position.z);
+        if (player.getPosition().x == nextX && player.getPosition().z == nextZ) {
             player.informEnemyCollision();
         }
     }
@@ -84,17 +97,20 @@ DungeonHop.Enemy = function () {
         }
     }
 
-    function updatePosition(x,z){
+    /*
+    updates the position and rotates the enemy
+     */
+    function updatePosition(x, z) {
         var newX,
             newZ;
         object.position.y = 0;
         object.position.x = oldPosition.x;
         object.position.z = oldPosition.z;
-        newX = x- oldPosition.x;
+        newX = x - oldPosition.x;
         newZ = z - oldPosition.z;
-        checkPlayerCollision(newX,newZ);
+        checkPlayerCollision(newX, newZ);
         animationNum++;
-        movePosition(10,newX,newZ,animationNum);
+        movePosition(10, newX, newZ, animationNum);
         moveDirection.x = x - oldPosition.x;
         moveDirection.z = z - oldPosition.z;
         rotate();

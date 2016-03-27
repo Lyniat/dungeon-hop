@@ -169,12 +169,13 @@ MainLogic = function () {
     function checkRemovingChunks() {
         var removingChunk;
         removingChunk = cameraPosition + 10;
+        console.log("checking chunk: "+removingChunk);
         if (removingChunk <= 0) {
             removeEnemiesOnChunk(removingChunk);
             console.log("removing chunk" + removingChunk);
             return removingChunk;
         }
-        return null;
+        //return null;
     }
 
     function removeEnemiesOnChunk(zPos) {

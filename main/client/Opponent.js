@@ -14,7 +14,7 @@ DungeonHop.Opponent = function () {
         name;
 
 
-    //load the player model (a cube for testing)
+    //load the player (in this case the model for the opponent)
     function loadPlayer(geometry, x, z) {
         object = geometry;
         object.castShadow = true;
@@ -39,6 +39,9 @@ DungeonHop.Opponent = function () {
         oldPosition = new THREE.Vector3(x, 0, z);
     }
 
+    /*
+    moves the opponent to a given position over time
+     */
     function movePosition(t, x, z, anNum) {
         setTimeout(function () {
             if (anNum != animationNum) {
@@ -77,6 +80,9 @@ DungeonHop.Opponent = function () {
         }
     }
 
+    /*
+     updates the position and rotates the opponent
+     */
     function updatePosition(x, z) {
         var newX,
             newZ;
@@ -95,6 +101,9 @@ DungeonHop.Opponent = function () {
         console.log("updated opponent position");
     }
 
+    /*
+    create particles where the opponent died
+     */
     function die() {
         var particles,
             particleSystem;
