@@ -9,6 +9,8 @@ DungeonHop.GameInstance = function () {
     var that = {},
         scene = new THREE.Scene(),
         infoText = document.getElementById("info-text"),
+		timer = document.getElementById("timer"),
+		seconds = 0,
         renderer,
         cameraObj,
         lastTime = Date.now(),
@@ -59,8 +61,8 @@ DungeonHop.GameInstance = function () {
      calculates the time between the frames
      */
     function getDeltaTime() {
-        var actualTime = Date.now();
-        var delta = actualTime - lastTime;
+        var actualTime = Date.now(),
+			delta = actualTime - lastTime;
         lastTime = actualTime;
         delta /= 1000;
         return delta;
@@ -130,8 +132,7 @@ DungeonHop.GameInstance = function () {
             r = parseInt(Math.floor(r));
             playerModel = players[r];
             return playerModel.clone();
-        }
-        else {
+        } else {
             playerModel = players[id];
             return playerModel.clone();
         }
@@ -173,10 +174,27 @@ DungeonHop.GameInstance = function () {
         serverInterface.setReady();
         infoText.innerHTML = "Waiting for other Players";
     }
+	function setTimer() {
+		var min, sec, view;
+        seconds++;
+        min = Math.floor(seconds / 60);
+        sec = Math.floor(seconds % 60);
 
+        if (min < 10) {
+            min = "0" + min;
+        }
+        if (sec < 10) {
+            sec = "0" + sec;
+        }
+        timer.innerHTML = min + ":" + sec;
+	}
+	
     function startGame() {
         gameStatus.active = true;
+		setInterval(setTimer, 1000);
     }
+	
+	
 
     /*
      synchronizes the players and creates new ones if the doesnt exist
@@ -231,8 +249,7 @@ DungeonHop.GameInstance = function () {
         console.log("player dead");
         if (id == playerId) {
             player.die();
-        }
-        else if (opponentPlayers[id] != undefined) {
+        } else if (opponentPlayers[id] != undefined) {
             //showInfoForTime("Player "+id+" died!",3);
             showInfoForTime(name + " died!", 3);
             opponentPlayers[id].die();
@@ -282,8 +299,8 @@ DungeonHop.GameInstance = function () {
 
     //http://stackoverflow.com/questions/27409074/three-js-converting-3d-position-to-2d-screen-position-r69
     function showPlayerLabels() {
-        var proj = toScreenPosition(player.getObject(), cameraObj.getCamera());
-        var label = document.getElementById("player-label");
+        var proj = toScreenPosition(player.getObject(), cameraObj.getCamera()),
+			label = document.getElementById("player-label");
         label.style.left = proj.x + 'px';
         label.style.top = proj.y + 'px';
         label.style.visibility = "visible";
