@@ -1,5 +1,6 @@
-## ANLEITUNG ## 
-Anleitung start der app:
+### ANLEITUNG ###
+
+Anleitung zum Starten der App:
 
 server.js im ordner server starten
 main.html local hosten und im browser öffnen
@@ -30,7 +31,7 @@ Durch einen mit node.js gehostetenServer verbinden sich die Spieler dann über d
 Adresse.
 
 
-### Spielverlauf ### 
+# Spielverlauf #
 
 **Das Spiel ist für 1 - 4 Spieler spielbar.**
 
@@ -42,17 +43,17 @@ Adresse.
 
 4. Ein Countdown wird heruntergezählt und das Spiel startet
 
-
-### Spielende ### 
+# Spielende #
 
 **Gewinner**
+
 --> Wer ohne Kollision am längsten durchhält
 
 **Verlierer**
  
-•  Wer in die Lava fällt und stirbt
-•  Wer mit einem Feind kollidiert
-•  Wer zu langsam vorwärts kommt und dadurch aus der Map verschwindet
+*  Wer in die Lava fällt und stirbt
+*  Wer mit einem Feind kollidiert
+*  Wer zu langsam vorwärts kommt und dadurch aus der Map verschwindet
 
 **Erweiterungen**
 
