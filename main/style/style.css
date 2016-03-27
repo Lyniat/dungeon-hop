@@ -11,6 +11,27 @@
 body {
     margin-top: 60px;
     font-family:'silkscreenbold',"Courier New", Courier, monospace;
+    background: url("../assets/images/bg_dungeonhop.png");
+    background-size: cover;
+    background-repeat: repeat;
+    background-color: #925B2B;
+    background-position: fixed;
+    color:#fff;
+}
+a{
+    color:#fff!important;
+    text-decoration: none;
+}
+a:hover{
+    -webkit-stroke-width: 5.3px;
+   -webkit-stroke-color: #FFFFFF;
+   -webkit-fill-color: #FFFFFF;
+   text-shadow: 1px 0px 20px yellow;
+   -webkit-transition: width 0.3s; /*Safari & Chrome*/
+   transition: width 0.3s;
+   -moz-transition: width 0.3s; /* Firefox 4 */
+   -o-transition: width 0.3s; /* Opera */
+    text-decoration: none;
 }
 #canvas {
     width: 100%;
@@ -22,6 +43,10 @@ nav.navbar.navbar-inverse.navbar-fixed-top {
     background-color: #572F0C;
     white-space: nowrap;
 
+}
+/*NAVBAR FIX*/
+.navbar-right{
+    margin-right: 65px;
 }
 .navbar-inverse .navbar-brand {
 
@@ -44,6 +69,32 @@ nav.navbar.navbar-inverse.navbar-fixed-top {
 .btn-default:hover{
     background-color: #8B572A;
     border-color: #572F0C;
+}
+/******************************/
+/******howto STYLES******/
+/****************************/
+
+.playerstats{
+display: inline-flex;
+width: 100%;
+background-color: rgba(68,44,23,.8);
+padding:40px;
+margin:20px;
+text-align: justify;
+hyphens:auto!important;
+}
+.playerstats h4{
+margin-right: 15em;
+}
+.playerstats p{
+float: right;
+line-height: 19px;
+margin:10px 0 0 0;
+hyphens:auto!important;
+}
+.model .contols .segmented-control .control-hotspots .label{
+    display:none!important;
+
 }
 /******************************/
 /******COOL TEXT EFFECTS******/
