@@ -4,8 +4,6 @@
 var GameHandler = GameHandler || {};
 var DungeonHop = DungeonHop || {};
 GameHandler = (function () {
-	"use strict";
-    /* eslint-env browser  */
     var that = {},
         infoText = document.getElementById("info-text"),
         ip,
@@ -15,40 +13,9 @@ GameHandler = (function () {
         serverInterface,
         activeGame = null,
         renderer;
-	
-	/*
-	creates a new game by destroying the old one and creating a new serverInterface and a new game instance
-     */
-    function createNewGame() {
-        var labels,
-            i;
-        if (activeGame != undefined) {
-            activeGame.destroy();
-        }
 
-        labels = document.getElementsByClassName("opponent-label");
-        for (i = 0; i < labels.length; i++) {
-            labels[i].remove();
-        }
-
-        //create new
-        serverInterface = new DungeonHop.ServerInterface();
-        activeGame = new DungeonHop.GameInstance();
-        serverInterface.init(that, activeGame, ip, playerName);
-        infoText.innerHTML = "CONNECTING TO SERVER";
-        activeGame.init(ip, playerName, models, serverInterface, renderer);
-    }
-  
 
     /*
-    this will be called after the modelmanager loaded all models
-     */
-    function loaded(mdls) {
-        models = mdls;
-        createNewGame();
-    }
-
-     /*
     inits the game by setting the important values
      */
     function init(i, name) {
@@ -68,6 +35,37 @@ GameHandler = (function () {
         playerName = name;
         modelManager = new DungeonHop.ModelManager();
         modelManager.init(this);
+    }
+
+    /*
+    this will be called after the modelmanager loaded all models
+     */
+    function loaded(mdls) {
+        models = mdls;
+        createNewGame();
+    }
+
+    /*
+    creates a new game by destroying the old one and creating a new serverInterface and a new game instance
+     */
+    function createNewGame() {
+        var labels,
+            i;
+        if(activeGame != undefined) {
+            activeGame.destroy();
+        }
+
+        labels = document.getElementsByClassName("opponent-label");
+        for(i = 0; i < labels.length; i++){
+            labels[i].remove();
+        }
+
+        //create new
+        serverInterface = new DungeonHop.ServerInterface();
+        activeGame = new DungeonHop.GameInstance();
+        serverInterface.init(that, activeGame, ip, playerName);
+        infoText.innerHTML = "CONNECTING TO SERVER";
+        activeGame.init(ip, playerName, models, serverInterface, renderer);
     }
 
     that.loaded = loaded;

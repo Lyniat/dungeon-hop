@@ -68,56 +68,6 @@ DungeonHop.GameInstance = function () {
         delta /= 1000;
         return delta;
     }
-	
-	/*
-     calculates the coordinates from the game to coordinates in the browser
-     */
-    function toScreenPosition(obj, camera) {
-        var vector = new THREE.Vector3(),
-			widthHalf = 0.5 * renderer.context.canvas.width,
-			heightHalf = 0.5 * renderer.context.canvas.height;
-
-        obj.updateMatrixWorld();
-        vector.setFromMatrixPosition(obj.matrixWorld);
-        vector.project(camera);
-
-        vector.x = (vector.x * widthHalf) + widthHalf;
-        vector.y = -(vector.y * heightHalf) + heightHalf;
-
-        return {
-            x: vector.x,
-            y: vector.y
-        };
-
-    }
-	
-	function showOpponentLabels() {
-        var i,
-            opponent,
-            proj,
-            label,
-            t;
-        for (i = 0; i < opponentPlayers.length; i++) {
-            opponent = opponentPlayers[i];
-            if (opponent == undefined) {
-                continue;
-            }
-            proj = toScreenPosition(opponent.getObject(), cameraObj.getCamera());
-            label = document.getElementById("opponent-" + i + "-label");
-            if (label == null) {
-                label = document.createElement("p");
-                t = document.createTextNode(opponent.getName());
-                label.appendChild(t);
-                label.className = "opponent-label";
-                label.id = "opponent-" + i + "-label";
-                document.body.appendChild(label);
-            } else {
-                label.style.left = proj.x + 'px';
-                label.style.top = proj.y + 'px';
-                label.style.visibility = "visible";
-            }
-        }
-    }
 
     /*
      renders the scene every frame
@@ -132,7 +82,6 @@ DungeonHop.GameInstance = function () {
         showOpponentLabels();
         showPlayerLabels();
     };
-	
 
     /*
      creates the world by creating the player, the camera and the chunks
@@ -166,9 +115,8 @@ DungeonHop.GameInstance = function () {
             modelId,
             modelObject,
             r,
-            playerModel,
-			i, 
-			players = [];
+            playerModel;
+        var i, players = [];
         //get all player models
         for (i = 0; i < models.length; i++) {
             model = models[i];
@@ -209,11 +157,24 @@ DungeonHop.GameInstance = function () {
         }
     }
 
+    /*
+     inits the game instance by passing the values from the game handler
+     */
+    function init(i, name, mdls, srv, rend) {
+        renderer = rend;
+        ip = i;
+        playerName = name;
+        models = mdls;
+        serverInterface = srv;
+        gameStatus.active = false;
+        startButton = document.getElementById("start");
+        startButton.addEventListener("click", startClicked);
+    }
+
     function startClicked() {
         serverInterface.setReady();
         infoText.innerHTML = "Waiting for other Players";
     }
-	
 	function setTimer() {
 		var min, sec, view;
         seconds++;
@@ -233,6 +194,8 @@ DungeonHop.GameInstance = function () {
         gameStatus.active = true;
 		setInterval(setTimer, 1000);
     }
+	
+	
 
     /*
      synchronizes the players and creates new ones if the doesnt exist
@@ -335,6 +298,66 @@ DungeonHop.GameInstance = function () {
         }
     }
 
+    //http://stackoverflow.com/questions/27409074/three-js-converting-3d-position-to-2d-screen-position-r69
+    function showPlayerLabels() {
+        var proj = toScreenPosition(player.getObject(), cameraObj.getCamera()),
+			label = document.getElementById("player-label");
+        label.style.left = proj.x + 'px';
+        label.style.top = proj.y + 'px';
+        label.style.visibility = "visible";
+    }
+
+    /*
+     calculates the coordinates from the game to coordinates in the browser
+     */
+    function toScreenPosition(obj, camera) {
+        var vector = new THREE.Vector3();
+
+        var widthHalf = 0.5 * renderer.context.canvas.width;
+        var heightHalf = 0.5 * renderer.context.canvas.height;
+
+        obj.updateMatrixWorld();
+        vector.setFromMatrixPosition(obj.matrixWorld);
+        vector.project(camera);
+
+        vector.x = ( vector.x * widthHalf ) + widthHalf;
+        vector.y = -( vector.y * heightHalf ) + heightHalf;
+
+        return {
+            x: vector.x,
+            y: vector.y
+        };
+
+    }
+
+    function showOpponentLabels() {
+        var i,
+            opponent,
+            proj,
+            label,
+            t;
+        for (i = 0; i < opponentPlayers.length; i++) {
+            opponent = opponentPlayers[i];
+            if (opponent == undefined) {
+                continue;
+            }
+            proj = toScreenPosition(opponent.getObject(), cameraObj.getCamera());
+            label = document.getElementById("opponent-" + i + "-label");
+            if (label == null) {
+                label = document.createElement("p");
+                t = document.createTextNode(opponent.getName());
+                label.appendChild(t);
+                label.className = "opponent-label";
+                label.id = "opponent-" + i + "-label";
+                document.body.appendChild(label);
+            } else {
+                label.style.left = proj.x + 'px';
+                label.style.top = proj.y + 'px';
+                label.style.visibility = "visible";
+            }
+        }
+    }
+
     /*
      destroys all objects in the scene
      */
@@ -350,20 +373,6 @@ DungeonHop.GameInstance = function () {
     function setGameFinished() {
         gameStatus.active = false;
         gameStatus.finished = true;
-    }
-
-	    /*
-     inits the game instance by passing the values from the game handler
-     */
-    function init(i, name, mdls, srv, rend) {
-        renderer = rend;
-        ip = i;
-        playerName = name;
-        models = mdls;
-        serverInterface = srv;
-        gameStatus.active = false;
-        startButton = document.getElementById("start");
-        startButton.addEventListener("click", startClicked);
     }
 
     that.startGame = startGame;

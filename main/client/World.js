@@ -13,12 +13,7 @@ DungeonHop.World = function () {
         serverInterface,
         loadDistance = 30,
         chunks = [];
-	
-	function addToWorld(obstacles, zPosition, chunk) {
-        worldMatrix[zPosition] = obstacles;
-        chunks[zPosition] = chunk;
-    }
-	
+
     /*
     creates the new chunk and adds the collision information the matrix
     */
@@ -38,12 +33,29 @@ DungeonHop.World = function () {
         }
     }
 
+    function addToWorld(obstacles, zPosition, chunk) {
+        worldMatrix[zPosition] = obstacles;
+        chunks[zPosition] = chunk;
+    }
+
     /*
     returns the status of the requested fiel in the matrix to check if the player can move
     */
     function getEntryInMatrix(x, z) {
         console.log(worldMatrix[z][x]);
         return worldMatrix[z][x];
+    }
+
+    function init(sc, mdls, pl, srv) {
+        var z;
+        serverInterface = srv;
+        player = pl;
+        models = mdls;
+        scene = sc;
+        getObstacleModels();
+        for (z = 0; z > -16; z--) {
+            createChunk();
+        }
     }
 
     function getObstacleModels() {
@@ -64,18 +76,6 @@ DungeonHop.World = function () {
     function removeChunk(pos) {
         console.log(chunks[pos]);
         chunks[pos].destroyChunk(scene);
-    }
-	
-	function init(sc, mdls, pl, srv) {
-        var z;
-        serverInterface = srv;
-        player = pl;
-        models = mdls;
-        scene = sc;
-        getObstacleModels();
-        for (z = 0; z > -16; z--) {
-            createChunk();
-        }
     }
 
     that.update = update;

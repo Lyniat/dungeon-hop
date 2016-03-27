@@ -24,7 +24,7 @@ DungeonHop.Particles = function () {
             texture,
             particleMaterial;
 
-        for (p = 0; p < particleCount; p++) {
+        for(p = 0; p < particleCount; p++) {
 
             xPos = x + (Math.random() - 0.5);
             yPos = y;
@@ -39,14 +39,16 @@ DungeonHop.Particles = function () {
         texture.magFilter = THREE.NearestFilter;
         texture.minFilter = THREE.LinearMipMapLinearFilter;
 
-        particleMaterial = new THREE.PointsMaterial({
-			color: 0xffffff,
-			size: 0.2,
-			map: texture,
-			blending: THREE.AdditiveBlending,
-			transparent: true
-		});
-        return (particleSystem = new THREE.Points(particles, particleMaterial));
+        particleMaterial = new THREE.PointsMaterial(
+            {
+                color: 0xffffff,
+                size: 0.2,
+                map: texture,
+                blending: THREE.AdditiveBlending,
+                transparent: true
+            });
+
+        return particleSystem = new THREE.Points(particles, particleMaterial);
     }
 
     that.init = init;
