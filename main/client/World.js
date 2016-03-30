@@ -3,7 +3,6 @@ DungeonHop.World = function () {
     "use strict";
     /* eslint-env browser  */
     var that = {},
-        timer,
         worldMatrix = [],
         actualChunk_Z_Position = 0,
         models,
@@ -42,7 +41,6 @@ DungeonHop.World = function () {
     returns the status of the requested fiel in the matrix to check if the player can move
     */
     function getEntryInMatrix(x, z) {
-        console.log(worldMatrix[z][x]);
         return worldMatrix[z][x];
     }
 
@@ -74,7 +72,6 @@ DungeonHop.World = function () {
     }
 
     function removeChunk(pos) {
-        console.log(chunks[pos]);
         chunks[pos].destroyChunk(scene);
     }
 

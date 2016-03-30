@@ -58,7 +58,6 @@ DungeonHop.Player = function () {
 
     function setDucking(ducking) {
         if (ducking) {
-            console.log(normalScale);
             object.scale.y = normalScale / 1.15;
         } else {
             object.scale.y = normalScale * 1.15;
@@ -180,7 +179,6 @@ DungeonHop.Player = function () {
                 enemy = enemies[i];
                 if (enemy != undefined && enemy != null) {
                     if (enemy.getPosition().x == object.position.x + moveDirection.x && enemy.getPosition().z == object.position.z + moveDirection.z) {
-                        console.log("enemy collision!");
                         informEnemyCollision();
                     }
                 }
@@ -203,7 +201,8 @@ DungeonHop.Player = function () {
     /*
     move to position over a given time to animate
      */
-    function movePosition(t, x, z) {
+    function movePosition(time, x, z) {
+        var t = time;
         setTimeout(function () {
             t--;
             object.position.x += x / 2.5;
@@ -240,8 +239,8 @@ DungeonHop.Player = function () {
     fall through ground and play a sound if dead
      */
     function die() {
-        falling = true;
         var audio = new Audio(losingSound);
+        falling = true;
         audio.play();
         setTimeout(function () {
             var particles = new DungeonHop.Particles();

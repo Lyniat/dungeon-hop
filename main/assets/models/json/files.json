@@ -1,1 +1,52 @@
-{"obstacles": [{"id": 0, "name": "stonething"}, {"id": 1, "name": "firebowl_small"}, {"id": 2, "name": "barell"}, {"id": 3, "name": "firebowl"}], "enemies": [{"id": 0, "name": "ghost_left"}, {"id": 1, "name": "bad_gecko"}, {"id": 2, "name": "ghost_right"}], "players": [{"id": 0, "name": "cubegoat"}, {"id": 1, "name": "piggycube"}, {"id": 2, "name": "geckocube"}]}
+{
+  "players": [
+    {
+      "name": "cubegoat",
+      "id": 0
+    },
+    {
+      "name": "piggycube",
+      "id": 1
+    },
+    {
+      "name": "birdycube",
+      "id": 2
+    },
+    {
+      "name": "geckocube",
+      "id": 3
+    }
+  ],
+  "obstacles": [
+    {
+      "name": "stonething",
+      "id": 0
+    },
+    {
+      "name": "firebowl_small",
+      "id": 1
+    },
+    {
+      "name": "barell",
+      "id": 2
+    },
+    {
+      "name": "stone",
+      "id": 3
+    },
+    {
+      "name": "firebowl",
+      "id": 4
+    }
+  ],
+  "enemies": [
+    {
+      "name": "bad_gecko_two",
+      "id": 0
+    },
+    {
+      "name": "bad_gecko",
+      "id": 1
+    }
+  ]
+}

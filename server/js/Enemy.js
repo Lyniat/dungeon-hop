@@ -9,7 +9,7 @@ Enemy = function () {
         logic,
         waitTime;
 
-    function init(i,size,srv,log,x,z){
+    function init(i, size, srv, log, x, z) {
         id = i;
         chunkSize = size;
         server = srv;
@@ -17,57 +17,57 @@ Enemy = function () {
         xPos = x;
         zPos = z;
         waitTime = Math.random() + 0.3;
-        server.createNewEnemy(id,xPos,zPos);
+        server.createNewEnemy(id, xPos, zPos);
         move();
     }
 
     /*
-    checks if the next field is empty. If so, it will move there and wait for the waitTime before
-    moving again
+     checks if the next field is empty. If so, it will move there and wait for the waitTime before
+     moving again
      */
-    function move(){
-        if(!nextFieldEmpty(direction)){
+    function move() {
+        if (!nextFieldEmpty(direction)) {
             direction *= -1;
         }
         else {
-            if (xPos+direction == -1 || xPos+direction == chunkSize) {
+            if (xPos + direction == -1 || xPos + direction == chunkSize) {
                 direction *= -1;
             }
             xPos += direction;
             updatePosition();
         }
-        setTimeout(function() {
+        setTimeout(function () {
             move();
-        }, waitTime*1000);
+        }, waitTime * 1000);
     }
 
-    function nextFieldEmpty(direction){
-        var nextX = xPos+direction,
-        enemies = logic.getAllEnemies(),
+    function nextFieldEmpty(direction) {
+        var nextX = xPos + direction,
+            enemies = logic.getAllEnemies(),
             i,
             enemy;
-        for(i = 0; i < enemies.length; i++){
+        for (i = 0; i < enemies.length; i++) {
             enemy = enemies[i];
-            if(enemy.getPosition().z != zPos){
+            if (enemy.getPosition().z != zPos) {
                 continue;
             }
-            if(enemy.getPosition().x == nextX){
+            if (enemy.getPosition().x == nextX) {
                 return false;
             }
         }
         return true;
     }
 
-    function updatePosition(){
-        server.updateEnemyPosition(id,xPos);
+    function updatePosition() {
+        server.updateEnemyPosition(id, xPos);
     }
 
-    function getId(){
+    function getId() {
         return id;
     }
 
-    function getPosition(){
-        return {x:xPos,z:zPos};
+    function getPosition() {
+        return {x: xPos, z: zPos};
     }
 
     that.init = init;

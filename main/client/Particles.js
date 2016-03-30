@@ -10,8 +10,7 @@ var DungeonHop = DungeonHop || {};
 DungeonHop.Particles = function () {
     "use strict";
     /* eslint-env browser  */
-    var that = {},
-        particleSystem;
+    var that = {};
 
     function init(x, y, z, tex) {
         var particleCount = 5,
@@ -48,7 +47,7 @@ DungeonHop.Particles = function () {
                 transparent: true
             });
 
-        return particleSystem = new THREE.Points(particles, particleMaterial);
+        return new THREE.Points(particles, particleMaterial);
     }
 
     that.init = init;

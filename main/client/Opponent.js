@@ -40,9 +40,10 @@ DungeonHop.Opponent = function () {
     }
 
     /*
-    moves the opponent to a given position over time
+     moves the opponent to a given position over time
      */
-    function movePosition(t, x, z, anNum) {
+    function movePosition(time, x, z, anNum) {
+        var t = time;
         setTimeout(function () {
             if (anNum != animationNum) {
                 return;
@@ -98,11 +99,10 @@ DungeonHop.Opponent = function () {
         rotate();
         oldPosition.x = x;
         oldPosition.z = z;
-        console.log("updated opponent position");
     }
 
     /*
-    create particles where the opponent died
+     create particles where the opponent died
      */
     function die() {
         var particles,
@@ -110,7 +110,7 @@ DungeonHop.Opponent = function () {
         scene.remove(object);
         setTimeout(function () {
             particles = new DungeonHop.Particles();
-                particleSystem = particles.init(getPosition().x, 1, getPosition().z, "skull");
+            particleSystem = particles.init(getPosition().x, 1, getPosition().z, "skull");
             scene.add(particleSystem);
             setTimeout(function () {
                 scene.remove(particleSystem);

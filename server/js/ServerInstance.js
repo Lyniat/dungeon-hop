@@ -7,7 +7,7 @@ ServerInstance = function () {
         readyPlayers = 0,
         deadPlayers = 0,
         status = 0, // 0 waiting for players, 1 active --> new players cant connect, 2 full, waiting for start, 3 private game, 4 finished game
-        maxPlayers = 3,
+        maxPlayers = 4,
         gameId;
 
 

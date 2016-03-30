@@ -65,7 +65,7 @@ GameHandler = (function () {
         activeGame = new DungeonHop.GameInstance();
         serverInterface.init(that, activeGame, ip, playerName);
         infoText.innerHTML = "CONNECTING TO SERVER";
-        activeGame.init(ip, playerName, models, serverInterface, renderer);
+        activeGame.init(playerName, models, serverInterface, renderer);
     }
 
     that.loaded = loaded;

@@ -7,11 +7,11 @@ DungeonHop.GameInstance = function () {
     "use strict";
     /* eslint-env browser  */
     var that = {},
-        GAME_VERSION = 1459098998.47, //this will be automaticly updated ba the python script
+        GAME_VERSION = 1459098998.47, //this will be automatically updated by the python script
         scene = new THREE.Scene(),
         infoText = document.getElementById("info-text"),
-		timer = document.getElementById("timer"),
-		seconds = 0,
+        timer = document.getElementById("timer"),
+        seconds = 0,
         renderer,
         cameraObj,
         lastTime = Date.now(),
@@ -26,7 +26,6 @@ DungeonHop.GameInstance = function () {
         startButton,
         serverInterface,
         render,
-        ip,
         playerName;
 
     /*
@@ -63,7 +62,7 @@ DungeonHop.GameInstance = function () {
      */
     function getDeltaTime() {
         var actualTime = Date.now(),
-			delta = actualTime - lastTime;
+            delta = actualTime - lastTime;
         lastTime = actualTime;
         delta /= 1000;
         return delta;
@@ -145,11 +144,14 @@ DungeonHop.GameInstance = function () {
     function getEnemyModel() {
         var i,
             model,
-            enemyModel;
+            enemyModel,
+            r;
+        //higher chance of enemy 0
+        r = Math.floor(Math.random() * 1.2);
         for (i = 0; i < models.length; i++) {
             model = models[i];
             if (model["type"] == "enemies") {
-                if (model["name"] == "bad_gecko") {
+                if (model["id"] == r) {
                     enemyModel = model["object"];
                     return enemyModel.clone();
                 }
@@ -160,29 +162,28 @@ DungeonHop.GameInstance = function () {
     /*
      inits the game instance by passing the values from the game handler
      */
-    function init(i, name, mdls, srv, rend) {
+    function init(name, mdls, srv, rend) {
         renderer = rend;
-        ip = i;
         playerName = name;
         models = mdls;
         serverInterface = srv;
         gameStatus.active = false;
         startButton = document.getElementById("start");
         startButton.addEventListener("click", startClicked);
-		
+
     }
 
     function startClicked() {
         serverInterface.setReady();
         infoText.innerHTML = "Waiting for other Players";
     }
-	
 
-	function setTimer() {
-		var min, sec;
-		if (gameStatus.active == false){
-			return;
-		}
+
+    function setTimer() {
+        var min, sec;
+        if (gameStatus.active == false) {
+            return;
+        }
         seconds++;
         min = Math.floor(seconds / 60);
         sec = Math.floor(seconds % 60);
@@ -194,12 +195,12 @@ DungeonHop.GameInstance = function () {
             sec = "0" + sec;
         }
         timer.innerHTML = min + ":" + sec;
-	}
-	
+    }
+
     function startGame() {
         gameStatus.active = true;
-		setInterval(setTimer, 1000);
-	}
+        setInterval(setTimer, 1000);
+    }
 
     /*
      synchronizes the players and creates new ones if the doesnt exist
@@ -208,7 +209,6 @@ DungeonHop.GameInstance = function () {
         var opponent,
             model;
         if (opponentPlayers[id] == undefined && id != playerId) {
-            console.log("added new player");
             opponent = new DungeonHop.Opponent();
             model = getPlayerModel(id);
             opponent.init(model, scene, xPos, zPos, name);
@@ -251,7 +251,6 @@ DungeonHop.GameInstance = function () {
     }
 
     function setPlayerDead(id, name) {
-        console.log("player dead");
         if (id == playerId) {
             player.die();
         } else if (opponentPlayers[id] != undefined) {
@@ -269,7 +268,6 @@ DungeonHop.GameInstance = function () {
     }
 
     function setInfoText(text) {
-        console.log("info text: " + text);
         infoText.innerHTML = text;
 
         if (document.getElementById("info-text").innerHTML != " ") {
@@ -305,9 +303,9 @@ DungeonHop.GameInstance = function () {
     //http://stackoverflow.com/questions/27409074/three-js-converting-3d-position-to-2d-screen-position-r69
     function showPlayerLabels() {
         var proj = toScreenPosition(player.getObject(), cameraObj.getCamera()),
-			label = document.getElementById("player-label");
-        label.style.left = proj.x + 'px';
-        label.style.top = proj.y + 'px';
+            label = document.getElementById("player-label");
+        label.style.left = proj.x + "px";
+        label.style.top = proj.y + "px";
         label.style.visibility = "visible";
     }
 
@@ -355,8 +353,8 @@ DungeonHop.GameInstance = function () {
                 label.id = "opponent-" + i + "-label";
                 document.body.appendChild(label);
             } else {
-                label.style.left = proj.x + 'px';
-                label.style.top = proj.y + 'px';
+                label.style.left = proj.x + "px";
+                label.style.top = proj.y + "px";
                 label.style.visibility = "visible";
             }
         }
@@ -377,7 +375,7 @@ DungeonHop.GameInstance = function () {
     function setGameFinished() {
         gameStatus.active = false;
         gameStatus.finished = true;
-		
+
     }
 
     that.startGame = startGame;
