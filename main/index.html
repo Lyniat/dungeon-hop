@@ -80,6 +80,8 @@
     var entries = cookie.split(";");
     var lastIp = entries[0].split("=")[1];
     var lastName = "Random Player";
+    var ip = null;
+    var name="";
     console.log(entries);
     if(entries[1] != undefined) {
         lastName = entries[1].split("=")[1];
@@ -87,32 +89,57 @@
     if (lastIp == "" || lastIp == null) {
         lastIp = "52.28.150.118:8080";
     }
-    var ip = prompt("Please enter the server address. If you want to play on the official server, use 'os' as server address.", lastIp);
-    var name = prompt("Please enter your player name", lastName);
-    if (ip != null) {
-        ip = ip.split("!")[0];
-        if(ip == "os"){
-            ip = "52.28.150.118:8080";
-        }
-        document.cookie = "lastIp=" + ip;
-        document.cookie = "lastName="+ name;
-        GameHandler.init(ip,name);
-        //DungeonHop.init(ip,name);
-    }
-    (function () {
-        var script = document.createElement('script');
-        script.onload = function () {
-            var stats = new Stats();
-            stats.domElement.style.cssText = 'position:fixed;left:0;top:0;z-index:10000';
-            document.body.appendChild(stats.domElement);
-            requestAnimationFrame(function loop() {
-                stats.update();
-                requestAnimationFrame(loop)
+   
+    bootbox.prompt({
+      title: "Please enter the server address. If you want to play on the official server, use 'os' as server address.",
+      value: lastIp,
+      callback: function(result) {
+        if (result === null) {
+           ip = lastIp;
+        } else {
+           ip = result;
+          bootbox.prompt({
+              title: "Please enter your player name",
+              value: lastName,
+              callback: function(result) {
+                if (result === null) {
+                   name = lastName;
+                } else {
+                   name = result;
+                  startgame();
+                }
+              }
             });
-        };
-        script.src = '//rawgit.com/mrdoob/stats.js/master/build/stats.min.js';
-        document.head.appendChild(script);
-    })()
+        }
+
+      }
+    });
+    function startgame(){
+        if (ip != null) {
+            ip = ip.split("!")[0];
+            if(ip == "os"){
+                ip = "52.28.150.118:8080";
+            }
+            document.cookie = "lastIp=" + ip;
+            document.cookie = "lastName="+ name;
+            GameHandler.init(ip,name);
+            //DungeonHop.init(ip,name);
+        }
+        (function () {
+            var script = document.createElement('script');
+            script.onload = function () {
+                var stats = new Stats();
+                stats.domElement.style.cssText = 'position:fixed;left:0;top:0;z-index:10000';
+                document.body.appendChild(stats.domElement);
+                requestAnimationFrame(function loop() {
+                    stats.update();
+                    requestAnimationFrame(loop)
+                });
+            };
+            script.src = '//rawgit.com/mrdoob/stats.js/master/build/stats.min.js';
+            document.head.appendChild(script);
+        })()
+        }
 </script>
 <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
 

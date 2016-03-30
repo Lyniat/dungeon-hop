@@ -42,6 +42,22 @@ h2{
     position: absolute;
     bottom:0;
 }
+.modal-content{
+    background-color:#925B2B;
+}
+.modal-header{
+    border-bottom: 0px!important;
+}
+.modal-footer{
+    border-top:0px!important;
+}
+.modal-footer .btn-default{
+    background-color: #ff0000;
+    margin-top: 0px!important;
+}
+.modal-footer .btn-default:hover{
+    background-color: #e74c3b;
+}
 .credits{
      -webkit-stroke-width: 5.3px;
    -webkit-stroke-color: #FFFFFF;
