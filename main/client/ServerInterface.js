@@ -5,6 +5,7 @@ DungeonHop.ServerInterface = function () {
     var that = {},
         handler,
         mainClass,
+		timer = document.getElementById('timer'),
         server,
         playerId,
         playerName;
@@ -51,7 +52,7 @@ DungeonHop.ServerInterface = function () {
 
     function setPlayerDead() {
         console.log("player dead");
-        mainClass.setInfoText("You died!");
+        mainClass.setInfoText("You died after " + timer.textContent + " seconds");
         server.emit("playerDead");
     }
 

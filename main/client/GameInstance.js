@@ -169,14 +169,20 @@ DungeonHop.GameInstance = function () {
         gameStatus.active = false;
         startButton = document.getElementById("start");
         startButton.addEventListener("click", startClicked);
+		
     }
 
     function startClicked() {
         serverInterface.setReady();
         infoText.innerHTML = "Waiting for other Players";
     }
+	
+
 	function setTimer() {
-		var min, sec, view;
+		var min, sec;
+		if (gameStatus.active == false){
+			return;
+		}
         seconds++;
         min = Math.floor(seconds / 60);
         sec = Math.floor(seconds % 60);
@@ -193,9 +199,7 @@ DungeonHop.GameInstance = function () {
     function startGame() {
         gameStatus.active = true;
 		setInterval(setTimer, 1000);
-    }
-	
-	
+	}
 
     /*
      synchronizes the players and creates new ones if the doesnt exist
@@ -252,7 +256,7 @@ DungeonHop.GameInstance = function () {
             player.die();
         } else if (opponentPlayers[id] != undefined) {
             //showInfoForTime("Player "+id+" died!",3);
-            showInfoForTime(name + " died!", 3);
+            showInfoForTime(name + " died", 3);
             opponentPlayers[id].die();
         }
 
@@ -373,6 +377,7 @@ DungeonHop.GameInstance = function () {
     function setGameFinished() {
         gameStatus.active = false;
         gameStatus.finished = true;
+		
     }
 
     that.startGame = startGame;
