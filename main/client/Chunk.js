@@ -82,7 +82,6 @@ DungeonHop.Chunk = function () {
             }
             if (obstacles[i] <= -3) {
                 obstacleId = (obstacles[i] + 3) * (-1);
-                console.log("obstacle id: " + obstacleId);
                 obstacle = obstacleModels[obstacleId].clone();
                 obstacle.position.z = zPosition;
                 obstacle.position.x = i;
@@ -143,7 +142,6 @@ DungeonHop.Chunk = function () {
      */
     function destroyChunk(scene) {
         var i;
-        console.log("destroying");
         for (i = 0; i < objects.length; i++) {
             scene.remove(objects[i]);
         }

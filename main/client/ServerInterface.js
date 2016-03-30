@@ -5,7 +5,7 @@ DungeonHop.ServerInterface = function () {
     var that = {},
         handler,
         mainClass,
-		timer = document.getElementById('timer'),
+        timer = document.getElementById("timer"),
         server,
         playerId,
         playerName;
@@ -14,20 +14,18 @@ DungeonHop.ServerInterface = function () {
     function getId() {
         server.on("setPlayerId", function (id) {
             playerId = id;
-            console.log("player id: " + playerId);
             mainClass.createWorld(playerId);
         });
     }
 
     function getPlayers() {
         server.on("newPlayer", function (id, name, xPos, zPos) {
-            console.log("retrieving player " + name);
             mainClass.setPlayers(id, name, xPos, zPos);
         });
     }
 
     function getChunkAt(zPosition, callback) {
-        server.emit('getChunkAt', zPosition);
+        server.emit("getChunkAt", zPosition);
         server.on("getChunkAtResp" + zPosition, function (result) {
             callback(result);
         });
@@ -43,7 +41,6 @@ DungeonHop.ServerInterface = function () {
 
     function setLoaded(xPos, zPos) {
         server.emit("loaded", playerId, playerName, xPos, zPos);
-        console.log("loading: " + playerId);
     }
 
     function setReady() {
@@ -51,28 +48,24 @@ DungeonHop.ServerInterface = function () {
     }
 
     function setPlayerDead() {
-        console.log("player dead");
         mainClass.setInfoText("You died after " + timer.textContent + " seconds");
         server.emit("playerDead");
     }
 
     function waitForDeadPlayer() {
         server.on("setPlayerDead", function (id, name) {
-            console.log("player " + id + " dead");
             mainClass.setPlayerDead(id, name);
         });
     }
 
     function waitForRemovingChunks() {
         server.on("removeChunk", function (pos) {
-            console.log("removing chunk " + pos);
             mainClass.removeChunk(pos);
         });
     }
 
     function waitForUpdatingPlayers() {
         server.on("updatePlayer", function (id, xPos, zPos) {
-            console.log("updating player");
             mainClass.updatePlayers(id, xPos, zPos);
         });
     }
@@ -80,7 +73,6 @@ DungeonHop.ServerInterface = function () {
 
     function waitForStart() {
         server.on("startGame", function () {
-            console.log("starting");
             waitForUpdatingPlayers();
             waitForRemovingChunks();
             waitForDeadPlayer();
@@ -97,7 +89,6 @@ DungeonHop.ServerInterface = function () {
 
     function waitForEnemy() {
         server.on("createNewEnemy", function (id, xPos, zPos) {
-            console.log("creat new enemy at " + xPos);
             mainClass.createNewEnemy(id, xPos, zPos);
         });
         server.on("updateEnemyPosition", function (id, xPos) {
@@ -122,12 +113,10 @@ DungeonHop.ServerInterface = function () {
 
 
     function init(hndlr, main, ip, name, gameId) {
-        console.log("connecting to server");
         handler = hndlr;
         mainClass = main;
         server = io(ip);
         playerName = name;
-        console.log("server connected");
         server.emit("joinGame", gameId);
         waitForPrivateId();
         getId();
@@ -140,9 +129,11 @@ DungeonHop.ServerInterface = function () {
         waitForGameFinished();
     }
 
+    /*
+        gets privateId for connecting to a private game. But not yet implemented
+     */
     function waitForPrivateId() {
         server.on("privateId", function (id) {
-            console.warn("your private game id is " + id);
         });
     }
 

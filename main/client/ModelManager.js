@@ -104,8 +104,7 @@ loads a 3d model from a json file
             objectName = value["name"];
             id = value["id"];
             path = name + "/" + objectName;
-            console.log(path);
-            loadJSON(name + "/" + objectName, name, id);
+            loadJSON(path, name, id);
         }
     }
 
