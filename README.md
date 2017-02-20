@@ -2,14 +2,9 @@
 
 Anleitung zum Starten der App:
 
-server.js im ordner server starten
-main.html local hosten und im browser öffnen
+__server.js__ im ordner server starten
+__main.html__ local hosten und im browser öffnen
 ip und port des servers eingeben
-
-oder
-
-auf nightsharts.net/apps/dungeonhop gehen
-als serveraddresse "os" eingeben um auf die amazon cloud zu verbinden
 _________________________________________________
  
 ### Projektbeschreibung ###
